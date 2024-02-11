@@ -4,6 +4,8 @@ import { Inter } from "next/font/google";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Analytics } from "@/components/analytics";
 import { ModeToggle } from "@/components/mode-toggle";
+import Texture from "@/components/BackgroundTexture";
+import CfIcon from "@/components/CFIcon";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -29,26 +31,14 @@ export default function RootLayout({ children }: RootLayoutProps) {
         className={`antialiased bg-gray-100 dark:bg-gray-900 text-gray-600 dark:text-gray-400 ${inter.className}`}
       >
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-          <svg className="absolute -z-10">
-            <filter id="grainy">
-              <feTurbulence
-                type="turbulence"
-                seed={20 * Math.random()}
-                baseFrequency="1"
-              />
-              <feComponentTransfer in="coloredNoise">
-                <feFuncA type="linear" slope="0.3" />
-              </feComponentTransfer>
-            </filter>
-          </svg>
+          <Texture />
+
           <div className="min-h-screen max-w-2xl mx-auto py-10 px-4 flex flex-col justify-between">
-            <header>
-              <div className="flex items-center justify-between">
-                <ModeToggle />
-                <nav className="ml-auto text-sm font-medium space-x-6"></nav>
-              </div>
+            <header className="flex w-full justify-between items-center">
+              {/* <CfIcon /> */}
+              <ModeToggle />
             </header>
-            <main className="pt-24 pb-24">{children}</main>
+            <main className="pt-12 pb-12">{children}</main>
             <footer className="pt-4 flex flex-col justify-center text-gray-400 text-sm mt-auto">
               <p>
                 <svg
