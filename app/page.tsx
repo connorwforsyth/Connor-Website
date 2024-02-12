@@ -1,5 +1,6 @@
 import { allPosts } from "@/.contentlayer/generated";
 import Link from "next/link";
+import "../styles/data.css";
 
 export default function Home() {
   return (
@@ -7,6 +8,18 @@ export default function Home() {
       <h1 className=" text-weight font-medium text-gray-800  dark:text-gray-50">
         Connor Forsyth
       </h1>
+      <a basics-link="" href="/">
+        <div>
+          <span
+            data-icon="arrow-left-curve"
+            aria-label="arrow-left-curve icon"
+            basics-css-icon=""
+          ></span>
+          <span basics-text="">
+            <em>Index</em>
+          </span>
+        </div>
+      </a>
       <p className="pt-3">
         I’m a designer and technologist interested in design sprints, Lean UX,
         agile, web technology, user/dev experience, education and open source. I
