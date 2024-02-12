@@ -30,12 +30,12 @@ export default function RootLayout({ children }: RootLayoutProps) {
       >
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           <Texture />
-
-          <div className="min-h-screen max-w-2xl mx-auto py-10 px-4 flex flex-col justify-between">
-            <header className="flex w-full justify-between items-center"></header>
-            <main className="pt-12 pb-12">{children}</main>
+          <div className="flex min-h-screen flex-col">
+            <div className="mx-auto flex max-w-2xl flex-grow flex-col justify-between px-4 py-10">
+              <main className="flex-grow pb-12 pt-12">{children}</main>
+            </div>
+            <Footer />
           </div>
-          <Footer />
           <Analytics />
         </ThemeProvider>
       </body>

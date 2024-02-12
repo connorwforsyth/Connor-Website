@@ -3,6 +3,7 @@
   max-height: var(--size);
   width: var(--size);
   content: var(--icon);
+  color: red;
 }
 
 [data-icon="arrow-left-curve"] {

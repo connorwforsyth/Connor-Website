@@ -3,7 +3,10 @@ export default function Footer() {
   const date = new Date();
   let year = date.getFullYear();
   return (
-    <footer className="p-3 place-items-baseline border-t text-sm border-opacity-50 border-gray-300">
+    <footer className="place-items-baseline border-t border-gray-300 border-opacity-50 p-3 text-sm">
+      <p>
+        Last Visit: <span>Location</span>
+      </p>
       <p>
         <span className="">☺</span>
         Connor Forsyth {year}
