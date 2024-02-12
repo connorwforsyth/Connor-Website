@@ -1,6 +1,6 @@
 export default function Texture() {
   return (
-    <svg className="absolute -z-10">
+    <svg className="h-full-z-10 absolute inset-0">
       <filter id="grainy">
         <feTurbulence
           type="turbulence"

@@ -1,41 +1,58 @@
 "use client";
-
-import * as React from "react";
-import { MoonIcon, SunIcon, DesktopIcon } from "@radix-ui/react-icons";
+import { useState, useEffect } from "react";
+import { FC } from "react";
 import { useTheme } from "next-themes";
-
-import { Button } from "@/components/ui/button";
+import { DesktopIcon, MoonIcon, SunIcon } from "@radix-ui/react-icons";
 import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
-export function ModeToggle() {
-  const { setTheme } = useTheme();
+// documenting themes, and their icons
+const themeIcons: Record<string, typeof SunIcon> = {
+  light: SunIcon,
+  dark: MoonIcon,
+  system: DesktopIcon,
+};
+
+const ThemeSelectItem: FC<{ readonly value: string }> = ({ value }) => {
+  const Icon = themeIcons[value];
 
   return (
-    <DropdownMenu>
-      <DropdownMenuTrigger asChild>
-        <Button variant="outline" size="icon">
-          <SunIcon className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
-          <DesktopIcon className="system:rotate-0 system:scale-100 absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all" />
-          <MoonIcon className="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
-          <span className="sr-only">Toggle theme</span>
-        </Button>
-      </DropdownMenuTrigger>
-      <DropdownMenuContent align="end">
-        <DropdownMenuItem onClick={() => setTheme("light")}>
-          Light
-        </DropdownMenuItem>
-        <DropdownMenuItem onClick={() => setTheme("dark")}>
-          Dark
-        </DropdownMenuItem>
-        <DropdownMenuItem onClick={() => setTheme("system")}>
-          System
-        </DropdownMenuItem>
-      </DropdownMenuContent>
-    </DropdownMenu>
+    <SelectItem value={value} key={value}>
+      <div className="flex items-center gap-2">
+        <Icon className="h-4 w-4" />
+        {value.charAt(0).toUpperCase() + value.slice(1)}
+      </div>
+    </SelectItem>
   );
-}
+};
+
+export const ModeToggle: FC = () => {
+  const [mounted, setMounted] = useState(false);
+  const { setTheme, themes, theme } = useTheme();
+  // useEffect only runs on the client, so now we can safely show the UI
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) {
+    return null;
+  }
+
+  return (
+    <Select value={theme} onValueChange={setTheme}>
+      <SelectTrigger className="gap-4 dark:border-zinc-700">
+        <SelectValue placeholder="Theme" />
+      </SelectTrigger>
+      <SelectContent>
+        {themes.map((option) => (
+          <ThemeSelectItem key={option} value={option} />
+        ))}
+      </SelectContent>
+    </Select>
+  );
+};
