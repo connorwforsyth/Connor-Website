@@ -21,6 +21,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <html lang="en">
       <body className={`relative antialiased ${inter.className}`}>
+        <div className="blur"></div>
         <Texture />
         <div
           className="absolute -z-50 h-full w-full"
@@ -30,9 +31,9 @@ export default function RootLayout({ children }: RootLayoutProps) {
         ></div>
         <Providers>
           <div className="flex min-h-screen flex-col">
-            <div className="mx-auto flex max-w-2xl flex-grow flex-col justify-between px-4 py-10">
-              <main className="">{children}</main>
-            </div>
+            <main className="mx-auto flex max-w-2xl flex-grow flex-col justify-between px-4 py-16 pt-36">
+              {children}
+            </main>
             <Footer />
           </div>
           <Analytics />
