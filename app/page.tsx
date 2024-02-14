@@ -20,14 +20,14 @@ export default function Home() {
       title: "Building",
       items: [
         {
-          href: "#",
           title: "Portfolio Readme",
           description: "My approach to sharing work.",
+          href: "/readme",
         },
         {
-          href: "#",
           title: "Craft",
           description: "Small projects that help push my craft forward.",
+          href: "#",
         },
       ],
     },
@@ -35,15 +35,15 @@ export default function Home() {
       title: "Projects",
       items: [
         {
-          href: "https://makeitbydesignit.com",
           title: "Makeit — by Designit",
           description: "My approach to sharing work.",
+          href: "https://makeitbydesignit.com",
           external: true,
         },
         {
-          href: "https://tedxmelbourne.com",
           title: "TEDxMelbourne",
           description: "Small projects that help push my craft forward.",
+          href: "https://tedxmelbourne.com",
           external: true,
         },
         {
@@ -58,18 +58,18 @@ export default function Home() {
       title: "Writing",
       items: [
         {
-          href: "#",
           title: "Good Judgement in Design",
           description: "My approach to sharing work.",
+          href: "",
         },
         {
-          href: "#",
           title: "Figma file structure",
           description: "How we approach figma structures.",
+          href: "#",
         },
         {
-          href: "#",
           title: "All writing",
+          href: "/writing",
         },
       ],
     },
@@ -131,13 +131,14 @@ export default function Home() {
                 <div className="sm:h-24" key={item.title}>
                   {item.external ? (
                     <span className="">
-                      <a
+                      <Link
+                        basics-link=""
                         href={item.href}
                         target="_blank"
                         rel="noopener noreferrer"
                       >
                         {item.title}
-                      </a>
+                      </Link>
                       <span
                         basics-css-icon=""
                         data-icon="arrow-up-right"
@@ -147,7 +148,9 @@ export default function Home() {
                     </span>
                   ) : (
                     <span className="">
-                      <Link href={item.href}>{item.title}</Link>
+                      <Link basics-link="" href={item.href}>
+                        {item.title}
+                      </Link>
                     </span>
                   )}
                   <p className="text-gray-600 dark:text-gray-400">

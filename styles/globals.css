@@ -98,10 +98,14 @@
     box-shadow: inset 0px -50px 0px 0px var(--highlight);
   }
 
-  a {
-    @apply box-shadow-small hover:box-shadow-full text-gray-900  dark:text-gray-200;
-    /* @apply text-gray-900 underline decoration-gray-400 underline-offset-auto transition-all hover:stroke-2 hover:text-gray-950 hover:decoration-gray-950 dark:text-gray-200  dark:decoration-gray-400 dark:hover:text-white dark:hover:decoration-white;*/
+  p a {
+    @apply box-shadow-small hover:box-shadow-full text-gray-900 dark:text-gray-200;
   }
+
+  [basics-link] {
+    @apply box-shadow-small hover:box-shadow-full text-gray-900  dark:text-gray-200;
+  }
+
   .blur {
     --page-top: 64px;
     --h: min(96px, var(--page-top));

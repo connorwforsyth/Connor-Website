@@ -6,6 +6,7 @@ export function Collaborators() {
     <div className="flex flex-wrap gap-2">
       {collaborators.map((collaborator) => (
         <Link
+          basics-link=""
           className="flex items-center gap-1 rounded-full bg-gray-300 bg-opacity-70 bg-gradient-to-r p-1 pr-2 text-sm no-underline dark:bg-gray-700 dark:bg-opacity-90 dark:text-gray-100 dark:hover:text-white"
           key={collaborator.name}
           href={collaborator.link}
