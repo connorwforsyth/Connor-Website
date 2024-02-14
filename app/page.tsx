@@ -13,39 +13,41 @@ export default function Home() {
         >
           Connor Forsyth
         </h1>
-        <p data-animate="" style={{ "--stagger": "1" }}>
-          I’m a designer and technologist interested in design sprints, Lean UX,
-          agile, web technology, user/dev experience, education and open source.
-          I currently work as a service designer at{" "}
-          <Link href="https://designit.com">Designit</Link> and as an academic
-          tutor at{" "}
-          <span>
-            <Link href="https://sydney.edu.au">The University of Sydney</Link>
-          </span>
-          .
-        </p>
-        <p data-animate="" style={{ "--stagger": "2" }}>
-          Previously, I’ve worked across public and private sector industries,
-          startups, local government councils, universities, utilities,
-          non-profits, community groups and the events industry. I started my
-          career in architecture.
-        </p>
-        <p data-animate="" style={{ "--stagger": "3" }}>
-          After work, you’ll find me chipping away at small web projects,
-          bouldering, and brewing coffee.
-        </p>
-        <p data-animate="" style={{ "--stagger": "4" }}>
-          Some would say my design process is a little unorthodox, however this
-          is overshadowed by my eagnerness to build a positive impact on
-          products, services and communtiies.
-        </p>
+        <div className="flex flex-col gap-3" data-animate="" basic-stagger="1">
+          <p>
+            I’m a designer and technologist interested in design sprints, Lean
+            UX, agile, web technology, user/dev experience, education and open
+            source. I currently work as a service designer at{" "}
+            <Link href="https://designit.com">Designit</Link> and as an academic
+            tutor at{" "}
+            <span>
+              <Link href="https://sydney.edu.au">The University of Sydney</Link>
+            </span>
+            .
+          </p>
+          <p>
+            Previously, I’ve worked across public and private sector industries,
+            startups, local government councils, universities, utilities,
+            non-profits, community groups and the events industry. I started my
+            career in architecture.
+          </p>
+          <p>
+            After work, you’ll find me chipping away at small web projects,
+            bouldering, and brewing coffee.
+          </p>
+          <p>
+            Some would say my design process is a little unorthodox, however
+            this is overshadowed by my eagnerness to build a positive impact on
+            products, services and communtiies.
+          </p>
+        </div>
       </div>
 
       {/*Posts*/}
 
       <div
         data-animate=""
-        style={{ "--stagger": "5" }}
+        basic-stagger="2"
         className="grid grid-cols-1 gap-2 sm:grid-cols-3"
       >
         {[
@@ -144,21 +146,13 @@ export default function Home() {
           </div>
         ))}
       </div>
-      <div
-        data-animate=""
-        style={{ "--stagger": "6" }}
-        className="flex flex-col gap-4"
-      >
+      <div data-animate="" basic-stagger="3" className="flex flex-col gap-4">
         <h2>
           <em>Collaborators</em>
         </h2>
         <Collaborators />
       </div>
-      <div
-        data-animate=""
-        style={{ "--stagger": "8" }}
-        className="flex flex-col gap-4"
-      >
+      <div data-animate="" basic-stagger="4" className="flex flex-col gap-4">
         <h2>
           <em>Connect</em>
         </h2>

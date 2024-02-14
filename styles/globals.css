@@ -162,6 +162,26 @@
   --start: 0ms;
 }
 
+[basic-stagger="1"] {
+  --stagger: 1;
+}
+
+[basic-stagger="2"] {
+  --stagger: 2;
+}
+
+[basic-stagger="3"] {
+  --stagger: 3;
+}
+
+[basic-stagger="4"] {
+  --stagger: 4;
+}
+
+[basic-stagger="5"] {
+  --stagger: 5;
+}
+
 @media (prefers-reduced-motion: no-preference) {
   [data-animate] {
     animation: enter 0.6s both ease;
