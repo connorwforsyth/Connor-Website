@@ -4,6 +4,77 @@ import "../styles/icons.css";
 import { Collaborators } from "@/components/Collaborators";
 
 export default function Home() {
+  type ContentItem = {
+    href: string;
+    title: string;
+    description?: string;
+    external?: boolean;
+  };
+
+  type Content = {
+    title: string;
+    items: ContentItem[];
+  };
+  const contents: Content[] = [
+    {
+      title: "Building",
+      items: [
+        {
+          href: "#",
+          title: "Portfolio Readme",
+          description: "My approach to sharing work.",
+        },
+        {
+          href: "#",
+          title: "Craft",
+          description: "Small projects that help push my craft forward.",
+        },
+      ],
+    },
+    {
+      title: "Projects",
+      items: [
+        {
+          href: "https://makeitbydesignit.com",
+          title: "Makeit — by Designit",
+          description: "My approach to sharing work.",
+          external: true,
+        },
+        {
+          href: "https://tedxmelbourne.com",
+          title: "TEDxMelbourne",
+          description: "Small projects that help push my craft forward.",
+          external: true,
+        },
+        {
+          href: "https://melbournesoup.org",
+          title: "MelbourneSOUP",
+          description: "Small projects that help push my craft forward.",
+          external: true,
+        },
+      ],
+    },
+    {
+      title: "Writing",
+      items: [
+        {
+          href: "#",
+          title: "Good Judgement in Design",
+          description: "My approach to sharing work.",
+        },
+        {
+          href: "#",
+          title: "Figma file structure",
+          description: "How we approach figma structures.",
+        },
+        {
+          href: "#",
+          title: "All writing",
+        },
+      ],
+    },
+  ];
+
   return (
     <div className="flex flex-col gap-12">
       <div className="flex flex-col gap-3 dark:text-gray-300">
@@ -50,65 +121,7 @@ export default function Home() {
         basic-stagger="2"
         className="grid grid-cols-1 gap-2 sm:grid-cols-3"
       >
-        {[
-          {
-            title: "Building",
-            items: [
-              {
-                href: "#",
-                title: "Portfolio Readme",
-                description: "My approach to sharing work.",
-              },
-              {
-                href: "#",
-                title: "Craft",
-                description: "Small projects that help push my craft forward.",
-              },
-            ],
-          },
-          {
-            title: "Projects",
-            items: [
-              {
-                href: "https://makeitbydesignit.com",
-                title: "Makeit — by Designit",
-                description: "My approach to sharing work.",
-                external: true,
-              },
-              {
-                href: "https://tedxmelbourne.com",
-                title: "TEDxMelbourne",
-                description: "Small projects that help push my craft forward.",
-                external: true,
-              },
-              {
-                href: "https://melbournesoup.org",
-                title: "MelbourneSOUP",
-                description: "Small projects that help push my craft forward.",
-                external: true,
-              },
-            ],
-          },
-          {
-            title: "Writing",
-            items: [
-              {
-                href: "#",
-                title: "Good Judgement in Design",
-                description: "My approach to sharing work.",
-              },
-              {
-                href: "#",
-                title: "Figma file structure",
-                description: "How we approach figma structures.",
-              },
-              {
-                href: "#",
-                title: "All writing",
-              },
-            ],
-          },
-        ].map((column) => (
+        {contents.map((column) => (
           <div key={column.title} className="flex flex-col">
             <h2 className="pb-4 pt-6 sm:pb-8 sm:pt-0">
               <em>{column.title}</em>
