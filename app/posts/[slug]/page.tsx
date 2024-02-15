@@ -3,6 +3,7 @@ import { useMDXComponent } from "next-contentlayer/hooks";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { Collaborators } from "@/components/Collaborators";
+import Image from "next/image";
 
 export async function generateStaticParams() {
   return allPosts.map((post) => ({
@@ -10,20 +11,20 @@ export async function generateStaticParams() {
   }));
 }
 
-const components = {
-  Image,
-  Collaborators,
-};
+// const components = {
+//   Image,
+//   Collaborators,
+// };
 
-interface MdxProps {
-  code: string;
-}
+// interface MdxProps {
+//   code: string;
+// }
 
-export function Mdx({ code }: MdxProps) {
-  const Component = useMDXComponent(code);
+// export function Mdx({ code }: MdxProps) {
+//   const Component = useMDXComponent(code);
 
-  return <Component components={components} />;
-}
+//   return <Component components={components} />;
+// }
 
 export default async function Page({ params }: { params: { slug: string } }) {
   // Find the post for the current page.
@@ -33,7 +34,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
   if (!post) notFound();
 
   // Parse the MDX file via the useMDXComponent hook.
-  const MDXContent = useMDXComponent(post.body.html);
+  // const MDXContent = useMDXComponent(post.body.html);
 
   return (
     <div className="flex flex-col gap-8">
@@ -55,7 +56,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
         dangerouslySetInnerHTML={{ __html: post.body.html }}
       />
       {/* Some code ... */}
-      <MDXContent />
+      {/* <MDXContent /> */}
     </div>
   );
 }
