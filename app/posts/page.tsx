@@ -2,6 +2,8 @@ import { allPosts } from "@/.contentlayer/generated";
 import Link from "next/link";
 import { format } from "date-fns";
 
+type PostWithElement = { element: JSX.Element; date: string };
+
 export default function Writing() {
   return (
     <div className="flex flex-col gap-8">
@@ -27,13 +29,12 @@ export default function Writing() {
           .sort(
             (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
           )
-          .reduce<JSX.Element[]>((acc, post) => {
-            // Specify the type of the accumulator here
+          .reduce<PostWithElement[]>((acc, post) => {
             const year = new Date(post.date).getFullYear();
             const isFirstOfYear = !acc.find(
-              (p) => new Date(p.date).getFullYear() === year,
+              (item) => new Date(item.date).getFullYear() === year,
             );
-            acc.push(
+            const element = (
               <li key={post.title} className="flex w-full border-t">
                 {isFirstOfYear && <span className="w-24 p-3">{year}</span>}
                 {!isFirstOfYear && <span className=""></span>}
@@ -47,10 +48,12 @@ export default function Writing() {
                     {format(new Date(post.date), "dd/MM")}
                   </time>
                 </Link>
-              </li>,
+              </li>
             );
+            acc.push({ element, date: post.date });
             return acc;
-          }, [])}
+          }, [])
+          .map((item) => item.element)}
       </ol>
     </div>
   );
