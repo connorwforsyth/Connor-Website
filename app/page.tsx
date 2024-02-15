@@ -69,7 +69,7 @@ export default function Home() {
         },
         {
           title: "All writing",
-          href: "/writing",
+          href: "/posts",
         },
       ],
     },

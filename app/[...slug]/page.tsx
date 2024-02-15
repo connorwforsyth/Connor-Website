@@ -1,60 +1,31 @@
-import { notFound } from "next/navigation"
-import { Metadata } from "next"
-import { allPages } from "contentlayer/generated"
+import { format, parseISO } from "date-fns";
+import { allPosts } from "contentlayer/generated";
 
-import { Mdx } from "@/components/mdx-components"
+export const generateStaticParams = async () =>
+  allPosts.map((post) => ({ slug: post._raw.flattenedPath }));
 
-interface PageProps {
-  params: {
-    slug: string[]
-  }
-}
+export const generateMetadata = ({ params }: { params: { slug: string } }) => {
+  const post = allPosts.find((post) => post._raw.flattenedPath === params.slug);
+  if (!post) throw new Error(`Post not found for slug: ${params.slug}`);
+  return { title: post.title };
+};
 
-async function getPageFromParams(params: PageProps["params"]) {
-  const slug = params?.slug?.join("/")
-  const page = allPages.find((page) => page.slugAsParams === slug)
-
-  if (!page) {
-    null
-  }
-
-  return page
-}
-
-export async function generateMetadata({
-  params,
-}: PageProps): Promise<Metadata> {
-  const page = await getPageFromParams(params)
-
-  if (!page) {
-    return {}
-  }
-
-  return {
-    title: page.title,
-    description: page.description,
-  }
-}
-
-export async function generateStaticParams(): Promise<PageProps["params"][]> {
-  return allPages.map((page) => ({
-    slug: page.slugAsParams.split("/"),
-  }))
-}
-
-export default async function PagePage({ params }: PageProps) {
-  const page = await getPageFromParams(params)
-
-  if (!page) {
-    notFound()
-  }
+const PostLayout = ({ params }: { params: { slug: string } }) => {
+  const post = allPosts.find((post) => post._raw.flattenedPath === params.slug);
+  if (!post) throw new Error(`Post not found for slug: ${params.slug}`);
 
   return (
-    <article className="py-6 prose dark:prose-invert">
-      <h1>{page.title}</h1>
-      {page.description && <p className="text-xl">{page.description}</p>}
-      <hr />
-      <Mdx code={page.body.code} />
+    <article className="mx-auto max-w-xl py-8">
+      <div className="mb-8 text-center">
+        <time dateTime={post.date} className="mb-1 text-xs text-gray-600">
+          {format(parseISO(post.date), "LLLL d, yyyy")}
+        </time>
+        <h1 className="text-3xl font-bold">{post.title}</h1>
+      </div>
+      <div
+        className="[&>*:last-child]:mb-0 [&>*]:mb-3"
+        dangerouslySetInnerHTML={{ __html: post.body.html }}
+      />
     </article>
-  )
-}
+  );
+};

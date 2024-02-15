@@ -1,59 +1,63 @@
 import { defineDocumentType, makeSource } from "contentlayer/source-files";
 
-/** @type {import('contentlayer/source-files').ComputedFields} */
-const computedFields = {
-  slug: {
-    type: "string",
-    resolve: (doc) => `/${doc._raw.flattenedPath}`,
-  },
-  slugAsParams: {
-    type: "string",
-    resolve: (doc) => doc._raw.flattenedPath.split("/").slice(1).join("/"),
-  },
-};
+// export const Page = defineDocumentType(() => ({
+//   name: "page",
+//   filePathPattern: `**/*.mdx`,
+//   contentType: "mdx",
+//   fields: {
+//     title: {
+//       type: "string",
+//       required: true,
+//     },
+//     description: {
+//       type: "string",
+//     },
+//   },
+// }));
 
-export const Page = defineDocumentType(() => ({
-  name: "Page",
-  filePathPattern: `pages/**/*.mdx`,
-  contentType: "mdx",
-  fields: {
-    title: {
-      type: "string",
-      required: true,
-    },
-    description: {
-      type: "string",
-    },
-  },
-  computedFields,
-}));
+// export const Writing = defineDocumentType(() => ({
+//   name: "writing",
+//   filePathPattern: `**/writing/*.mdx`,
+//   contentType: "mdx",
+//   fields: {
+//     title: {
+//       type: "string",
+//       required: true,
+//     },
+//     description: {
+//       type: "string",
+//     },
+//     date: {
+//       type: "date",
+//       required: true,
+//     },
+//   },
+//   computedFields: {
+//     url: {
+//       type: "string",
+//       resolve: (writing) => `content/writing/${writing._raw.flattenedPath}`,
+//     },
+//   },
+// }));
 
-export const Writing = defineDocumentType(() => ({
-  name: "Writing",
-  filePathPattern: `writing/**/*.mdx`,
-  contentType: "mdx",
+export const Post = defineDocumentType(() => ({
+  name: "Post",
+  filePathPattern: `**/*.mdx`,
   fields: {
-    title: {
-      type: "string",
-      required: true,
-    },
-    description: {
-      type: "string",
-    },
-    date: {
-      type: "date",
-      required: true,
-    },
+    title: { type: "string", required: true },
+    description: { type: "string", required: true },
+    date: { type: "string", required: true },
   },
   computedFields: {
     url: {
       type: "string",
-      resolve: (writing) => `/writing/${writing._raw.flattenedPath}`,
+      resolve: (post) => `/posts/${post._raw.flattenedPath}`,
     },
   },
 }));
 
 export default makeSource({
-  contentDirPath: "./content",
-  documentTypes: [Writing, Page],
+  documentTypes: [Post],
+  contentDirPath: "posts",
+  // contentDirExclude: ["internal-docs"],
 });

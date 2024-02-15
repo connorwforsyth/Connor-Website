@@ -127,11 +127,24 @@
     width: 100%;
   }
 }
+
+a:hover > [basics-css-icon] {
+  @apply text-stone-400 transition-all;
+}
+
+[basic-list] {
+  @apply transition-all hover:text-gray-500;
+}
+
+[basic-list]:hover [basic-list-item] {
+  @apply hover:text-black dark:hover:text-white;
+}
+
 [basics-css-icon] {
   color: black;
   --OFF: initial;
   --ON: ;
-  --size: 1.125em;
+  --size: 1em;
   display: inline-block;
   height: var(--size);
   width: var(--size);
