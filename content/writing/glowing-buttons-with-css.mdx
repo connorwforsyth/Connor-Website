@@ -1,0 +1,97 @@
+---
+title: CSS Glowing buttons
+description:
+date: 2023-11-10
+---
+Occassionally you come across a button or UI element on a website and I desparately want to learn how it's built. Here's my take on the popular glowing button.
+
+The selected code is written in JSX, which is a syntax extension for JavaScript, commonly used with React to describe what the UI should look like.
+The code consists of a `div` container that holds a button with several styling properties and classes. The button contains two `div` elements and a `span` element.
+
+<UIWrapper>
+<Button/>
+</UIWrapper>
+
+This year, I'm aiming to experiment regularly to improve my ui development skills. 
+
+
+```tsx
+export function Button(){
+    return (
+        <div>
+        <style jsx>{`
+            @keyframes spin {
+                to {
+                    transform: rotate(360deg);
+                }
+            }
+            .spin-slow {
+                animation: spin 4s linear infinite;
+            }
+            .badge-border {
+                background-image: conic-gradient(
+                    from 45deg at 50% 50%,
+                    #194b3a,
+                    #26d97f66,
+                    #194b3a,
+                    #194b3a,
+                    #194b3a,
+                    #26d97f,
+                    #194b3a,
+                    #194b3a,
+                    #194b3a
+                );
+            }
+        `}</style>
+        <button className="flex relative overflow-hidden text-green-300 rounded-full p-[2px] font-medium">
+            <div className="py-0.5 px-2 relative bg-green-950 rounded-full z-10">
+                <span className="relative z-20">New Button Span</span>
+                <div className="absolute -inset-32  opacity-10 badge-border rounded-full z-10"/>
+            </div>
+            <div className="spin-slow -inset-20 badge-border absolute rounded-full z-5"/>
+        </button>
+        </div>
+    )
+}
+```
+{/* Components below */}
+
+
+
+export function Button(){
+    return (
+        <div>
+        <style jsx>{`
+            @keyframes spin {
+                to {
+                    transform: rotate(360deg);
+                }
+            }
+            .spin-slow {
+                animation: spin 4s linear infinite;
+            }
+            .badge-border {
+                background-image: conic-gradient(
+                    from 45deg at 50% 50%,
+                    #194b3a,
+                    #26d97f66,
+                    #194b3a,
+                    #194b3a,
+                    #194b3a,
+                    #26d97f,
+                    #194b3a,
+                    #194b3a,
+                    #194b3a
+                );
+            }
+        `}</style>
+        <button className="flex relative overflow-hidden text-green-300 rounded-full p-[2px] font-medium">
+            <div className="py-0.5 px-2 relative bg-green-950 rounded-full z-10">
+                <span className="relative z-20">New Button Span</span>
+                <div className="absolute -inset-32  opacity-10 badge-border rounded-full z-10"/>
+            </div>
+            <div className="spin-slow -inset-20 badge-border absolute rounded-full z-5"/>
+        </button>
+        </div>
+    )
+}

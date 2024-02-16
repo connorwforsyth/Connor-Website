@@ -78,10 +78,30 @@
     --text-highlight: white;
   }
 
-  * {
-    @apply box-border border-border;
-    scrollbar-width: thin;
+  *::-webkit-scrollbar {
+    width: thin;
   }
+
+  *::-webkit-scrollbar-thumb {
+    background-color: hsla(0, 0%, 100%, 0.5), none;
+  }
+
+  *::-webkit-scrollbar-track {
+    background: none;
+  }
+
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: hsla(0, 0%, 100%, 0.5) none;
+  }
+
+  * {
+    -ms-overflow-style: none;
+  }
+  .scrollbar-none {
+    scrollbar-width: none;
+  }
+
   body {
     @apply bg-background text-foreground;
   }
@@ -99,11 +119,15 @@
   }
 
   p a {
-    @apply box-shadow-small hover:box-shadow-full text-gray-900 dark:text-gray-200;
+    @apply box-shadow-small hover:box-shadow-full font-medium text-gray-900 underline-offset-4 dark:text-gray-200;
+  }
+
+  table a {
+    @apply box-shadow-small hover:box-shadow-full font-medium text-gray-900 underline-offset-4 dark:text-gray-200;
   }
 
   [basics-link] {
-    @apply box-shadow-small hover:box-shadow-full text-gray-900  dark:text-gray-200;
+    @apply box-shadow-small hover:box-shadow-full font-medium text-gray-900 underline-offset-4 dark:text-gray-200;
   }
 
   .blur {
@@ -132,6 +156,7 @@ a:hover > [basics-css-icon] {
   @apply text-stone-400 transition-all;
 }
 
+/* This is for the writing menu */
 [basic-list] {
   @apply transition-all hover:text-gray-500;
 }
