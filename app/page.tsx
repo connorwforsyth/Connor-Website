@@ -24,11 +24,6 @@ export default function Home() {
           description: "My approach to sharing work.",
           href: "/readme",
         },
-        {
-          title: "Craft",
-          description: "Small projects that help push my craft forward.",
-          href: "#",
-        },
       ],
     },
     {
@@ -65,18 +60,18 @@ export default function Home() {
         {
           title: "Figma file structure",
           description: "How we approach figma structures.",
-          href: "#",
+          href: "/writing/figma-file-structure",
         },
         {
           title: "All writing",
-          href: "/posts",
+          href: "/writing",
         },
       ],
     },
   ];
 
   return (
-    <div className="flex flex-col gap-12">
+    <div className="mx-auto flex w-full max-w-2xl flex-col gap-12">
       <div className="flex flex-col gap-3 dark:text-gray-300">
         <h1
           data-animate=""
@@ -163,9 +158,6 @@ export default function Home() {
         ))}
       </div>
       <div data-animate="" basic-stagger="3" className="flex flex-col gap-4">
-        <h2>
-          <em>Collaborators</em>
-        </h2>
         <Collaborators />
       </div>
       <div data-animate="" basic-stagger="4" className="flex flex-col gap-4">
