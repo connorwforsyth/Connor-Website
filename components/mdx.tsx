@@ -37,7 +37,7 @@ const components = {
         borderBottomRightRadius: "1.2rem 1rem",
       }}
     >
-      <h5 className="flex-grow p-2">{title}</h5>
+      <p className="flex-grow p-2">{title}</p>
       <Link
         href={href}
         target="_blank"
@@ -73,7 +73,12 @@ const components = {
     size,
     ImgClassName,
     ...otherProps
-  }: React.ImgHTMLAttributes<HTMLImageElement> & { size: string }) => (
+  }: React.ImgHTMLAttributes<HTMLImageElement> & {
+    size: string;
+    alt: string;
+    ImgClassName: string;
+    src: string;
+  }) => (
     <div
       className={cn(
         "mx-auto mb-6 flex aspect-[3/2] w-full items-center overflow-clip rounded-md border p-36 dark:bg-zinc-900",
@@ -95,19 +100,20 @@ const components = {
     className,
     alt,
     src,
-    ...props
-  }: React.ImgHTMLAttributes<HTMLImageElement>) => {
-    // Correct the src path
-    const imagePath = src.startsWith("/") ? src : `/${src}`;
+  }: React.ImgHTMLAttributes<HTMLImageElement> & {
+    src: string;
+    alt: string;
+    width: number;
+    height: number;
+  }) => {
     return (
       <Image
-        className={cn("", className)}
-        src={imagePath}
+        className={cn(className)}
+        src={src}
         alt={alt}
         width={1}
         height={1}
         layout="responsive"
-        {...props}
       />
     );
   },
@@ -203,7 +209,7 @@ const components = {
   ),
   hr: ({ ...props }) => <hr className="my-4 md:my-8" {...props} />,
   table: ({ className, ...props }: React.HTMLAttributes<HTMLTableElement>) => (
-    <div className="{ mx-auto my-6 w-full max-w-2xl overflow-y-auto">
+    <div className="mx-auto my-6 w-full max-w-2xl overflow-y-auto">
       <table
         style={{ tableLayout: "fixed" }}
         className={cn("w-full", className)}
