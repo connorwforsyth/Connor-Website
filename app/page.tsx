@@ -1,4 +1,3 @@
-import { allPosts } from "@/.contentlayer/generated";
 import Link from "next/link";
 import "../styles/icons.css";
 import { Collaborators } from "@/components/Collaborators";
