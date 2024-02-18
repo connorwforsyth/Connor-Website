@@ -36,6 +36,10 @@ export const Writing = defineDocumentType(() => ({
       type: "boolean",
       default: true,
     },
+    protected: {
+      type: "boolean",
+      default: false,
+    },
   },
   computedFields,
 }));
