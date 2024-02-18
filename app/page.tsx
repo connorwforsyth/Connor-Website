@@ -53,7 +53,7 @@ export default function Home() {
       items: [
         {
           title: "Good Judgement in Design",
-          description: "My approach to sharing work.",
+          description: "How designers can tap into intuition.",
           href: "/writing/designing-with-good-judgement",
         },
         {
@@ -63,6 +63,7 @@ export default function Home() {
         },
         {
           title: "All writing",
+          description: "All ",
           href: "/writing",
         },
       ],

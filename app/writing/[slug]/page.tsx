@@ -27,41 +27,49 @@ const page = async ({ params }: PageProps) => {
     getKindeServerSession();
 
   const user = getUser();
+
+  const Header = () => {
+    return (
+      <>
+        <BackButton label="Writing" />
+        <div className="mx-auto mb-3 w-full max-w-2xl text-stone-500">
+          <h1 className="inline-block font-medium text-stone-950 dark:text-stone-100">
+            {doc.title}{" "}
+          </h1>{" "}
+          / {format(new Date(doc.date), "EEE dd MMM yyyy")}
+        </div>
+      </>
+    );
+  };
   if (doc.protected === true)
     if (!(await isAuthenticated()))
       //check if they're sign in
       return (
-        <div className="mx-auto w-full max-w-2xl">
-          <BackButton label="All Writing" />
-          <div className="mb-3 text-stone-500">
-            <h1 className="inline-block font-medium text-stone-950">
-              {doc.title}{" "}
-            </h1>{" "}
-            / {format(new Date(doc.date), "EEE dd MMM yyyy")}
-          </div>
+        <>
+          <Header />
           <p className="mb-3">{doc.description}</p>
           <p>
             This is a protected route, please{" "}
             <LoginLink className="">login</LoginLink> or{" "}
             <RegisterLink>sign up</RegisterLink> to get access.
           </p>
-        </div>
+        </>
       );
     else if ((await getPermission("approved:true")).isGranted)
       return (
-        <div className="relative">
-          <BackButton label="All Writing" />
+        <>
+          <Header />
           <p className="mx-auto w-full max-w-2xl">
             Hey {(await user).given_name} 👋 — This is a protected page, please
             keep it confidential.
           </p>
           <Mdx code={doc.body.code} />
-        </div>
+        </>
       );
     else
       return (
-        <div className="relative">
-          <BackButton label="All Writing" />
+        <>
+          <Header />
           <p className="mx-auto mb-3 w-full max-w-2xl">
             Hey {(await user).given_name} 👋 — Thanks for requesting access.
           </p>
@@ -73,14 +81,14 @@ const page = async ({ params }: PageProps) => {
             </span>
             <Link href="https://Linkedin.com/in/connorwforsyth">LinkedIn</Link>.
           </p>
-        </div>
+        </>
       );
   else
     return (
-      <div className="relative">
-        <BackButton label="All Writing" />
+      <>
+        <Header />
         <Mdx code={doc.body.code} />
-      </div>
+      </>
     );
 };
 

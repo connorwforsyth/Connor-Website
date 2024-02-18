@@ -150,7 +150,7 @@
 }
 
 a:hover > [basics-css-icon] {
-  @apply text-stone-400 transition-all;
+  @apply text-black transition-all dark:text-white;
 }
 
 /* This is for the writing menu */
@@ -163,26 +163,18 @@ a:hover > [basics-css-icon] {
 }
 
 [basics-css-icon] {
-  color: black;
   --OFF: initial;
   --ON: ;
   --size: 1em;
-  display: inline-block;
   height: var(--size);
   width: var(--size);
   vertical-align: text-top;
-
-  --mask: var(--ON);
-  --icon: var(--mask, var(--icon));
+  color: red;
+  --icon: var(--icon);
   display: inline-block;
-  -webkit-mask: var(--mask, invalid) var(--icon);
-  mask: var(--mask, invalid) var(--icon);
-  -webkit-mask-repeat: no-repeat;
-  mask-repeat: no-repeat;
-  -webkit-mask-size: 100% 100%;
+  -webkit-mask: var(--icon);
   mask-size: 100% 100%;
-  background-color: var(--mask, invalid) currentColor;
-  background-repeat: no-repeat;
+  background-color: currentColor;
   background-size: 100% 100%;
 }
 .dark {
