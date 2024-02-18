@@ -54,7 +54,7 @@ export default function Home() {
         {
           title: "Good Judgement in Design",
           description: "My approach to sharing work.",
-          href: "",
+          href: "/writing/designing-with-good-judgement",
         },
         {
           title: "Figma file structure",
