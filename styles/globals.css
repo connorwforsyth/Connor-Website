@@ -73,7 +73,7 @@
     --text-highlight: white;
   }
   .dark {
-    --highlight-light: #7887bc;
+    --highlight-light: #0033ff;
     --highlight: #0033ff;
     --text-highlight: white;
   }
@@ -95,9 +95,6 @@
     scrollbar-color: hsla(0, 0%, 100%, 0.5) none;
   }
 
-  * {
-    -ms-overflow-style: none;
-  }
   .scrollbar-none {
     scrollbar-width: none;
   }
@@ -119,15 +116,15 @@
   }
 
   p a {
-    @apply box-shadow-small hover:box-shadow-full font-medium text-gray-900 underline-offset-4 dark:text-gray-200;
+    @apply box-shadow-small hover:box-shadow-full font-medium text-stone-900 underline-offset-4 dark:text-stone-200;
   }
 
   table a {
-    @apply box-shadow-small hover:box-shadow-full font-medium text-gray-900 underline-offset-4 dark:text-gray-200;
+    @apply box-shadow-small hover:box-shadow-full font-medium text-stone-900 underline-offset-4 dark:text-stone-200;
   }
 
   [basics-link] {
-    @apply box-shadow-small hover:box-shadow-full font-medium text-gray-900 underline-offset-4 dark:text-gray-200;
+    @apply box-shadow-small hover:box-shadow-full font-medium text-stone-900 underline-offset-4 dark:text-stone-200;
   }
 
   .blur {
@@ -140,7 +137,7 @@
     backdrop-filter: blur(4px);
     position: fixed;
     pointer-events: none;
-    height: 88px;
+    height: 64px;
     opacity: 0.95;
     z-index: 1;
     mask-image: linear-gradient(
@@ -158,7 +155,7 @@ a:hover > [basics-css-icon] {
 
 /* This is for the writing menu */
 [basic-list] {
-  @apply transition-all hover:text-gray-500;
+  @apply transition-all hover:text-stone-500;
 }
 
 [basic-list]:hover [basic-list-item] {
