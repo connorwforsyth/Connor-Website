@@ -81,13 +81,13 @@ const components = {
   }) => (
     <div
       className={cn(
-        "mx-auto mb-6 flex aspect-[3/2] w-full items-center overflow-clip rounded-md border p-36 dark:bg-zinc-900",
+        "z-5 relative mx-auto mb-6 flex aspect-[3/2] w-full items-center overflow-clip rounded-md border p-36 dark:bg-zinc-900",
         className,
       )}
       {...otherProps} // Spread the rest of the props without className
     >
       <Image
-        className={cn("", ImgClassName)}
+        className={cn("z-5", ImgClassName)}
         alt={alt}
         src={src}
         width={1}
@@ -108,7 +108,7 @@ const components = {
   }) => {
     return (
       <Image
-        className={cn(className)}
+        className={cn("z-5 relative", className)}
         src={src}
         alt={alt}
         width={1}
