@@ -1,5 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
+import * as Tooltip from "@radix-ui/react-tooltip";
 
 export default function Offline() {
   const [isOffline, setIsOffline] = useState(false);
@@ -36,9 +37,24 @@ export default function Offline() {
             border-radius: 0.6rem;
           }
         `}</style>
-        <div className="br fixed right-3 top-3 z-10 rounded-lg border bg-white bg-opacity-50 px-1.5 text-sm text-stone-500 dark:bg-stone-900 dark:text-current">
-          Offline
-        </div>
+        <Tooltip.Provider>
+          <Tooltip.Root>
+            <Tooltip.Trigger asChild>
+              <div className="br fixed right-3 top-3 z-10 rounded-lg border bg-white bg-opacity-50 px-1.5 text-sm text-stone-500 dark:bg-stone-900 dark:text-current">
+                Offline
+              </div>
+            </Tooltip.Trigger>
+            <Tooltip.Portal>
+              <Tooltip.Content
+                sideOffset={1}
+                className="data-[state=delayed-open]:data-[side=top]:animate-slideDownAndFade data-[state=delayed-open]:data-[side=right]:animate-slideLeftAndFade data-[state=delayed-open]:data-[side=left]:animate-slideRightAndFade data-[state=delayed-open]:data-[side=bottom]:animate-slideUpAndFade z-10 mr-3 select-none rounded-lg bg-stone-200 px-2 py-1 text-sm leading-none text-black shadow-md will-change-[transform,opacity]"
+              >
+                <Tooltip.Arrow className="fill-stone-200" />
+                Your device is offline
+              </Tooltip.Content>
+            </Tooltip.Portal>
+          </Tooltip.Root>
+        </Tooltip.Provider>
       </>
     );
   }

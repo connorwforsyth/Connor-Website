@@ -8,13 +8,13 @@ export default function Footer() {
         Last Visit: <span>Location</span>
         <div className="flex-grow"></div>
       </div> */}
-      <div className="flex max-w-2xl flex-grow p-3 align-baseline">
+      <div className="mx-auto flex w-full max-w-2xl p-3 align-baseline">
         <div className="flex h-full p-1">
           <span className="translate-y-[-1px] text-[1rem]">☺ </span> Connor
           Forsyth {year}
         </div>
         <div className="relative flex flex-grow">
-          <div className="sm:flex-grow"></div>
+          <div className="flex-grow"></div>
           <div className="flex-shrink">
             <ModeToggle />
           </div>
