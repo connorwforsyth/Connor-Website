@@ -67,7 +67,7 @@ const page = async ({ params }: PageProps) => {
           </p>
           <p className="mx-auto w-full max-w-2xl">
             I have to manually approve your access, you will recieve an email
-            from me once it's granted. Until then, you can give me a{" "}
+            from me once it{"'"}s granted. Until then, you can give me a{" "}
             <span>
               <Nudge /> on{" "}
             </span>
