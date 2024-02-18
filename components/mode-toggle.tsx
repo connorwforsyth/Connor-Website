@@ -22,7 +22,7 @@ const ThemeSelectItem: FC<{ readonly value: string }> = ({ value }) => {
   const Icon = themeIcons[value];
 
   return (
-    <SelectItem value={value} key={value}>
+    <SelectItem value={value} className="" key={value}>
       <div className="flex items-center gap-2">
         <Icon className="h-4 w-4" />
         {value.charAt(0).toUpperCase() + value.slice(1)}
@@ -45,7 +45,7 @@ export const ModeToggle: FC = () => {
 
   return (
     <Select value={theme} onValueChange={setTheme}>
-      <SelectTrigger className="gap-2 border hover:border-white focus:bg-accent dark:border-zinc-700">
+      <SelectTrigger className="gap-2 border hover:border-black focus:bg-accent dark:border-stone-700 dark:hover:border-white">
         <SelectValue placeholder="Theme" />
       </SelectTrigger>
       <SelectContent>

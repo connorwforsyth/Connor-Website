@@ -5,6 +5,7 @@ import { Providers } from "@/components/theme-provider";
 import { Analytics } from "@/components/analytics";
 import Texture from "@/components/BackgroundTexture";
 import Footer from "@/components/Footer";
+import Offline from "@/components/Offline";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -21,6 +22,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <html lang="en">
       <body className={`relative antialiased ${inter.className}`}>
+        <Offline />
         <div className="blur"></div>
         <Texture />
         <div

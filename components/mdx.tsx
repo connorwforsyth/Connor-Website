@@ -129,7 +129,7 @@ const components = {
   h2: ({ className, ...props }) => (
     <h2
       className={cn(
-        "mx-auto  mt-10 max-w-2xl scroll-m-20 pb-1 text-3xl font-semibold tracking-tight first:mt-0",
+        "mx-auto  mt-10 max-w-2xl scroll-m-20 pb-1 text-3xl font-semibold tracking-[-0.015rem] first:mt-0",
         className,
       )}
       {...props}
@@ -138,7 +138,7 @@ const components = {
   h3: ({ className, ...props }) => (
     <h3
       className={cn(
-        "mx-auto  mt-8 max-w-2xl scroll-m-20 text-2xl font-semibold tracking-tight",
+        "tracking  mx-auto mt-8 max-w-2xl scroll-m-20 text-2xl font-semibold",
         className,
       )}
       {...props}
@@ -209,7 +209,7 @@ const components = {
   ),
   hr: ({ ...props }) => <hr className="my-4 md:my-8" {...props} />,
   table: ({ className, ...props }: React.HTMLAttributes<HTMLTableElement>) => (
-    <div className="mx-auto my-6 w-full max-w-2xl overflow-y-auto">
+    <div className=" mx-auto my-6 w-full max-w-2xl overflow-y-auto">
       <table
         style={{ tableLayout: "fixed" }}
         className={cn("w-full", className)}
