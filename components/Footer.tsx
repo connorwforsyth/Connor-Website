@@ -10,8 +10,10 @@ export default function Footer() {
       </div> */}
       <div className="mx-auto flex w-full max-w-2xl p-3 align-baseline">
         <div className="flex h-full p-1">
-          <span className="translate-y-[-1px] text-[1rem]">☺ </span> Connor
-          Forsyth {year}
+          <span className="translate-y-[-2px] pr-1 font-mono text-[1rem]">
+            ☺{" "}
+          </span>{" "}
+          Connor Forsyth {year}
         </div>
         <div className="relative flex flex-grow">
           <div className="flex-grow"></div>

@@ -2,17 +2,17 @@ import Link from "next/link";
 
 export default function BackButton({ label }: { label: string }) {
   return (
-    <div className="font-rodney mx-auto mb-8 w-full max-w-2xl md:mb-[2px] md:max-w-6xl">
+    <div className="mx-auto mb-8 w-full max-w-2xl font-rodney md:mb-[2px] md:max-w-6xl">
       <div className="flex">
         <Link
           href="./"
-          className="z-1 align-center flex items-center gap-0.5 rounded-full border bg-zinc-50 px-2 py-1 text-sm  decoration-zinc-500 transition-all hover:decoration-black  hover:shadow-md dark:bg-transparent md:fixed"
+          className="z-1 align-center flex items-center gap-0.5 rounded-full border border-zinc-300 px-2 py-1 text-sm transition-all hover:border-zinc-500 hover:shadow-md dark:border-zinc-500 dark:hover:border-zinc-50 md:fixed"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 20 20"
             fill="currentColor"
-            className="h-3 w-3 translate-y-[-0px] scale-x-[-1]"
+            className="h-3 w-3 scale-x-[-1]"
           >
             <path
               fillRule="evenodd"
@@ -20,7 +20,7 @@ export default function BackButton({ label }: { label: string }) {
               clipRule="evenodd"
             />
           </svg>
-          <span className="px-1">{label}</span>
+          <span className="translate-y-[-1px] px-1">{label}</span>
         </Link>
       </div>
     </div>

@@ -114,7 +114,7 @@ export default function Home() {
       <div
         data-animate=""
         basic-stagger="2"
-        className="grid grid-cols-1 gap-2 sm:grid-cols-3"
+        className="grid grid-cols-1 gap-3 sm:grid-cols-3"
       >
         {contents.map((column) => (
           <div key={column.title} className="flex flex-col">
@@ -154,7 +154,7 @@ export default function Home() {
                       </Link>
                     </span>
                   )}
-                  <p className="text-gray-600 dark:text-gray-400">
+                  <p className="text-zinc-600 dark:text-zinc-300">
                     {item.description}
                   </p>
                 </div>

@@ -7,35 +7,35 @@ import Footer from "@/components/Footer";
 import Offline from "@/components/Offline";
 import localFont from "next/font/local";
 
-const KAG300 = localFont({
-  src: [
-    {
-      path: "./fonts/KynetonArtGrotesqueVF.ttf",
-      weight: "275",
-      style: "normal",
-    },
-  ],
-  display: "swap",
-  variable: "--kag-300",
-});
+// const KAG300 = localFont({
+//   src: [
+//     {
+//       path: "./fonts/KynetonArtGrotesqueVF.ttf",
+//       weight: "275",
+//       style: "normal",
+//     },
+//   ],
+//   display: "swap",
+//   variable: "--kag-300",
+// });
 
-const KAG500 = localFont({
-  src: [
-    {
-      path: "./fonts/KynetonArtGrotesqueVF.ttf",
-      weight: "500",
-      style: "normal",
-    },
-  ],
-  display: "swap",
-  variable: "--kag-500",
-});
+// const KAG500 = localFont({
+//   src: [
+//     {
+//       path: "./fonts/KynetonArtGrotesqueVF.ttf",
+//       weight: "500",
+//       style: "normal",
+//     },
+//   ],
+//   display: "swap",
+//   variable: "--kag-500",
+// });
 
-const RodneyLight = localFont({
-  src: "./fonts/Rodney-LightItalic.woff",
-  display: "swap",
-  variable: "--font-rodney-light",
-});
+// const RodneyLight = localFont({
+//   src: "./fonts/Rodney-LightItalic.woff",
+//   display: "swap",
+//   variable: "--font-rodney-light",
+// });
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 
@@ -51,9 +51,23 @@ interface RootLayoutProps {
 export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <html lang="en">
-      <body
-        className={`relative antialiased  ${RodneyLight.variable} ${inter.className} ${KAG500.variable}`}
-      >
+      <head>
+        <link
+          rel="preload"
+          href="/fonts/KynetonArtGrotesqueVF.ttf"
+          as="font"
+          type="font/woff2"
+          crossOrigin="anonymous"
+        />
+        <link
+          rel="preload"
+          href="/fonts/Rodney-LightItalic.woff"
+          as="font"
+          type="font/woff2"
+          crossOrigin="anonymous"
+        />
+      </head>
+      <body className={`relative bg-zinc-100 antialiased dark:bg-zinc-900`}>
         <Offline />
         <div className="blur"></div>
         <Texture />

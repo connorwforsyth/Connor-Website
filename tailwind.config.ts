@@ -19,12 +19,7 @@ const config = {
       },
     },
     extend: {
-      fontFamily: {
-        rodney: ["var(--font-rodney-light)"],
-        kag: ["var(--kag)"],
-        medium: ["var(--kag-500)"],
-        inter: ["var(--font-inter)"],
-      },
+      fontFamily: {},
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
