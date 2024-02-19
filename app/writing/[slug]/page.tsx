@@ -59,11 +59,13 @@ const page = async ({ params }: PageProps) => {
       return (
         <>
           <Header />
-          <p className="mx-auto w-full max-w-2xl">
+          <p className="mx-auto mb-3 w-full max-w-2xl">
             Hey {(await user).given_name} 👋 — This is a protected page, please
             keep it confidential.
           </p>
+          <p className="mx-auto mb-3 w-full max-w-2xl">{doc.protectedIntro}</p>
           <Mdx code={doc.body.code} />
+          <p className="mx-auto w-full max-w-2xl">{doc.protectedEnd}</p>
         </>
       );
     else

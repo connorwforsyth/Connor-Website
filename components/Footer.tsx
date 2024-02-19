@@ -3,7 +3,7 @@ export default function Footer() {
   const date = new Date();
   let year = date.getFullYear();
   return (
-    <footer className="border-t border-stone-300 border-opacity-50 text-sm text-stone-700 dark:text-stone-400 ">
+    <footer className="border-t border-zinc-300 border-opacity-50 text-sm text-zinc-700 dark:text-zinc-400 ">
       {/* <div className="flex flex-grow">
         Last Visit: <span>Location</span>
         <div className="flex-grow"></div>

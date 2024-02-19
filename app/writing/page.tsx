@@ -11,7 +11,7 @@ export default function Writing() {
       <div></div>
       <BackButton label="Index" />
       <div className="mx-auto flex w-full max-w-2xl flex-col gap-8">
-        <h1>Writing</h1>
+        <h1 className="font-medium">Writing</h1>
 
         <ol basic-list="" className="border-b">
           {allDocuments

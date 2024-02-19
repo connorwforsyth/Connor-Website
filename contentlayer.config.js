@@ -30,7 +30,7 @@ export const Writing = defineDocumentType(() => ({
     },
     date: {
       type: "string",
-      default: "20-6-4",
+      default: "2022-6-4",
     },
     published: {
       type: "boolean",
@@ -39,6 +39,12 @@ export const Writing = defineDocumentType(() => ({
     protected: {
       type: "boolean",
       default: false,
+    },
+    protectedIntro: {
+      type: "string",
+    },
+    protectedEnd: {
+      type: "string",
     },
   },
   computedFields,

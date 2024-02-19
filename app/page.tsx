@@ -125,7 +125,7 @@ export default function Home() {
               {column.items.map((item) => (
                 <div className="sm:h-24" key={item.title}>
                   {item.external ? (
-                    <span className="">
+                    <span className="flex">
                       <Link
                         basics-link=""
                         href={item.href}
@@ -134,12 +134,18 @@ export default function Home() {
                       >
                         {item.title}
                       </Link>
-                      <span
-                        basics-css-icon=""
-                        data-icon="arrow-up-right"
-                        role="img"
-                        aria-label="arrow-up-right icon"
-                      ></span>
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 16 16"
+                        fill=""
+                        className="h-4 w-4 fill-stone-500"
+                      >
+                        <path
+                          fillRule="evenodd"
+                          d="M4.22 11.78a.75.75 0 0 1 0-1.06L9.44 5.5H5.75a.75.75 0 0 1 0-1.5h5.5a.75.75 0 0 1 .75.75v5.5a.75.75 0 0 1-1.5 0V6.56l-5.22 5.22a.75.75 0 0 1-1.06 0Z"
+                          clipRule="evenodd"
+                        />
+                      </svg>
                     </span>
                   ) : (
                     <span className="">
