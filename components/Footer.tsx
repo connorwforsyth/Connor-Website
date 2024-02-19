@@ -16,7 +16,7 @@ export default function Footer() {
             viewBox="0 0 24 24"
             strokeWidth={1.8}
             stroke="currentColor"
-            className="my-auto inline h-4 w-3 pb-[2.5px]"
+            className="my-auto inline h-4 w-3 pb-[2.2px]"
           >
             <path
               strokeLinecap="round"
