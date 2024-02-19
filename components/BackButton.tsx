@@ -2,11 +2,11 @@ import Link from "next/link";
 
 export default function BackButton({ label }: { label: string }) {
   return (
-    <div className="mx-auto mb-8 w-full max-w-2xl font-rodney md:mb-[2px] md:max-w-6xl">
+    <div className="mx-auto mb-8 w-full max-w-2xl font-rodney lg:mb-[2px] lg:max-w-5xl">
       <div className="flex">
         <Link
           href="./"
-          className="z-1 align-center flex items-center gap-0.5 rounded-full border border-zinc-300 px-2 py-1 text-sm transition-all hover:border-zinc-500 hover:shadow-md dark:border-zinc-500 dark:hover:border-zinc-50 md:fixed"
+          className="z-1 align-center flex items-center gap-0.5 rounded-full border border-zinc-300 px-2 py-1 text-sm transition-all hover:border-zinc-500 hover:shadow-md dark:border-zinc-500 dark:hover:border-zinc-50 lg:fixed"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
