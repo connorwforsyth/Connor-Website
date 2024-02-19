@@ -2,6 +2,41 @@
 @tailwind components;
 @tailwind utilities;
 
+@font-face {
+  font-family: "kag";
+  src: url(/fonts/KynetonArtGrotesqueVF.ttf) format("woff2");
+  font-weight: 100, 200, 300, 400, 500, 600, 700, 800, 900;
+  font-style: light, medium, italic, bold, bold-italic;
+  font-display: optional;
+}
+
+@font-face {
+  font-family: "rodney-light";
+  src: url(/fonts/Rodney-LightItalic.woff) format("woff2");
+  font-weight: 300;
+  font-style: italic;
+  font-display: optional;
+}
+
+body {
+  font-weight: 300;
+  font-family:
+    kag,
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Roboto,
+    "Helvetica Neue",
+    Arial,
+    "Noto Sans",
+    sans-serif,
+    "Apple Color Emoji",
+    "Segoe UI Emoji",
+    "Segoe UI Symbol",
+    "Noto Color Emoji";
+}
+
 @layer base {
   :root {
     @media (min-width: 600px) {
@@ -102,7 +137,26 @@
   }
 
   em {
-    @apply font-rodney;
+    font-family:
+      rodney-light,
+      system-ui,
+      -apple-system,
+      BlinkMacSystemFont,
+      "Segoe UI",
+      Roboto,
+      "Helvetica Neue",
+      Arial,
+      "Noto Sans",
+      sans-serif,
+      "Apple Color Emoji",
+      "Segoe UI Emoji",
+      "Segoe UI Symbol",
+      "Noto Color Emoji";
+  }
+
+  .font-rodney {
+    font-family: rodney-light, serif;
+    font-style: italic;
   }
 
   body {
@@ -122,15 +176,15 @@
   }
 
   p a {
-    @apply box-shadow-small hover:box-shadow-full font-kag font-medium text-stone-900 underline-offset-4 dark:text-stone-200;
+    @apply box-shadow-small hover:box-shadow-full  font-[450] text-stone-900 underline-offset-4 dark:text-stone-200;
   }
 
   table a {
-    @apply box-shadow-small hover:box-shadow-full font-kag font-medium text-stone-900 underline-offset-4 dark:text-stone-200;
+    @apply box-shadow-small hover:box-shadow-full  font-[450] text-stone-900 underline-offset-4 dark:text-stone-200;
   }
 
   [basics-link] {
-    @apply box-shadow-small hover:box-shadow-full font-kag font-medium text-stone-900 underline-offset-4 dark:text-stone-200;
+    @apply box-shadow-small hover:box-shadow-full  font-[450] text-stone-900 underline-offset-4 dark:text-stone-200;
   }
 
   .blur {
