@@ -4,7 +4,9 @@
 
 @layer base {
   :root {
-    font-size: 14px;
+    @media (min-width: 600px) {
+      font-size: 15px;
+    }
     --accent: #000dff;
     --background: 0 0% 95.9%%;
     --foreground: 240 10% 3.9%;
@@ -99,6 +101,10 @@
     scrollbar-width: none;
   }
 
+  em {
+    @apply font-rodney;
+  }
+
   body {
     @apply bg-background text-foreground;
   }
@@ -116,15 +122,15 @@
   }
 
   p a {
-    @apply box-shadow-small hover:box-shadow-full font-medium text-stone-900 underline-offset-4 dark:text-stone-200;
+    @apply box-shadow-small hover:box-shadow-full font-kag font-medium text-stone-900 underline-offset-4 dark:text-stone-200;
   }
 
   table a {
-    @apply box-shadow-small hover:box-shadow-full font-medium text-stone-900 underline-offset-4 dark:text-stone-200;
+    @apply box-shadow-small hover:box-shadow-full font-kag font-medium text-stone-900 underline-offset-4 dark:text-stone-200;
   }
 
   [basics-link] {
-    @apply box-shadow-small hover:box-shadow-full font-medium text-stone-900 underline-offset-4 dark:text-stone-200;
+    @apply box-shadow-small hover:box-shadow-full font-kag font-medium text-stone-900 underline-offset-4 dark:text-stone-200;
   }
 
   .blur {
@@ -155,7 +161,7 @@ a:hover > [basics-css-icon] {
 
 /* This is for the writing menu */
 [basic-list] {
-  @apply transition-all hover:text-stone-500;
+  @apply transition-all hover:text-zinc-500;
 }
 
 [basic-list]:hover [basic-list-item] {

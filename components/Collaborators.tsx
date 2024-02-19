@@ -29,7 +29,7 @@ export function Collaborators({ who, all }: CollaboratorsProps) {
         {filteredCollaborators.map((collaborator: Collaborator) => (
           <Link
             basics-link=""
-            className="flex items-center gap-1 rounded-full bg-stone-300 bg-opacity-70  p-1 pr-2 text-sm no-underline dark:bg-stone-700 dark:bg-opacity-90 dark:text-stone-100 dark:hover:text-white"
+            className="align-center flex items-center gap-1 rounded-full bg-zinc-300 bg-opacity-70  p-1 pr-2 text-sm no-underline dark:bg-zinc-700 dark:bg-opacity-90 dark:text-zinc-100 dark:hover:text-white"
             key={collaborator.name}
             href={collaborator.link}
           >
@@ -41,7 +41,7 @@ export function Collaborators({ who, all }: CollaboratorsProps) {
               alt={collaborator.name}
               unoptimized={true}
             />
-            <span>{collaborator.name}</span>
+            <span className="translate-y-[1px] ">{collaborator.name}</span>
           </Link>
         ))}
       </div>

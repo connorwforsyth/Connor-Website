@@ -4,6 +4,17 @@ import { useMDXComponent } from "next-contentlayer/hooks";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
 import { Collaborators } from "./Collaborators";
+import MDXCarousel from "./mdx-carousel";
+
+
+("use-client");
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel";
 
 export function UIWrapper({ children }: { children: React.ReactNode }) {
   return (
@@ -14,6 +25,12 @@ export function UIWrapper({ children }: { children: React.ReactNode }) {
 }
 
 const components = {
+  MDXCarousel,
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
   Collaborators,
   UIWrapper,
   MiroMapLink: ({
@@ -81,15 +98,16 @@ const components = {
   }) => (
     <div
       className={cn(
-        "z-5 relative mx-auto mb-6 flex aspect-[3/2] w-full items-center overflow-clip rounded-md border p-36 dark:bg-zinc-900",
+        "z-5 relative mx-auto mb-6  flex aspect-[3/2] w-full items-center overflow-clip rounded-md border p-36 dark:bg-zinc-900",
         className,
       )}
       {...otherProps} // Spread the rest of the props without className
     >
       <Image
-        className={cn("z-5", ImgClassName)}
+        className={cn("", ImgClassName)}
         alt={alt}
         src={src}
+        loading="eager"
         width={1}
         height={1}
         layout="responsive"
