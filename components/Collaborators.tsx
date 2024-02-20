@@ -1,6 +1,7 @@
 import collaboratorsData from "../data/collaborators/collaborators.json";
 import Image from "next/image";
 import Link from "next/link";
+import { cn } from "@/lib/utils";
 
 interface Collaborator {
   name: string;
@@ -9,19 +10,19 @@ interface Collaborator {
 }
 
 interface CollaboratorsProps {
-  who?: string[];
-  all?: boolean;
+  people?: string[];
+  className?: string[];
 }
 
-export function Collaborators({ who, all }: CollaboratorsProps) {
-  const filteredCollaborators = who
+export function Collaborators({ people, className }: CollaboratorsProps) {
+  const filteredCollaborators = people
     ? collaboratorsData
-        .filter((collaborator) => who.includes(collaborator.name))
-        .sort((a, b) => who.indexOf(a.name) - who.indexOf(b.name))
+        .filter((collaborator) => people.includes(collaborator.name))
+        .sort((a, b) => people.indexOf(a.name) - people.indexOf(b.name))
     : collaboratorsData;
 
   return (
-    <>
+    <div className={cn("mx-auto w-full max-w-2xl", className)}>
       <h2 className="mb-2">
         <em>Collaborators</em>
       </h2>
@@ -45,6 +46,6 @@ export function Collaborators({ who, all }: CollaboratorsProps) {
           </Link>
         ))}
       </div>
-    </>
+    </div>
   );
 }

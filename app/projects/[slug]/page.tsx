@@ -33,10 +33,11 @@ const page = async ({ params }: PageProps) => {
       <>
         <BackButton label="Projects" />
         <div className="mx-auto mb-3 w-full max-w-2xl text-stone-500">
-          <h1 className="inline-block font-medium text-stone-950 dark:text-stone-100">
-            {doc.title}{" "}
+          <h1 className="font-medium text-stone-950 dark:text-stone-100 md:inline">
+            {doc.title}
           </h1>{" "}
-          / {format(new Date(doc.date), "EEE dd MMM yyyy")}
+          <span className="hidden md:inline"> | </span>
+          {format(new Date(doc.date), "EEE dd MMM yyyy")}
         </div>
       </>
     );
@@ -47,12 +48,14 @@ const page = async ({ params }: PageProps) => {
       return (
         <>
           <Header />
-          <p className="mb-3">{doc.description}</p>
-          <p>
+
+          <p className="mx-auto w-full max-w-2xl">
             This is a protected route, please{" "}
             <LoginLink className="">login</LoginLink> or{" "}
-            <RegisterLink>sign up</RegisterLink> to get access.
+            <RegisterLink>sign up</RegisterLink> to get full access.
           </p>
+          <p className="mx-auto my-3 w-full max-w-2xl">{doc.protectedIntro}</p>
+          <p className="mx-auto w-full max-w-2xl">{doc.protectedEnd}</p>
         </>
       );
     else if ((await getPermission("approved:true")).isGranted)
@@ -63,7 +66,7 @@ const page = async ({ params }: PageProps) => {
             Hey {(await user).given_name} 👋 — This is a protected page, please
             keep it confidential.
           </p>
-          <p className="mx-auto mb-3 w-full max-w-2xl">{doc.protectedIntro}</p>
+          <p className="mx-auto my-3 w-full max-w-2xl">{doc.protectedIntro}</p>
           <Mdx code={doc.body.code} />
           <p className="mx-auto w-full max-w-2xl">{doc.protectedEnd}</p>
         </>
@@ -83,13 +86,17 @@ const page = async ({ params }: PageProps) => {
             </span>
             <Link href="https://Linkedin.com/in/connorwforsyth">LinkedIn</Link>.
           </p>
+          <p className="mx-auto mb-3 w-full max-w-2xl">{doc.protectedIntro}</p>
+          <p className="mx-auto w-full max-w-2xl">{doc.protectedEnd}</p>
         </>
       );
   else
     return (
       <>
         <Header />
+        <p className="mx-auto mb-3 w-full max-w-2xl">{doc.protectedIntro}</p>
         <Mdx code={doc.body.code} />
+        <p className="mx-auto w-full max-w-2xl">{doc.protectedEnd}</p>
       </>
     );
 };
