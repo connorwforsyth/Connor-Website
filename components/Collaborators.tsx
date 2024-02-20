@@ -12,6 +12,7 @@ interface Collaborator {
 interface CollaboratorsProps {
   people?: string[];
   className?: string[];
+  inline?: boolean;
 }
 
 export function Collaborators({ people, className }: CollaboratorsProps) {

@@ -194,7 +194,7 @@ const components = {
   p: ({ className, ...props }) => (
     <p
       className={cn(
-        "mx-auto  max-w-2xl leading-7 [&:not(:first-child)]:mt-6",
+        "mx-auto mb-1 mt-1 max-w-2xl leading-7 [@is:not(first-child)]:mt-10",
         className,
       )}
       {...props}
