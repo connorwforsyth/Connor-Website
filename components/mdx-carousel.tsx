@@ -34,11 +34,11 @@ export default function MDXCarousel({ children }) {
   return (
     <>
       <Carousel className="mx-auto mt-6 w-full max-w-6xl " setApi={setApi}>
+        <div className="mx-auto w-full max-w-2xl pb-3 text-center text-sm text-muted-foreground">
+          Slide {current} of {count}
+        </div>
         <div className="overflow-clip">
           <CarouselContent className="">{items}</CarouselContent>
-        </div>
-        <div className=" text-center text-sm text-muted-foreground">
-          Slide {current} of {count}
         </div>
         <CarouselPrevious />
         <CarouselNext />

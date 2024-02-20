@@ -74,7 +74,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
 
         <Providers>
           <div className="flex min-h-screen flex-col">
-            <main className="flex-grow px-4 pb-16 pt-24 md:pt-36">
+            <main className="flex-grow px-4 pb-24 pt-24 md:pt-36">
               {children}
             </main>
             <Footer />
