@@ -6,7 +6,6 @@ import Link from "next/link";
 import { Collaborators } from "./Collaborators";
 import MDXCarousel from "./mdx-carousel";
 
-
 ("use-client");
 import {
   Carousel,
@@ -98,7 +97,7 @@ const components = {
   }) => (
     <div
       className={cn(
-        "z-5 relative mx-auto mb-6  flex aspect-[3/2] w-full items-center overflow-clip rounded-md border p-36 dark:bg-zinc-900",
+        "z-5 relative mx-auto mb-6  flex aspect-[3/2] w-full items-center overflow-clip rounded-md border p-6 dark:bg-zinc-900 sm:p-36",
         className,
       )}
       {...otherProps} // Spread the rest of the props without className
