@@ -33,15 +33,20 @@ export default function MDXCarousel({ children }) {
 
   return (
     <>
-      <Carousel className="mx-auto mt-6 w-full max-w-6xl " setApi={setApi}>
-        <div className="mx-auto w-full max-w-2xl pb-3 text-center text-sm text-muted-foreground">
-          Slide {current} of {count}
+      <Carousel
+        className="mx-auto mt-6 w-full overflow-hidden sm:overflow-visible"
+        setApi={setApi}
+      >
+        <div className="mx-auto flex  h-auto w-full max-w-2xl items-center justify-center gap-3 pb-3 text-sm text-muted-foreground">
+          <CarouselPrevious className="" />
+          <p>
+            Slide {current} of {count}
+          </p>
+          <CarouselNext className="" />
         </div>
-        <div className="overflow-clip">
-          <CarouselContent className="">{items}</CarouselContent>
-        </div>
-        <CarouselPrevious />
-        <CarouselNext />
+        <CarouselContent className="mx-auto w-full max-w-6xl">
+          {items}
+        </CarouselContent>
       </Carousel>
     </>
   );
