@@ -5,17 +5,25 @@
 @font-face {
   font-family: "kag";
   src: url(/fonts/KynetonArtGrotesqueVF.ttf) format("woff2");
-  font-weight: 100, 200, 300, 400, 500, 600, 700, 800, 900;
-  font-style: light, medium, italic, bold, bold-italic;
+  font-weight: 100, 200, 300, 500, 600, 700, 800, 900;
+  font-style: light, medium, italic, bold;
   font-display: optional;
 }
 
 @font-face {
-  font-family: "rodney-light";
-  src: url(/fonts/Rodney-LightItalic.woff) format("woff2");
+  font-family: "rodney";
+  src: url(/fonts/Rodney-LightItalic.woff2) format("woff2");
   font-weight: 300;
   font-style: italic;
-  font-display: optional;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "rodney";
+  src: url(/fonts/Rodney-RegularItalic.woff) format("woff");
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
 }
 
 body {
@@ -152,10 +160,11 @@ body {
       "Segoe UI Emoji",
       "Segoe UI Symbol",
       "Noto Color Emoji";
+    font-weight: 300;
   }
 
   .font-rodney {
-    font-family: rodney-light, serif;
+    font-family: rodney, serif;
     font-style: italic;
   }
 

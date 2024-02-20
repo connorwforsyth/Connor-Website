@@ -41,7 +41,7 @@ export default function Home() {
       title: "Writing",
       items: [
         {
-          title: "All writing",
+          title: "All Writing",
 
           href: "/writing",
         },
@@ -95,7 +95,7 @@ export default function Home() {
 
       {/*Posts*/}
 
-      <div data-animate="" basic-stagger="2" className="">
+      <div data-animate="" basic-stagger="2" className="md:w-[90%]">
         {contents.map((column) => (
           <div
             key={column.title}
@@ -104,7 +104,7 @@ export default function Home() {
             <h2 className="my-3 text-zinc-700 dark:text-zinc-300">
               <em>{column.title}</em>
             </h2>
-            <div className="grid sm:grid-cols-3 sm:gap-4">
+            <div className="grid  sm:grid-cols-3 sm:gap-4">
               {column.items.map((item) => (
                 <div className="" key={item.title}>
                   {item.title.includes("All") ? (
