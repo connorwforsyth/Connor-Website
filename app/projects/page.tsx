@@ -1,20 +1,20 @@
-import { allWritings } from "@/.contentlayer/generated";
+import { allProjects } from "@/.contentlayer/generated";
 import Link from "next/link";
 import { format } from "date-fns";
 import BackButton from "@/components/BackButton";
 
 type PostWithElement = { element: JSX.Element; date: string };
 
-export default function Writing() {
+export default function Projects() {
   return (
     <>
       <div></div>
       <BackButton label="Index" />
       <div className="mx-auto flex w-full max-w-2xl flex-col gap-8">
-        <h1 className="font-medium">Writing</h1>
+        <h1 className="font-medium">Projects and Case Studies</h1>
 
         <ol basic-list="" className="border-b">
-          {allWritings
+          {allProjects
             .sort(
               (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
             )

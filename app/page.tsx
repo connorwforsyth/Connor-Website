@@ -16,34 +16,23 @@ export default function Home() {
   };
   const contents: Content[] = [
     {
-      title: "Building",
-      items: [
-        {
-          title: "Portfolio Readme",
-          description: "My approach to sharing work.",
-          href: "/readme",
-        },
-      ],
-    },
-    {
       title: "Projects",
       items: [
         {
+          title: "All Projects",
+
+          href: "/projects",
+        },
+        {
           title: "Makeit — by Designit",
-          description: "My approach to sharing work.",
-          href: "https://makeitbydesignit.com",
+          description: "Building a routine for design strategy.",
+          href: "/projects/makeit",
           external: true,
         },
         {
           title: "TEDxMelbourne",
-          description: "Small projects that help push my craft forward.",
-          href: "https://tedxmelbourne.com",
-          external: true,
-        },
-        {
-          href: "https://melbournesoup.org",
-          title: "MelbourneSOUP",
-          description: "Small projects that help push my craft forward.",
+          description: "Evolving the digital and inperson experience.",
+          href: "projects/tedxmelbourne",
           external: true,
         },
       ],
@@ -51,6 +40,11 @@ export default function Home() {
     {
       title: "Writing",
       items: [
+        {
+          title: "All writing",
+
+          href: "/writing",
+        },
         {
           title: "Good Judgement in Design",
           description: "How designers can tap into intuition.",
@@ -61,17 +55,12 @@ export default function Home() {
           description: "How we approach figma structures.",
           href: "/writing/figma-file-structure",
         },
-        {
-          title: "All writing",
-          description: "All ",
-          href: "/writing",
-        },
       ],
     },
   ];
 
   return (
-    <div className="mx-auto flex w-full max-w-2xl flex-col gap-12">
+    <div className="mx-auto flex w-full max-w-2xl flex-col gap-8">
       <div className="flex flex-col gap-3 dark:text-gray-300">
         <h1
           data-animate=""
@@ -101,49 +90,40 @@ export default function Home() {
             After work, you’ll find me chipping away at small web projects,
             bouldering, and brewing coffee.
           </p>
-          <p>
-            Some would say my design process is a little unorthodox, however
-            this is overshadowed by my eagnerness to build a positive impact on
-            products, services and communtiies.
-          </p>
         </div>
       </div>
 
       {/*Posts*/}
 
-      <div
-        data-animate=""
-        basic-stagger="2"
-        className="grid grid-cols-1 gap-3 sm:grid-cols-3"
-      >
+      <div data-animate="" basic-stagger="2" className="">
         {contents.map((column) => (
-          <div key={column.title} className="flex flex-col">
-            <h2 className="pb-4 pt-6 sm:pb-8 sm:pt-0">
+          <div
+            key={column.title}
+            className="border-t border-dotted border-t-zinc-500  pb-3  sm:border-none"
+          >
+            <h2 className="my-3 text-zinc-700 dark:text-zinc-300">
               <em>{column.title}</em>
             </h2>
-            <div className="grid gap-4">
+            <div className="grid sm:grid-cols-3 sm:gap-4">
               {column.items.map((item) => (
-                <div className="sm:h-24" key={item.title}>
-                  {item.external ? (
-                    <span className="flex">
-                      <Link
-                        basics-link=""
-                        href={item.href}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
+                <div className="" key={item.title}>
+                  {item.title.includes("All") ? (
+                    <span className="">
+                      <Link basics-link="" href={item.href} className="">
                         {item.title}
                       </Link>
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 16 16"
-                        fill=""
-                        className="h-4 w-4 fill-stone-500"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        strokeWidth={1.8}
+                        stroke="currentColor"
+                        className="ml-1 inline h-3 w-3 text-zinc-500"
                       >
                         <path
-                          fillRule="evenodd"
-                          d="M4.22 11.78a.75.75 0 0 1 0-1.06L9.44 5.5H5.75a.75.75 0 0 1 0-1.5h5.5a.75.75 0 0 1 .75.75v5.5a.75.75 0 0 1-1.5 0V6.56l-5.22 5.22a.75.75 0 0 1-1.06 0Z"
-                          clipRule="evenodd"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"
                         />
                       </svg>
                     </span>
@@ -162,6 +142,13 @@ export default function Home() {
             </div>
           </div>
         ))}
+      </div>
+      <div className="flex flex-col gap-3" data-animate="" basic-stagger="3">
+        <p>
+          Some would say my design process is a little unorthodox, however this
+          is overshadowed by my eagnerness to build a positive impact on
+          products, services and communtiies.
+        </p>
       </div>
       <div data-animate="" basic-stagger="3" className="flex flex-col gap-4">
         <Collaborators />
