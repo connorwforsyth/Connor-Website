@@ -1,0 +1,92 @@
+---
+title: Magnify on pressed event.
+description: 
+date: 2020-05-10
+---
+
+This is a record of a pressed event _x_ to magnify elements of a page. This is particularly useful for sharing journey maps as images on web. 
+
+
+```js
+<script type="text/javascript" src="https://assets.website-files.com/5e2755779d8b8ea1d6373797/5ea88e92dce9b4b66f165490_zoom.txt"></script>
+ <script>
+  jQuery(function(){
+
+  if(!$.fn.imagezoomsl){
+
+      $('.msg').show();
+      return;
+    }
+    else $('.msg').hide();
+
+    // plugin initialization
+    $('.magnify').imagezoomsl({
+
+      innerzoommagnifier: true,
+      classmagnifier: "round-loope",
+      magnifiersize: [300, 300],
+      // disables the scrolling of the document with the mouse wheel when the cursor is over the image
+      disablewheel: false
+    });
+  });
+</script>
+```
+
+
+This was incorperated on my previous weblflow blog and I've repurposed it here.
+
+Attempted recreation with tsx
+
+```tsx
+
+import { useEffect, useRef } from 'react';
+
+const ImageMagnify = () => {
+  const imageRef = useRef(null);
+
+  useEffect(() => {
+    // Assuming imagezoomsl is a global function available after the script is loaded
+    if (typeof imagezoomsl === 'function' && imageRef.current) {
+      imagezoomsl(imageRef.current, {
+        innerzoommagnifier: true,
+        classmagnifier: "round-loope",
+        magnifiersize: [300, 300],
+        disablewheel: false
+      });
+    } else {
+      document.querySelector('.msg').style.display = 'block';
+    }
+  }, []);
+
+  return (
+    <div>
+      <div className="msg" style={{ display: 'none' }}>Zoom plugin not available</div>
+      <img ref={imageRef} className="imagemagnify" src="your-image-source.jpg" alt="Magnifiable" />
+    </div>
+  );
+};
+
+export default ImageMagnify;
+```
+
+Add a CSS class for the round-loope.
+
+```css
+.round-loope {
+  display: block;
+  border: 1px solid #000;
+  border-radius: 50%;
+  background-color: #fff;
+  box-shadow: 0 0 13px -6px rgba(0, 0, 0, 0.61);
+}
+```
+
+Add a round loope div to the page. 
+
+```html
+  <div class="magnify"/>
+```
+
+
+
+However, now I want to apply this same pattern, but on event pressed.

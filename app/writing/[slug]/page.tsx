@@ -22,7 +22,7 @@ const page = async ({ params }: PageProps) => {
   const Header = () => {
     return (
       <>
-        <BackButton label="Projects" />
+        <BackButton label="Writings" />
         <div className="mx-auto mb-3 w-full max-w-2xl text-stone-500">
           <h1 className="font-medium text-stone-950 dark:text-stone-100 md:inline">
             {doc.title}

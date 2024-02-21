@@ -246,11 +246,19 @@ a:hover > [basics-css-icon] {
 
 /* This is for the writing menu */
 [basic-list] {
-  @apply transition-all  hover:text-zinc-400 dark:hover:text-zinc-600;
+  @apply transition-all  sm:hover:text-zinc-400 sm:dark:hover:text-zinc-600;
 }
 
 [basic-list]:hover [basic-list-item] {
   @apply hover:text-black dark:hover:text-white;
+}
+
+[basic-list]:hover [basic-list-item]:hover [basic-list-year] {
+  @apply hover:text-zinc-400 dark:hover:text-zinc-600;
+}
+
+[basic-list-item]:hover [basic-list-year] {
+  @apply text-zinc-400 dark:text-zinc-600;
 }
 
 [basics-css-icon] {

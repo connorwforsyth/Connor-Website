@@ -27,11 +27,14 @@ export default function Projects() {
                 <li key={post.title} className="">
                   <Link className="flex" href={post.slug}>
                     {isFirstOfYear ? (
-                      <span className="flex w-24 border-t border-zinc-300 px-0 py-3  sm:px-3">
+                      <span
+                        basic-list-year=""
+                        className="flex w-24 border-t border-zinc-300 px-0 py-3 sm:w-36  sm:px-3"
+                      >
                         {year}
                       </span>
                     ) : (
-                      <span className=" w-24 px-0 py-3 sm:px-3"></span>
+                      <span className=" w-24 px-0 py-3 sm:w-36 sm:px-3"></span>
                     )}
 
                     <span

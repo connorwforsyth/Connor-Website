@@ -97,7 +97,7 @@ const components = {
   }) => (
     <div
       className={cn(
-        "relative z-20 mx-auto my-6 flex aspect-[3/2] w-full items-center overflow-clip rounded-md border p-4 dark:bg-zinc-900 lg:p-24",
+        "relative mx-auto my-8 flex aspect-[3/2] w-full items-center overflow-clip rounded-md border p-4 dark:bg-zinc-900 lg:p-24",
         className,
       )}
       {...otherProps} // Spread the rest of the props without className
@@ -125,7 +125,7 @@ const components = {
   }) => {
     return (
       <Image
-        className={cn("z-5 relative my-8", className)}
+        className={cn("my-8", className)}
         src={src}
         alt={alt}
         width={1}
@@ -257,12 +257,12 @@ const components = {
   ),
   pre: ({ className, ...props }) => (
     <pre
-      className="scrollbar-none mx-auto max-h-96 max-w-2xl overflow-x-auto rounded-xl p-6"
+      className="scrollbar-none mx-auto my-8 max-h-96 max-w-2xl overflow-x-auto rounded-xl p-6"
       {...props}
     />
   ),
   code: ({ className, ...props }) => (
-    <code className={cn("text-sm", className)} {...props} />
+    <code className={cn("text-sm ", className)} {...props} />
   ),
 };
 
