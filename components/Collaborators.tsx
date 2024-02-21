@@ -30,7 +30,7 @@ export function Collaborators({ people, className }: CollaboratorsProps) {
       <div className="flex flex-wrap gap-2">
         {filteredCollaborators.map((collaborator: Collaborator) => (
           <Link
-            basics-link=""
+            basics-link-pill=""
             className="align-center flex items-center gap-1 rounded-full bg-zinc-300 bg-opacity-70  p-1 pr-2 text-sm no-underline dark:bg-zinc-700 dark:bg-opacity-90 dark:text-zinc-100 dark:hover:text-white"
             key={collaborator.name}
             href={collaborator.link}
