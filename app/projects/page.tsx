@@ -11,9 +11,9 @@ export default function Projects() {
       <div></div>
       <BackButton label="Index" />
       <div className="mx-auto flex w-full max-w-2xl flex-col gap-8">
-        <h1 className="font-medium">Projects and Case Studies</h1>
+        <h1 className="font-medium">Case Studies and Projects</h1>
 
-        <ol basic-list="" className="border-b">
+        <ol basic-list="" className="border-b border-zinc-300">
           {allProjects
             .sort(
               (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
@@ -24,18 +24,28 @@ export default function Projects() {
                 (item) => new Date(item.date).getFullYear() === year,
               );
               const element = (
-                <li key={post.title} className="flex w-full border-t">
-                  {isFirstOfYear && <span className="w-24 p-3">{year}</span>}
-                  {!isFirstOfYear && <span className=""></span>}
-                  <Link
-                    basic-list-item=""
-                    href={post.slug}
-                    className="flex flex-grow justify-between"
-                  >
-                    <h2 className=" p-3">{post.title}</h2>
-                    <time className=" p-3" dateTime={post.date}>
-                      {format(new Date(post.date), "dd/MM")}
-                    </time>
+                <li key={post.title} className="">
+                  <Link className="flex" href={post.slug}>
+                    {isFirstOfYear ? (
+                      <span className="flex w-24 border-t border-zinc-300 px-0 py-3  sm:px-3">
+                        {year}
+                      </span>
+                    ) : (
+                      <span className=" w-24 px-0 py-3 sm:px-3"></span>
+                    )}
+
+                    <span
+                      basic-list-item=""
+                      className="flex h-full w-full flex-grow  items-center gap-1 border-t border-zinc-300"
+                    >
+                      <h2 className="flex-grow py-3">{post.title}</h2>
+                      <time
+                        className=" whitespace-nowrap py-3 text-sm"
+                        dateTime={post.date}
+                      >
+                        {format(new Date(post.date), "MMM dd ")}
+                      </time>
+                    </span>
                   </Link>
                 </li>
               );

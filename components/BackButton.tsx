@@ -42,7 +42,7 @@ export default function BackButton({ label }: { label: string }) {
       <div className="flex">
         <Link
           href="./"
-          className="z-1 align-center flex items-center gap-0.5 rounded-full border border-zinc-300 px-2 py-1 text-sm transition-all hover:border-zinc-500 hover:shadow-md dark:border-zinc-500 dark:hover:border-zinc-50 lg:fixed"
+          className="align-center flex items-center gap-0.5 rounded-full border border-zinc-300 px-2 py-1 text-sm transition-all hover:border-zinc-500 hover:shadow-md dark:border-zinc-500 dark:hover:border-zinc-50 lg:fixed"
         >
           {svgIcon}
           <span className="translate-y-[-1px] px-1">{label}</span>

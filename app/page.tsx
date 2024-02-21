@@ -99,12 +99,12 @@ export default function Home() {
         {contents.map((column) => (
           <div
             key={column.title}
-            className="border-t border-dotted border-t-zinc-500  pb-3  sm:border-none"
+            className="border-dotted border-t-zinc-300 pb-3  dark:border-t-zinc-700  sm:border-none"
           >
             <h2 className="my-3 text-zinc-700 dark:text-zinc-300">
               <em>{column.title}</em>
             </h2>
-            <div className="grid  sm:grid-cols-3 sm:gap-4">
+            <div className="grid gap-4 sm:grid-cols-3 ">
               {column.items.map((item) => (
                 <div className="" key={item.title}>
                   {item.title.includes("All") ? (
@@ -158,7 +158,7 @@ export default function Home() {
           <em>Connect</em>
         </h2>
         <p>
-          You can reach out on{" "}
+          You can reach me on{" "}
           <Link href="https://www.linkedin.com/in/connorwforsyth">
             LinkedIn
           </Link>{" "}

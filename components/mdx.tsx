@@ -43,8 +43,8 @@ const components = {
   }) => (
     <div
       className={cn(
-        "z-1 relative mx-auto mt-2 flex w-full max-w-2xl rounded-md border p-3 align-baseline transition-all",
-        "shadow-none hover:shadow-[0px_0px_30px_-10px] hover:shadow-blue-700 ",
+        "z-1 relative mx-auto mt-2 flex w-full max-w-2xl rounded-md border bg-white p-3 align-baseline font-medium transition-all dark:bg-zinc-950",
+        "shadow-none hover:shadow-[0px_0px_30px_-10px] hover:shadow-[var(--highlight)] ",
       )}
       style={{
         borderTopLeftRadius: "1.2rem 1rem",
@@ -58,7 +58,7 @@ const components = {
         href={href}
         target="_blank"
         rel="noreferrer noopener"
-        className="flex items-center gap-2 bg-blue-700 p-2 px-4"
+        className="flex items-center gap-2 bg-[var(--highlight)] p-2 px-4"
         style={{
           borderTopLeftRadius: ".4rem",
           borderTopRightRadius: ".4rem",
@@ -97,7 +97,7 @@ const components = {
   }) => (
     <div
       className={cn(
-        "z-5 relative mx-auto mb-6  flex aspect-[3/2] w-full items-center overflow-clip rounded-md border p-6 dark:bg-zinc-900 sm:p-36",
+        "relative z-20 mx-auto my-6 flex aspect-[3/2] w-full items-center overflow-clip rounded-md border p-4 dark:bg-zinc-900 lg:p-24",
         className,
       )}
       {...otherProps} // Spread the rest of the props without className
@@ -125,7 +125,7 @@ const components = {
   }) => {
     return (
       <Image
-        className={cn("z-5 relative", className)}
+        className={cn("z-5 relative my-8", className)}
         src={src}
         alt={alt}
         width={1}
@@ -137,7 +137,7 @@ const components = {
   h1: ({ className, ...props }) => (
     <h1
       className={cn(
-        "mx-auto  mb-4 mt-2 max-w-2xl scroll-m-20 text-4xl font-bold tracking-tight",
+        "mx-auto  mb-2 mt-2 max-w-2xl scroll-m-20 text-3xl font-medium ",
         className,
       )}
       {...props}
@@ -146,7 +146,7 @@ const components = {
   h2: ({ className, ...props }) => (
     <h2
       className={cn(
-        "mx-auto  mt-10 max-w-2xl scroll-m-20 pb-1 text-3xl font-semibold tracking-[-0.015rem] first:mt-0",
+        "mx-auto  mt-8 max-w-2xl scroll-m-20 pb-1 text-2xl font-medium first:mt-0",
         className,
       )}
       {...props}
@@ -155,7 +155,7 @@ const components = {
   h3: ({ className, ...props }) => (
     <h3
       className={cn(
-        "tracking  mx-auto mt-8 max-w-2xl scroll-m-20 text-2xl font-semibold",
+        "tracking  mx-auto mt-8 max-w-2xl scroll-m-20 text-xl font-medium",
         className,
       )}
       {...props}
@@ -164,7 +164,7 @@ const components = {
   h4: ({ className, ...props }) => (
     <h4
       className={cn(
-        "mx-auto  mt-8 max-w-2xl scroll-m-20 text-xl font-semibold tracking-tight",
+        "mx-auto  mt-8 max-w-2xl scroll-m-20 text-xl font-medium",
         className,
       )}
       {...props}
@@ -173,7 +173,7 @@ const components = {
   h5: ({ className, ...props }) => (
     <h5
       className={cn(
-        "mx-auto  mt-8 max-w-2xl scroll-m-20 text-lg font-semibold tracking-tight",
+        "mx-auto  mt-8 max-w-2xl scroll-m-20 text-lg font-medium",
         className,
       )}
       {...props}
@@ -182,7 +182,7 @@ const components = {
   h6: ({ className, ...props }) => (
     <h6
       className={cn(
-        "mx-auto mt-8 max-w-2xl  scroll-m-20 text-base font-semibold tracking-tight",
+        "mx-auto mt-8 max-w-2xl  scroll-m-20 text-base font-medium ",
         className,
       )}
       {...props}
