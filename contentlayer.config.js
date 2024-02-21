@@ -75,10 +75,7 @@ export const Projects = defineDocumentType(() => ({
       type: "boolean",
       default: false,
     },
-    protectedIntro: {
-      type: "string",
-    },
-    protectedEnd: {
+    p2: {
       type: "string",
     },
   },

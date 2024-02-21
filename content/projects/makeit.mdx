@@ -14,24 +14,19 @@ We decided to create this experience we called _Makeit_.
 Link: [makeit.designit.com](makeit.designit.com)
 
 
-<MDXCarousel>
-<Img className="bg-gradient-to-tr from-blue-900 to-blue-950" src="/projects/makeit/a57e3777d171f8e4068fbaa1e6d5cefb0afdfee232f715d8479e8db0317bcb49 copy.png"/>
-<Img className="bg-gradient-to-tr from-blue-900 to-blue-950" src="/projects/makeit/CF_Figma_2024-02-20.png"/>
-
-</MDXCarousel>
 
 The goal was to come up with a simple pitch that we could attach to client conversations to allow for more opportunities to work together.
 
 <MDXCarousel>
-<Img className="bg-gradient-to-tr from-blue-900 to-blue-950" src="/projects/makeit/pitchdeck/Structural-Slides-0.png"/>
-<Img className="bg-gradient-to-tr from-blue-900 to-blue-950" src="/projects/makeit/pitchdeck/Structural-Slides-1.png"/>
-<Img className="bg-gradient-to-tr from-blue-900 to-blue-950" src="/projects/makeit/pitchdeck/Structural-Slides-2.png"/>
-<Img className="bg-gradient-to-tr from-blue-900 to-blue-950" src="/projects/makeit/pitchdeck/Structural-Slides-3.png"/>
-<Img className="bg-gradient-to-tr from-blue-900 to-blue-950" src="/projects/makeit/pitchdeck/Structural-Slides-4.png"/>
-<Img className="bg-gradient-to-tr from-blue-900 to-blue-950" src="/projects/makeit/pitchdeck/Structural-Slides-5.png"/>
-<Img className="bg-gradient-to-tr from-blue-900 to-blue-950" src="/projects/makeit/pitchdeck/Structural-Slides-6.png"/>
-<Img className="bg-gradient-to-tr from-blue-900 to-blue-950" src="/projects/makeit/pitchdeck/Structural-Slides-7.png"/>
-<Img className="bg-gradient-to-tr from-blue-900 to-blue-950" src="/projects/makeit/pitchdeck/Structural-Slides-8.png"/>
+<Img className="p-0 lg:p-0 aspect-auto bg-gradient-to-tr from-blue-900 to-blue-950" src="/projects/makeit/pitchdeck/Structural-Slides-0.png"/>
+<Img className="p-0 lg:p-0 aspect-auto bg-gradient-to-tr from-blue-900 to-blue-950" src="/projects/makeit/pitchdeck/Structural-Slides-1.png"/>
+<Img className="p-0 lg:p-0 aspect-auto bg-gradient-to-tr from-blue-900 to-blue-950" src="/projects/makeit/pitchdeck/Structural-Slides-2.png"/>
+<Img className="p-0 lg:p-0 aspect-auto bg-gradient-to-tr from-blue-900 to-blue-950" src="/projects/makeit/pitchdeck/Structural-Slides-3.png"/>
+<Img className="p-0 lg:p-0 aspect-auto bg-gradient-to-tr from-blue-900 to-blue-950" src="/projects/makeit/pitchdeck/Structural-Slides-4.png"/>
+<Img className="p-0 lg:p-0 aspect-auto bg-gradient-to-tr from-blue-900 to-blue-950" src="/projects/makeit/pitchdeck/Structural-Slides-5.png"/>
+<Img className="p-0 lg:p-0 aspect-auto bg-gradient-to-tr from-blue-900 to-blue-950" src="/projects/makeit/pitchdeck/Structural-Slides-6.png"/>
+<Img className="p-0 lg:p-0 aspect-auto bg-gradient-to-tr from-blue-900 to-blue-950" src="/projects/makeit/pitchdeck/Structural-Slides-7.png"/>
+<Img className="p-0 lg:p-0 aspect-auto bg-gradient-to-tr from-blue-900 to-blue-950" src="/projects/makeit/pitchdeck/Structural-Slides-8.png"/>
 </MDXCarousel>
 
 Initially we thought of just including a PDF to assist the sales team.
@@ -40,8 +35,14 @@ Experimental one off websites are new for Designit, however we found it useful t
 
 <p className="text-center mt-4">_↓ Scroll ↓_</p>
 
-<Img className="relative max-w-5xl mt-8 w-full overflow-y-scroll h-full block p-0 md:p-0" src="/projects/makeit/webpage.png"/>
+<Img className="relative max-w-5xl w-full overflow-y-scroll h-full block p-0 lg:p-0" src="/projects/makeit/webpage.png"/>
 
+
+
+<MDXCarousel>
+<Img className="bg-gradient-to-tr from-blue-900 to-blue-950" src="/projects/makeit/a57e3777d171f8e4068fbaa1e6d5cefb0afdfee232f715d8479e8db0317bcb49 copy.png"/>
+<Img className="bg-gradient-to-tr from-blue-900 to-blue-950" src="/projects/makeit/CF_Figma_2024-02-20.png"/>
+</MDXCarousel>
 We managed to wire up a contact form into Airtable which led to a simple way for our team to track leads.
 
 The following enabled us to setup a multistep form with some react state. Tracking visitors with posthog.
@@ -318,7 +319,8 @@ export default function SignUp() {
 }
 
 ```
-API routes handled through Next.
+
+API routes handled through Next. Sending data to an airtable base.
 
 
 ```tsx
@@ -349,5 +351,4 @@ export async function POST(req: NextRequest, res: NextResponse) {
     return NextResponse.json({ message }, { status: 500 });
   }
 }
-
 ```

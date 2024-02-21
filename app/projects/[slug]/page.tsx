@@ -39,6 +39,8 @@ const page = async ({ params }: PageProps) => {
           <span className="hidden md:inline"> | </span>
           {format(new Date(doc.date), "EEE dd MMM yyyy")}
         </div>
+        <p className="mx-auto my-3 w-full max-w-2xl">{doc.description}</p>
+        {doc.p2 && <p className="mx-auto w-full max-w-2xl">{doc.p2}</p>}
       </>
     );
   };
@@ -48,27 +50,22 @@ const page = async ({ params }: PageProps) => {
       return (
         <>
           <Header />
-
           <p className="mx-auto w-full max-w-2xl">
             This is a protected route, please{" "}
             <LoginLink className="">login</LoginLink> or{" "}
             <RegisterLink>sign up</RegisterLink> to get full access.
           </p>
-          <p className="mx-auto my-3 w-full max-w-2xl">{doc.protectedIntro}</p>
-          <p className="mx-auto w-full max-w-2xl">{doc.protectedEnd}</p>
         </>
       );
     else if ((await getPermission("approved:true")).isGranted)
       return (
         <>
           <Header />
-          <p className="mx-auto mb-3 w-full max-w-2xl">
+          <p className="fixed top-3 mx-auto mb-3 w-full max-w-2xl">
             Hey {(await user).given_name} 👋 — This is a protected page, please
             keep it confidential.
           </p>
-          <p className="mx-auto my-3 w-full max-w-2xl">{doc.protectedIntro}</p>
           <Mdx code={doc.body.code} />
-          <p className="mx-auto w-full max-w-2xl">{doc.protectedEnd}</p>
         </>
       );
     else

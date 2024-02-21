@@ -95,7 +95,7 @@ export default function Home() {
 
       {/*Posts*/}
 
-      <div data-animate="" basic-stagger="2" className="md:w-[90%]">
+      <div data-animate="" basic-stagger="2" className="sm:w-[90%]">
         {contents.map((column) => (
           <div
             key={column.title}
@@ -108,7 +108,7 @@ export default function Home() {
               {column.items.map((item) => (
                 <div className="" key={item.title}>
                   {item.title.includes("All") ? (
-                    <span className="">
+                    <span className="pr-10">
                       <Link basics-link="" href={item.href} className="">
                         {item.title}
                       </Link>

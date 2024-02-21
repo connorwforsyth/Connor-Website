@@ -23,7 +23,7 @@ export function Collaborators({ people, className }: CollaboratorsProps) {
     : collaboratorsData;
 
   return (
-    <div className={cn("mx-auto w-full max-w-2xl", className)}>
+    <div className={cn("mx-auto my-8 w-full max-w-2xl", className)}>
       <h2 className="mb-2">
         <em>Collaborators</em>
       </h2>

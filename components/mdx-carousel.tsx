@@ -28,7 +28,7 @@ export default function MDXCarousel({ children }) {
   }, [api]);
 
   const items = React.Children.map(children, (child) => (
-    <CarouselItem className="basis-11/12  ">{child}</CarouselItem>
+    <CarouselItem className="">{child}</CarouselItem>
   ));
 
   return (
@@ -41,7 +41,7 @@ export default function MDXCarousel({ children }) {
           </p>
           <CarouselNext />
         </div>
-        <CarouselContent className="mx-auto w-full max-w-6xl overflow-hidden sm:overflow-visible">
+        <CarouselContent className="mx-auto w-full max-w-6xl cursor-grab">
           {items}
         </CarouselContent>
       </Carousel>
