@@ -19,7 +19,7 @@
 }
 
 @font-face {
-  font-family: "rodney";
+  font-family: "rodney-medium";
   src: url(/fonts/Rodney-RegularItalic.woff) format("woff");
   font-weight: 500;
   font-style: italic;
@@ -48,7 +48,7 @@ body {
 @layer base {
   :root {
     @media (min-width: 600px) {
-      font-size: 15px;
+      font-size: 16px;
     }
     --accent: #000dff;
     --background: 0 0% 95.9%%;
@@ -144,27 +144,22 @@ body {
     scrollbar-width: none;
   }
 
+  a em {
+    @apply font-rodney-medium;
+  }
+
   em {
-    font-family:
-      rodney,
-      system-ui,
-      -apple-system,
-      BlinkMacSystemFont,
-      "Segoe UI",
-      Roboto,
-      "Helvetica Neue",
-      Arial,
-      "Noto Sans",
-      sans-serif,
-      "Apple Color Emoji",
-      "Segoe UI Emoji",
-      "Segoe UI Symbol",
-      "Noto Color Emoji";
+    @apply font-rodney;
   }
 
   .font-rodney {
     font-family: rodney, serif;
-    font-style: italic;
+    font-weight: 300;
+  }
+
+  .font-rodney-medium {
+    font-family: rodney, serif;
+    font-weight: 600;
   }
 
   body {
