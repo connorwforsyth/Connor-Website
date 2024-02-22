@@ -83,17 +83,13 @@ const page = async ({ params }: PageProps) => {
             </span>
             <Link href="https://Linkedin.com/in/connorwforsyth">LinkedIn</Link>.
           </p>
-          <p className="mx-auto mb-3 w-full max-w-2xl">{doc.protectedIntro}</p>
-          <p className="mx-auto w-full max-w-2xl">{doc.protectedEnd}</p>
         </>
       );
   else
     return (
       <>
         <Header />
-        <p className="mx-auto mb-3 w-full max-w-2xl">{doc.protectedIntro}</p>
         <Mdx code={doc.body.code} />
-        <p className="mx-auto w-full max-w-2xl">{doc.protectedEnd}</p>
       </>
     );
 };
