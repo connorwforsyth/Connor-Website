@@ -3,7 +3,7 @@ import Image from "next/image";
 import { useMDXComponent } from "next-contentlayer/hooks";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
-import { Collaborators } from "./Collaborators";
+import { Collaborators, Person } from "./Collaborators";
 import MDXCarousel from "./mdx-carousel";
 
 ("use-client");
@@ -24,6 +24,7 @@ export function UIWrapper({ children }: { children: React.ReactNode }) {
 }
 
 const components = {
+  Person,
   MDXCarousel,
   Carousel,
   CarouselContent,
@@ -36,15 +37,17 @@ const components = {
     title,
     href,
     linkText,
-  }: {
+    className,
+  }: React.ImgHTMLAttributes<HTMLImageElement> & {
     title: string;
     href: string;
     linkText: string;
   }) => (
     <div
       className={cn(
-        "z-1 relative mx-auto mt-2 flex w-full max-w-2xl rounded-md border bg-white p-3 align-baseline font-medium transition-all dark:bg-zinc-950",
+        "z-1 relative mx-auto mb-4 flex w-full max-w-2xl rounded-md border bg-white p-3 align-baseline font-medium transition-all dark:bg-zinc-950",
         "shadow-none hover:shadow-[0px_0px_30px_-10px] hover:shadow-[var(--highlight)] ",
+        className,
       )}
       style={{
         borderTopLeftRadius: "1.2rem 1rem",
@@ -87,6 +90,7 @@ const components = {
     src,
     className,
     size,
+    type,
     ImgClassName,
     ...otherProps
   }: React.ImgHTMLAttributes<HTMLImageElement> & {
@@ -94,23 +98,42 @@ const components = {
     alt: string;
     ImgClassName: string;
     src: string;
+    type: "slides" | "2/3" | "hero";
   }) => (
-    <div
-      className={cn(
-        "relative mx-auto my-8 flex aspect-[3/2] w-full items-center overflow-clip rounded-md border p-4 dark:bg-zinc-900 lg:p-24",
-        className,
+    <div className={!alt ? "my-4" : "mt-4"}>
+      <div
+        className={cn(
+          !type ? (
+            "relative mx-auto flex aspect-[3/2] w-full items-center overflow-clip rounded-md border p-4 dark:bg-zinc-900 lg:p-24"
+          ) : type === "slides" ? (
+            "mx-auto flex aspect-auto w-full items-center overflow-clip rounded-md p-0 lg:p-0"
+          ) : type === "hero" ? (
+            "relative mx-auto flex aspect-auto w-full items-center overflow-clip rounded-md border bg-gradient-to-tr from-blue-500 to-blue-600 p-4 sm:p-8 lg:p-24"
+          ) : (
+            <></>
+          ),
+          className,
+        )}
+        {...otherProps} // Spread the rest of the props without className
+      >
+        <Image
+          className={cn(
+            type === "hero" ? "mx-auto w-full max-w-2xl" : "",
+            ImgClassName,
+          )}
+          alt={alt}
+          src={src}
+          loading="eager"
+          width={1}
+          height={1}
+          layout="responsive"
+        />
+      </div>
+      {alt && (
+        <em className="mx-auto mb-4 mt-2 block w-full max-w-2xl text-center text-sm text-zinc-700 dark:text-zinc-200">
+          {alt}
+        </em>
       )}
-      {...otherProps} // Spread the rest of the props without className
-    >
-      <Image
-        className={cn("", ImgClassName)}
-        alt={alt}
-        src={src}
-        loading="eager"
-        width={1}
-        height={1}
-        layout="responsive"
-      />
     </div>
   ),
   img: ({
@@ -218,7 +241,7 @@ const components = {
   blockquote: ({ className, ...props }) => (
     <blockquote
       className={cn(
-        "mx-auto mt-6  max-w-2xl border-l-2 pl-6 italic [&>*]:text-muted-foreground",
+        "font-rodney mx-auto my-6 max-w-2xl border-l-2 pl-6 pr-32 text-lg italic leading-10 ",
         className,
       )}
       {...props}

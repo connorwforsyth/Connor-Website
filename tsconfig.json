@@ -32,7 +32,8 @@
     ".next/types/**/*.ts",
     ".contentlayer/generated",
     "components/mdx.jsx",
-    "app/api/auth/[kindeAuth]/route.js"
+    "app/api/auth/[kindeAuth]/route.js",
+    "app/providers.js"
   ],
   "exclude": ["node_modules"]
 }

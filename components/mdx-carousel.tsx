@@ -41,7 +41,7 @@ export default function MDXCarousel({ children }) {
           </p>
           <CarouselNext />
         </div>
-        <CarouselContent className="mx-auto w-full max-w-6xl cursor-grab">
+        <CarouselContent className="mx-auto flex w-full max-w-6xl cursor-grab items-center">
           {items}
         </CarouselContent>
       </Carousel>

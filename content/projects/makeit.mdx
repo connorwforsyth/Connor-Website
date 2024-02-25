@@ -1,21 +1,24 @@
 ---
 title: Makeit — By Designit
-description: How can we
+description: At Designit, we love working on highly strategic yet tactical projects that enable us to advance our craft. This is why regularly we will set aside our tools to create something meaningful with clients.
 date: 2024-01-20
 ---
 
-At Designit, we love working on highlighly strategic, yet tactical projects that enable us to move our craft forward.
-<Collaborators className="mt-3" people="Alec Gozali, Andrew Barrie, Madeleine Frick, Cimara Carneiro, "/>
-
-This is why regurlary we will down our tools to create something meaningful with clients.
-
 We decided to create this experience we called _Makeit_.
 
-Link: [makeit.designit.com](makeit.designit.com)
+Link: [makeit.designit.com](https://makeit.designit.com)
+<Collaborators className="mt-3" people="Alec Gozali, Andrew Barrie, Madeleine Frick, Cimara Carneiro, Amalie Judd"/>
 
+## Overview
 
+_Call it a hackathon, design sprint, innovation sprint, strategy sprint._  
+_Build something testable in four hours._
 
-The goal was to come up with a simple pitch that we could attach to client conversations to allow for more opportunities to work together.
+The core concept was to come up with a way to improve how we generate for strategic projects. 
+
+Our idea, was to build an offering, that enables clients to quickly workshop challenge areas with us, to kickstart a future relationship, and come away with something useful fast.
+
+We first explored the idea with a simple pitch that for our sales team.
 
 <MDXCarousel>
 <Img className="p-0 lg:p-0 aspect-auto bg-gradient-to-tr from-blue-900 to-blue-950" src="/projects/makeit/pitchdeck/Structural-Slides-0.png"/>
@@ -29,33 +32,42 @@ The goal was to come up with a simple pitch that we could attach to client conve
 <Img className="p-0 lg:p-0 aspect-auto bg-gradient-to-tr from-blue-900 to-blue-950" src="/projects/makeit/pitchdeck/Structural-Slides-8.png"/>
 </MDXCarousel>
 
-Initially we thought of just including a PDF to assist the sales team.
-But we opted to also craft a website to help capture inbound leads.
-Experimental one off websites are new for Designit, however we found it useful to centralise the experiment and focus the offer.
+## UI Design
+In an effort to make this product offering more _real_. We crafted a simple landing page to support inbound opportunities. Exploring a product idea through different artefacts helps legitimise the concept for others.
+
+<Person name="Amalie Judd"/> and <Person name="Alec Gozali"/> were quick to support with UI and prototyping for this effort.
 
 <p className="text-center mt-4">_↓ Scroll ↓_</p>
 
 <Img className="relative max-w-5xl w-full overflow-y-scroll h-full block p-0 lg:p-0" src="/projects/makeit/webpage.png"/>
 
 
-
 <MDXCarousel>
 <Img className="bg-gradient-to-tr from-blue-900 to-blue-950" src="/projects/makeit/a57e3777d171f8e4068fbaa1e6d5cefb0afdfee232f715d8479e8db0317bcb49 copy.png"/>
 <Img className="bg-gradient-to-tr from-blue-900 to-blue-950" src="/projects/makeit/CF_Figma_2024-02-20.png"/>
 </MDXCarousel>
-We managed to wire up a contact form into Airtable which led to a simple way for our team to track leads.
 
-The following enabled us to setup a multistep form with some react state. Tracking visitors with posthog.
+
+## Development and Technology
+
+Our team explored the connection between design systems and component libraries. 
+
+- We chose [TailwindCSS](https://tailwindcss.com) for its primitive and extendable architecture. 
+- We use Airtable for CRM and project tracking. To streamline lead management, we integrated the contact form with Airtable's API.
+- The webpage was generated statically with Next.js to secure our API calls.
+- Analytics hosted with PostHog.
+
+### Planned updates:
+In the future, we might enhance the multistep form with slider animations using Framer Motion.
 
 ```tsx
-// signupComponent.tsx
+// SignupComponent.tsx
 "use client";
 import { cn } from "@/lib/utils";
 import Arrow from "../Icons/Arrow";
 import * as Form from "@radix-ui/react-form";
 import React from "react";
 import { useState } from "react";
-import motion from "framer-motion";
 import { Toaster, toast } from "sonner";
 import posthog from "posthog-js";
 import { compareAsc, format, formatDate, setDay } from "date-fns";
@@ -352,3 +364,5 @@ export async function POST(req: NextRequest, res: NextResponse) {
   }
 }
 ```
+
+If you'd like to learn more about Makeit. Reach out: c@connorforsyth.co

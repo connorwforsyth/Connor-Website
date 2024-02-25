@@ -39,8 +39,8 @@ const page = async ({ params }: PageProps) => {
           <span className="hidden md:inline"> | </span>
           {format(new Date(doc.date), "EEE dd MMM yyyy")}
         </div>
-        <p className="mx-auto my-3 w-full max-w-2xl">{doc.description}</p>
-        {doc.p2 && <p className="mx-auto w-full max-w-2xl">{doc.p2}</p>}
+        <p className="mx-auto mb-3 w-full max-w-2xl">{doc.description}</p>
+        {doc.p2 && <p className="mx-auto mb-3 w-full max-w-2xl">{doc.p2}</p>}
       </>
     );
   };
@@ -61,7 +61,7 @@ const page = async ({ params }: PageProps) => {
       return (
         <>
           <Header />
-          <p className="fixed top-3 mx-auto mb-3 w-full max-w-2xl">
+          <p className="mx-auto mb-3 w-full max-w-2xl ">
             Hey {(await user).given_name} 👋 — This is a protected page, please
             keep it confidential.
           </p>
@@ -75,7 +75,7 @@ const page = async ({ params }: PageProps) => {
           <p className="mx-auto mb-3 w-full max-w-2xl">
             Hey {(await user).given_name} 👋 — Thanks for requesting access.
           </p>
-          <p className="mx-auto w-full max-w-2xl">
+          <p className="mx-auto mb-3 w-full max-w-2xl">
             I have to manually approve your access, you will recieve an email
             from me once it{"'"}s granted. Until then, you can give me a{" "}
             <span>

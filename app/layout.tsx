@@ -5,37 +5,7 @@ import { Analytics } from "@/components/analytics";
 import Texture from "@/components/BackgroundTexture";
 import Footer from "@/components/Footer";
 import Offline from "@/components/Offline";
-import localFont from "next/font/local";
-
-// const KAG300 = localFont({
-//   src: [
-//     {
-//       path: "./fonts/KynetonArtGrotesqueVF.ttf",
-//       weight: "275",
-//       style: "normal",
-//     },
-//   ],
-//   display: "swap",
-//   variable: "--kag-300",
-// });
-
-// const KAG500 = localFont({
-//   src: [
-//     {
-//       path: "./fonts/KynetonArtGrotesqueVF.ttf",
-//       weight: "500",
-//       style: "normal",
-//     },
-//   ],
-//   display: "swap",
-//   variable: "--kag-500",
-// });
-
-// const RodneyLight = localFont({
-//   src: "./fonts/Rodney-LightItalic.woff",
-//   display: "swap",
-//   variable: "--font-rodney-light",
-// });
+import { CSPostHogProvider } from "./providers";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 
@@ -73,13 +43,15 @@ export default function RootLayout({ children }: RootLayoutProps) {
         <Texture />
 
         <Providers>
-          <div className="flex min-h-screen flex-col">
-            <main className="flex-grow px-4 pb-24 pt-24 md:pt-36">
-              {children}
-            </main>
-            <Footer />
-          </div>
-          <Analytics />
+          <CSPostHogProvider>
+            <div className="flex min-h-screen flex-col">
+              <main className="flex-grow px-4 pb-24 pt-24 md:pt-36">
+                {children}
+              </main>
+              <Footer />
+            </div>
+            <Analytics />
+          </CSPostHogProvider>
         </Providers>
       </body>
     </html>
