@@ -46,21 +46,21 @@ export default function Home() {
           href: "/writing",
         },
         {
-          title: "Good Judgement in Design",
-          description: "How designers can tap into intuition.",
-          href: "/writing/designing-with-good-judgement",
+          title: "Portfolio 2024 Readme",
+          description: "A guide to reading my portfolio and website.",
+          href: "/writing/readme",
         },
         {
-          title: "Figma file structure",
-          description: "How we approach figma structures.",
-          href: "/writing/figma-file-structure",
+          title: "Miro Design Systems",
+          description: "",
+          href: "/writing/miro-design-system",
         },
       ],
     },
   ];
 
   return (
-    <div className="mx-auto flex w-full max-w-2xl flex-col gap-8">
+    <div className="mx-auto w-full max-w-2xl flex-col ">
       <div className="flex flex-col gap-3 dark:text-gray-300">
         <h1
           data-animate=""
@@ -70,24 +70,36 @@ export default function Home() {
         </h1>
         <div className="flex flex-col gap-3" data-animate="" basic-stagger="1">
           <p>
-            I’m a designer and technologist interested in design sprints, Lean
-            UX, agile, web technology, user/dev experience, education and open
-            source. I currently work as a service designer at{" "}
-            <Link href="https://designit.com">Designit</Link> and as an academic
-            tutor at{" "}
+            I’m a designer and technologist with a background in design sprints,
+            lean ux, agile and web technology. I currently work as a service
+            designer at{" "}
+            <Link
+              href="https://designit.com"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Designit
+            </Link>{" "}
+            and as an academic tutor at{" "}
             <span>
-              <Link href="https://sydney.edu.au">The University of Sydney</Link>
+              <Link
+                target="_blank"
+                rel="noopener noreferrer"
+                href="https://sydney.edu.au"
+              >
+                The University of Sydney
+              </Link>
             </span>
             .
           </p>
-          <p>
-            Previously, I’ve worked across public and private sector industries,
+          {/* <p>
+            Previously, I’ve worked in public and private sector industries,
             startups, local government councils, universities, utilities,
             non-profits, community groups and the events industry. I started my
             career in architecture.
-          </p>
+          </p> */}
           <p>
-            After work, you’ll find me chipping away at small web projects,
+            Outside of work, you’ll find me working on small web projects,
             bouldering, and brewing coffee.
           </p>
         </div>
@@ -95,13 +107,17 @@ export default function Home() {
 
       {/*Posts*/}
 
-      <div data-animate="" basic-stagger="2" className="sm:w-[90%]">
+      <div
+        data-animate=""
+        basic-stagger="2"
+        className=" my-8 flex flex-col gap-4 sm:w-[90%]"
+      >
         {contents.map((column) => (
           <div
             key={column.title}
-            className="border-dotted border-t-zinc-300 pb-3  dark:border-t-zinc-700  sm:border-none"
+            className="border-dotted border-t-zinc-300  dark:border-t-zinc-700  sm:border-none"
           >
-            <h2 className="my-3 text-zinc-700 dark:text-zinc-300">
+            <h2 className="mb-4 text-zinc-700 dark:text-zinc-300">
               <em>{column.title}</em>
             </h2>
             <div className="grid gap-4 sm:grid-cols-3 ">
@@ -144,16 +160,17 @@ export default function Home() {
         ))}
       </div>
       <div className="flex flex-col gap-3" data-animate="" basic-stagger="3">
-        <p>
+        {/* <p>
+          I see design as <em>realising ideas.</em>
           Some would say my design process is a little unorthodox, however this
           is overshadowed by my eagnerness to build a positive impact on
-          products, services and communtiies.
-        </p>
+          products, services and communtiies. 
+        </p>*/}
       </div>
       <div data-animate="" basic-stagger="3" className="flex flex-col gap-4">
         <Collaborators />
       </div>
-      <div data-animate="" basic-stagger="4" className="flex flex-col gap-4">
+      <div data-animate="" basic-stagger="4" className="">
         <h2>
           <em>Connect</em>
         </h2>

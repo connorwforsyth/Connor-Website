@@ -16,37 +16,46 @@ interface CollaboratorsProps {
 }
 
 export function Collaborators({ people, className }: CollaboratorsProps) {
-  const filteredCollaborators = people
+  const searchedPeople = people
     ? collaboratorsData
-        .filter((collaborator) => people.includes(collaborator.name))
-        .sort((a, b) => people.indexOf(a.name) - people.indexOf(b.name))
-    : collaboratorsData;
-
+        .filter((i) => people.includes(i.name))
+        .sort(() => 0.5 - Math.random())
+    : collaboratorsData.sort(() => 0.5 - Math.random());
   return (
     <div className={cn("mx-auto my-8 w-full max-w-2xl", className)}>
       <h2 className="mb-2">
         <em>Collaborators</em>
       </h2>
       <div className="flex flex-wrap gap-2">
-        {filteredCollaborators.map((collaborator: Collaborator) => (
+        {searchedPeople.map((i: Collaborator) => (
           <Link
             basics-link-pill=""
             className="align-center flex items-center gap-1 rounded-full bg-zinc-300 bg-opacity-70  p-1 pr-2 text-sm no-underline dark:bg-zinc-700 dark:bg-opacity-90 dark:text-zinc-100 dark:hover:text-white"
-            key={collaborator.name}
-            href={collaborator.link}
+            key={i.name}
+            href={i.link}
           >
             <Image
               className="h-6 w-6 rounded-full"
-              src={collaborator.image}
+              src={i.image}
               width={16}
               height={16}
-              alt={collaborator.name}
+              alt={i.name}
               unoptimized={true}
             />
-            <span className="translate-y-[1px] ">{collaborator.name}</span>
+            <span className="translate-y-[1px] ">{i.name}</span>
           </Link>
         ))}
       </div>
     </div>
   );
+}
+
+export function Person({ name }: { name: string }) {
+  const person = collaboratorsData.find((person) => person.name === name);
+
+  if (!person) {
+    return <div>Person not found</div>;
+  }
+
+  return <Link href={person.link}>{person.name}</Link>;
 }

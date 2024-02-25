@@ -11,7 +11,7 @@ export default function Projects() {
       <div></div>
       <BackButton label="Index" />
       <div className="mx-auto flex w-full max-w-2xl flex-col gap-8">
-        <h1 className="font-medium">Case Studies and Projects</h1>
+        <h1 className="font-medium">Projects and Case Studies</h1>
 
         <ol basic-list="" className="border-b border-zinc-300">
           {allProjects
@@ -24,23 +24,19 @@ export default function Projects() {
                 (item) => new Date(item.date).getFullYear() === year,
               );
               const element = (
-                <li key={post.title} className="">
-                  <Link className="flex" href={post.slug}>
+                <li basic-list-item="" className="">
+                  <Link className="flex " href={post.slug} key={post.title}>
                     {isFirstOfYear ? (
                       <span
                         basic-list-year=""
-                        className="flex w-24 border-t border-zinc-300 px-0 py-3 sm:w-36  sm:px-3"
+                        className="flex  w-24 border-t border-zinc-300 px-0 py-3  sm:px-3"
                       >
                         {year}
                       </span>
                     ) : (
-                      <span className=" w-24 px-0 py-3 sm:w-36 sm:px-3"></span>
+                      <span className=" w-24 px-0 py-3 sm:px-3"></span>
                     )}
-
-                    <span
-                      basic-list-item=""
-                      className="flex h-full w-full flex-grow  items-center gap-1 border-t border-zinc-300"
-                    >
+                    <span className="flex w-full flex-grow  items-center gap-1 border-t border-zinc-300">
                       <h2 className="flex-grow py-3">{post.title}</h2>
                       <time
                         className=" whitespace-nowrap py-3 text-sm"
