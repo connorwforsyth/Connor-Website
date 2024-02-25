@@ -52,7 +52,7 @@ export default function Home() {
         },
         {
           title: "Miro Design Systems",
-          description: "",
+          description: "An approach for structuring Miro boards",
           href: "/writing/miro-design-system",
         },
       ],
