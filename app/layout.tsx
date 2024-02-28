@@ -13,6 +13,14 @@ export const metadata = {
   metadataBase: new URL("https://connorforsyth.co"),
   title: "Connor Forsyth",
   description: "Design Technologist currently based in Sydney, Australia.",
+  openGraph: {
+    images: "/opengraph-image.jpg",
+    type: "website",
+    url: "https://connorforsyth.co",
+    title: "Connor Forsyth",
+    description: "Design Technologist currently based in Sydney, Australia.",
+    siteName: "Connor Forsyth",
+  },
 };
 
 interface RootLayoutProps {
