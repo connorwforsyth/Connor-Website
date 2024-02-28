@@ -1,6 +1,7 @@
 import Link from "next/link";
 import "../styles/icons.css";
 import { Collaborators } from "@/components/Collaborators";
+import Image from "next/image";
 
 export default function Home() {
   type ContentItem = {
@@ -98,6 +99,13 @@ export default function Home() {
             non-profits, community groups and the events industry. I started my
             career in architecture.
           </p> */}
+          <Image
+            width="0"
+            height="0"
+            alt="ConnorForsythHeadshot"
+            className="sr-only rounded-lg"
+            src="/images/connorforsyth-headshot.jpg"
+          />
           <p>
             Outside of work, you’ll find me working on small web projects,
             bouldering, and brewing coffee.
