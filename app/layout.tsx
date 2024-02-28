@@ -10,8 +10,9 @@ import { CSPostHogProvider } from "./providers";
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 
 export const metadata = {
+  metadataBase: new URL("https://connorforsyth.co"),
   title: "Connor Forsyth",
-  description: "Designer and Developer based in Australia",
+  description: "Design Technologist currently based in Sydney, Australia.",
 };
 
 interface RootLayoutProps {
