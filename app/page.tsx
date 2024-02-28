@@ -63,10 +63,7 @@ export default function Home() {
   return (
     <div className="mx-auto w-full max-w-2xl flex-col ">
       <div className="flex flex-col gap-3 dark:text-gray-300">
-        <h1
-          data-animate=""
-          className="pb-4 text-xl text-gray-800  dark:text-gray-50"
-        >
+        <h1 className="pb-4 text-xl text-gray-800  dark:text-gray-50">
           Connor Forsyth
         </h1>
         <div className="flex flex-col gap-3" data-animate="" basic-stagger="1">
