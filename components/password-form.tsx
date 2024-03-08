@@ -7,12 +7,7 @@ import { posthog } from "posthog-js";
 
 export default function PasswordForm() {
   const [state, formAction] = useFormState<any, FormData>(login, undefined);
-  const formName = formData.get("name") as string;
-  const formEmail = formData.get("email") as string;
-  
-  posthog.identify(formName {name: formName, email: formEmail})
 
-  
   return (
     <>
       <style jsx>{`
