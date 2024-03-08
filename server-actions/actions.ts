@@ -3,7 +3,6 @@ import { getIronSession } from "iron-session";
 import { sessionOptions, SessionData, defaultSession } from "@/lib/lib";
 import { cookies } from "next/headers";
 import { revalidatePath } from "next/cache";
-import { posthog } from "posthog-js";
 
 let password = process.env.ACCESS_CODE!;
 
@@ -25,8 +24,6 @@ export const login = async (
   const formName = formData.get("name") as string;
   const formEmail = formData.get("email") as string;
   const formPassword = formData.get("password") as string;
-
-  posthog.identify(formName, { name: formName, email: formEmail });
 
   if (formPassword !== password) {
     return { error: "Wrong access code." };
