@@ -33,6 +33,11 @@ const components = {
   CarouselPrevious,
   Collaborators,
   UIWrapper,
+  Caption: ({ children }) => (
+    <em className="mx-auto mb-4 mt-2 block w-full max-w-2xl text-center text-sm text-zinc-700 dark:text-zinc-200">
+      {children}
+    </em>
+  ),
   MiroMapLink: ({
     title,
     href,
@@ -45,7 +50,7 @@ const components = {
   }) => (
     <div
       className={cn(
-        "z-1 relative mx-auto mb-4 flex w-full max-w-2xl rounded-md border bg-white p-3 align-baseline font-medium transition-all dark:bg-zinc-950",
+        "z-1 relative mx-auto mb-4 flex w-full max-w-2xl flex-col rounded-md border bg-white p-3 text-center align-baseline font-medium transition-all dark:bg-zinc-950 sm:flex-row sm:justify-center sm:text-left",
         "shadow-none hover:shadow-[0px_0px_30px_-10px] hover:shadow-[var(--highlight)] ",
         className,
       )}
@@ -61,7 +66,7 @@ const components = {
         href={href}
         target="_blank"
         rel="noreferrer noopener"
-        className="flex items-center gap-2 bg-[var(--highlight)] p-2 px-4"
+        className="flex items-center justify-center gap-2 bg-[var(--highlight)] p-4 px-4 sm:p-2"
         style={{
           borderTopLeftRadius: ".4rem",
           borderTopRightRadius: ".4rem",
@@ -212,7 +217,13 @@ const components = {
     />
   ),
   a: ({ className, ...props }) => (
-    <a className={cn("", className)} {...props} />
+    <a
+      className={cn(
+        "box-shadow-small hover:box-shadow-full  font-[450] text-stone-900 underline-offset-4 dark:text-stone-200",
+        className,
+      )}
+      {...props}
+    />
   ),
   p: ({ className, ...props }) => (
     <p

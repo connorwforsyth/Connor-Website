@@ -1,5 +1,5 @@
 ---
-title: TEDxMelbourne
+title: 'TEDxMelbourne: Revamping digital experiences'
 description: Recrafting experiences fit for an engaged, curious community.
 date: 2021-01-02
 ---
@@ -23,9 +23,9 @@ TEDxMelbourne has been a long-term platform and playground for my practice. I'm 
 
 <Collaborators people="Jon Yeo, Aik, Tanya Simpson, Angie Kitono,"/>
 
-## Project 1
 
-### A new website for a new era.
+
+## A new website for a new era.
 <MDXCarousel>
 <Img className="p-8 lg:p-12 bg-zinc-200" src="/images/hero2-tedxmelbourne.png"/>
 <Img className="p-8 lg:p-12 bg-zinc-200" alt="
@@ -33,10 +33,7 @@ An exploration of wireframes and view options." src="/images/adobexd-image-of-wi
 </MDXCarousel>
 
 
-
-
-In 2019, TEDxMelbourne's website was in an unusable state, with bugs, unclear development standards, and broad usability issues. We redesigned and redeveloped the website from the ground up to provide a better experience for our audiences.
-
+In 2019, TEDxMelbourne's website was in an unusable state with bugs, unclear development standards, and broad usability issues. We redesigned and redeveloped the website from the ground up to provide a better experience for our audiences.
 [Read more](https://www.tedxmelbourne.com/blog/new-website-new-era) about the TEDxMelbourne Website launch.
 
 
@@ -57,75 +54,72 @@ Areas to improve that are critical to users were:
 
 ## Objectives
 
-The development of the digital experience has been an iterative process over several years. However, there have been some key principles that have led to getting the most out of the website.
+The development of the digital experience has been an iterative process over several years. The development of the new website was informed by these three principles.
 
-#### Creating a frictionless experience for attendees and organisers.
+### Creating a frictionless experience for attendees and organisers.
 
--  All new features integrate with existing tools and inform organisers in a place that suits them best.
--  CRM like automations allow interactive elements of the website, such as contact forms, and applications, inform the user when they’ve submitted an application, and the likely response time they will receive.
--  Allowing contact forms to integrate with usable back end tools have enabled us to easily audit the types of responses we receive.
+-  Custom CRM automations provide the user with instant automated feedback from requests such as volunteer, partner and speaker applications.
+-  All new features integrate with existing tools informing organisers of the new requests in platforms that suit them best such as Trello or G-Suite.
+- Automations also extend to operations team functions such as new volunteer onboarding.
 
-#### Support existing workflows
+### Support existing workflows
+-  How can we bring more value to current activities that we provide?
+-  How can our digital experience support operationally critical workflows for staff?
 
--  How can we bring more value to current activities that we provide.
--  How can our digital experience support operation critical workflows for staff?
 
-#### Be adaptive and experiment.
+### Be adaptive and experiment.
 
--  The website is a medium that brings cohesion across our digital experience, while bringing freedom to how we express and craft an experience for the audience. During the pandemic, our digital experience heavily relied on innovative ways of engaging with attendees, this brought experience such as a hybrid music festival, and interactions for user-generated content.
+-   During the pandemic, our team was pushed to come up with new ways of engaging with our audience which heavily relied on digital forms of interaction. This led us to experiment and develop experiences including but not limited to hybrid music festivals, regular [TED Circles](https://www.tedxmelbourne.com/event/designing-humanity), and events that featured user-generated content. These initiatives, particularly during a time of such disconnect, united the TEDxMelbourne community more than ever before.
 
-## Features
+## Website Features
 
+### Redeveloped TEDx Talks experience
+![Redesigned--tedxtalks-experience](/images/Redesigned--tedxtalks-experience.png)
+
+TEDxMelbourne has a catalog of over 140 talks. Hence it was important for us to consider how a user could filter through these talks to find useful ones that they wanted to view. We leveraged [Finsweet's CMS filtering system](https://finsweet.com/attributes/cms-filter) to filter results on the search page.
+
+As an experiment to make the website feel more bespoke and native, I developed a custom video player using [plyr.io](https://plyr.io).
+
+<br />
+
+__In development:__
+
+We hope to add in-page, indexable video transcripts to each of the TEDxMelbourne Talks.
+
+
+### About TEDxMelbourne and team recognition
+![TEDxTeam-page](/images/TEDxTeam-page.png)
+
+As a volunteer organisation, we aim to give as much recognition to the people behind TEDxMelbourne.
+
+This also helps the audience, especially for those who are interested to join and get involved, understand the overall structure of TEDxMelbourne and the value that each team brings to the organisation.
+{/* Potentially add something here relating to the goal of adding info about recruitment challenges */}
+
+### Integrations with event platforms
+![eventbrite-feature-1](/images/eventbrite-feature-1.svg)
+
+TEDxMelbourne has used Eventbrite as our ticketing plaform for over 10 years. Using Eventbrite's public API, our team was able to integrate and push events to the website's content management system.
+
+### User experience and event accessibility
 ![accessibility-feature-tedx](/images/accessibility-feature-tedx.png)
 
-#### User experience and event accessibility
 
 TEDxMelbourne is undergoing a major exercise in addressing accessibility needs across our service experience.
 
-An initial change has been to focus on wayfinding and navigation across our web experience. We rebuilt our navigation bar and tested using keyboard travel and tested using a screen reader.
+An initial change has been to focus on wayfinding and navigation across our website. We rebuilt our navigation bar and tested using keyboard travel and screen readers.
 
 
-<Img className="bg-zinc-100 max-w-5xl aspect-auto"src="/images/flow-for-accessibility-questions.svg"/>
+<Img alt="Decision workflow for addressing accessibility challenges." className="bg-zinc-100 max-w-5xl aspect-auto"src="/images/flow-for-accessibility-questions.svg"/>
 
 
-Outside of our web experience, we’re working on some preliminary workflows and checklists for accessible events. Above is a decision process for working through accessible challenges.
+Outside of our web experience, we’re working on some preliminary workflows and checklists for accessible events.
 
-
-![Redesigned--tedxtalks-experience](/images/Redesigned--tedxtalks-experience.png)
-
-#### Redeveloped TEDx Talks experience
-
-TEDxMelbourne has a catalog of over 140 talks. Hence it was important for us to consider how a user could filter through these talks to find useful talks that connected with them. Dynamic Filtering system based on keywords and text filtering for the browsing page.
-
-Furthermore, the video page itself was aimed to focus the users towards the content to the talk itself. Including having recommended videos based on similar categories and the date of the talk. I developed a custom UI video player using plyr.io, which allows us to build brand cohesion through the experience.
-
-Our next feature that we hope to add to the talks page is a transcription button.
-
-
-
-![TEDxTeam-page](/images/TEDxTeam-page.png)
-
-#### Team recognition / organisation info experience
-
-As a volunteer organization, it was necessary to give as much recognition to the people behind TEDxMelbourne for what they deserve. So the TEDxMelbourne team section was given particular importance.
-
-This also helps the audience understand the overall structure of a TEDx team if they want to join or get involved.
-
-
-
-![eventbrite-feature-1](/images/eventbrite-feature-1.svg)
-
-#### Clean integrations with critical platforms
-
-Using API integrations, our team was able to use Eventbrite for event organizing features yet seamlessly integrate it within the website experience.
 
 ## Outcomes
 
 ### Outcomes for the organization:
 
--  Having a usable web experience has helped the organization maintain footing over their customer journey.
--  It’s empowered the organization to be experimental with their audience interactions.
--  It’s centralized the brand’s output and has given the audience something to be proud of.
+A usable web experience has helped the organization maintain customer relationships. This has allowed the organization to experiment with audience interactions. It has also centralized the brand's output, giving the audience something to take pride in.
 
 ### Outcomes for users:
 
