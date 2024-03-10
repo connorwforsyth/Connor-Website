@@ -15,7 +15,7 @@ export default function Texture() {
             baseFrequency="1"
           />
           <feComponentTransfer in="coloredNoise">
-            <feFuncA type="linear" slope="0.3" />
+            <feFuncA type="linear" slope="0.4" />
           </feComponentTransfer>
         </filter>
       </svg>
