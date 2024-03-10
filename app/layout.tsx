@@ -35,7 +35,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
           rel="preload"
           href="/fonts/KynetonArtGrotesqueVF.ttf"
           as="font"
-          type="font/woff2"
+          type="font/ttf"
           crossOrigin="anonymous"
         />
         <link
@@ -49,7 +49,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
       <body className={`relative bg-zinc-100 antialiased dark:bg-zinc-900`}>
         <Offline />
         <div className="blur"></div>
-        <Texture />
+        {/* <Texture /> */}
 
         <Providers>
           <CSPostHogProvider>
