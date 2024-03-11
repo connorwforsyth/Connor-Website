@@ -38,7 +38,7 @@ export default function PasswordForm() {
         }
       `}</style>
       <div className="mx-auto mt-4 max-w-2xl">
-        <form action={formAction} className="flex max-w-sm flex-col gap-4">
+        <form action={formAction} className="flex max-w-sm flex-col gap-5">
           <label className="flex flex-col gap-2">
             Name
             <input
@@ -57,24 +57,24 @@ export default function PasswordForm() {
             />
           </label>
           <label className="flex flex-col gap-2">
-            <div className="flex w-full justify-between">
-              Access Code
-              {state?.error && (
-                <div className="error flex gap-1 text-red-500 dark:text-red-400">
-                  <ExclamationCircleIcon className="text-medium h-auto w-5" />
-                  <p className="">{state.error}</p>
-                </div>
-              )}
-            </div>
+            Access Code
             <input
               className="rounded-lg border border-zinc-500 bg-transparent p-2 px-3"
               name="password"
               type="password"
               required
             />
+            {state?.error ? (
+              <div className="error flex h-5 gap-1 text-red-500 dark:text-red-400">
+                <ExclamationCircleIcon className="text-medium h-auto w-5" />
+                <p className="">{state.error}</p>
+              </div>
+            ) : (
+              <div className="h-5"></div>
+            )}
           </label>
           <button
-            className="rounded-lg bg-zinc-900 p-3 text-zinc-50 dark:bg-zinc-50 dark:text-black sm:w-32"
+            className="rounded-lg bg-zinc-900 p-2 text-zinc-50 dark:bg-zinc-50 dark:text-black sm:w-32"
             type="submit"
           >
             Submit

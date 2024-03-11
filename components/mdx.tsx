@@ -24,6 +24,7 @@ export function UIWrapper({ children }: { children: React.ReactNode }) {
 }
 
 const components = {
+  Image,
   Person,
   MDXCarousel,
   Carousel,
@@ -227,20 +228,17 @@ const components = {
   ),
   p: ({ className, ...props }) => (
     <p
-      className={cn(
-        "mx-auto mb-1 mt-1 max-w-2xl leading-7 [@is:not(first-child)]:mt-10",
-        className,
-      )}
+      className={cn("mx-auto mt-4 max-w-2xl leading-7", className)}
       {...props}
     />
   ),
   ul: ({ className, ...props }) => (
-    <div className="mx-auto my-6 max-w-2xl ">
+    <div className="mx-auto mb-6 max-w-2xl ">
       <ul className={cn("ml-6 list-disc", className)} {...props} />
     </div>
   ),
   ol: ({ className, ...props }) => (
-    <div className="mx-auto my-6 max-w-2xl ">
+    <div className="mx-auto max-w-2xl ">
       <ol className={cn("ml-6 list-decimal", className)} {...props} />
     </div>
   ),

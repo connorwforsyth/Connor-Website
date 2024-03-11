@@ -3,80 +3,125 @@ title: "TEDxMelbourne: Hybrid Event Experiences"
 date: 2020-12-07
 description: In late 2020, TEDxMelbourne wanted to introduce an event that celebrates the creative and artistic individuals of our community.
 ---
+  <Img
+    type="hero"
+    ImgClassName="rounded-xl max-w-2xl"
+    className="from-red-500 to-red-600"
+    src="/projects/united/1.jpg"
+  />
+
+## A hybrid event experience to reconnect artists of the TEDxMelbourne community
 
 The aim was to create an engaging experience for both online and in-person attendees.
 
-This event also introduced an ambitious audience interaction — Artist Pass. This offered artists the chance to be shared on our website and event marketing collateral.
+This event also introduced an ambitious audience interaction — the _Artist Pass_. This offered artists the opportunity to share their music and art as part of the event curation and marketing collateral.
 
-| _Role_          |
-| --- |
+<Collaborators people="Jon Yeo, Aik, Tanya Simpson, Angie Kitono," />
+_Role_
  - UI/UX Design and Development
  - Technical Support and Coordination
  - Art Direction Partner
 
+ _View website:_
+[tedxmelbourne.com/music-salon/artist-catalogue](http://tedxmelbourne.com/music-salon/artist-catalogue)
 
-<Collaborators people="Jon Yeo, Aik, Tanya Simpson, Angie Kitono," />
 
-
-## A hybrid event experience to reconnect the artists of the TEDxMelbourne community
-
-<MDXCarousel>
+<div className="md:grid-cols-3 mb-[-1rem] grid max-w-6xl sm:gap-4 w-full mx-auto items-end">
   <Img
     ImgClassName="rounded-xl"
-    className="border-none"
-    src="/projects/united/1.jpg"
-  />
-  <Img
-    ImgClassName="rounded-xl"
-    className="border-none"
+    className="border-none p-0 aspect-auto lg:p-0 my-0"
     src="/projects/united/2.jpg"
   />
   <Img
     ImgClassName="rounded-xl"
-    className="border-none"
+    className="border-none p-0 aspect-auto lg:p-0 my-0"
     src="/projects/united/3.jpg"
   />
   <Img
     ImgClassName="rounded-xl"
-    className="border-none"
+    className="border-none p-0 aspect-auto lg:p-0 my-0"
     src="/projects/united/4.jpg"
   />
-</MDXCarousel>
+</div>
+<Caption>Snapshots from the in-person event.</Caption>
 
 
-View website:
+## Background
 
-[tedxmelbourne.com/music-salon/artist-catalogue](http://tedxmelbourne.com/music-salon/artist-catalogue)
+Through preliminary audience research with focus groups conducted in partnership with [Prime Motive](https://primemotive.com.au/), we learned that the TEDxMelbourne community value seeing everyday Melburnians celebrated on the TEDxMelbourne stage.
 
-<Img className="mt-24 relative aspect-[3/2] max-w-4xl w-full overflow-y-scroll h-full block p-0 lg:p-0" src="/projects/united/united-webpage.png"/>
-<Caption>The Artist Catalogue of TEDxMelbourne. Embeded from Webflow.</Caption>
+Furthermore, we learned that the TEDxMelbourne audience wants more events that showcase the cultural features of Melbourne, such as music, arts and creativity.
+
+## Challenge
+
+- We embarked on an event concept that placed Melbourne artists as the central focus.
+- Given the uncertainty of events at the time, this event would be positioned to be hybrid. Making it accessible to audiences in-person and online.
+- To celebrate the Melbourne community, we created the Artist Pass, giving artists free access to be part of the event and a platform to share their art.
 
 
-### Background
 
-- Through preliminary research done by focus groups with consultancy Prime Motive, the TEDxMelbourne audience desire authentic interactions and collaboration with sharing their own TEDx story or message. Not everyone can be a speaker. But there can be other ways of expressing this.
 
-### Solutions
+## Event Blueprint
 
-- Creating an event that’s central to cultural features of Melbourne, music, Arts, Creativity.
-- Providing an alternative platform for our audience to express themselves through TEDxMelbourne.
-- Creating a frictionless experience for artists to receive free access to our event while also getting a platform for themselves to share their art.
+What our team had proposed was ambitious for a fully volunteer team to deliver. The technology and streaming capabilities was also something that few in our team had addressed before. In order to prototyping and walkthrough the event ahead of time, we produced a detailed service blueprint[^1].
 
-### Challenges
 
-- Designing and delivering a hybrid (in-person and virtual) music festival.
-- Building a platform and workflow for parsing and optimizing user generated content.
-- Coordinating a secure access for paid online events.
+<Img
+  className="aspect-auto max-w-screen-2xl overflow-clip bg-white p-4 dark:bg-white"
+  src="/images/MED-white-United-Service-Blueprint---TEDxMelbourne-Music-Salon-Event-Blueprint.jpg"
+  alt=""
+/>
+<MiroMapLink
+  title="Service Blueprint for Music Salon Event"
+  href="https://miro.com/app/board/uXjVO6grHdY=/?share_link_id=779527562585"
+  linkText="Open In Miro"
+/>
 
-## Prototyping
+## Hybrid event design
+
+The design of the event required experimentation and collaboration between team members. This space was new for most of us however we were up for the challenge.
+
+Snapshot of wireframes of the artist catalogue. As I handle both UX design and development of this project, the development was deployed in an iterative process.
+<br />
+
+
+<Img
+  className="max-w-2xl aspect-auto p-0 lg:p-0"
+  src="/projects/united/united-password.gif"
+  alt=""
+/>
+
+<br />
+
+We created a custom access screen to protect page access. Thanks <Person name="Angie Kitono" /> for the amazing branding work for this event. This was one of the first event where the art direction was shared across all platforms.
+<br />
+
+
+<Img
+  className="mt-6 aspect-auto max-w-2xl overflow-clip p-4 dark:bg-neutral-400"
+  src="/images/prototyping-eventpage.png"
+  alt=""
+/>
+<br />
+
+We initially made some mockups of what we believed the in-page experience could be like, complete with the [Artist Pass](http://tedxmelbourne.com/music-salon/artist-catalogue) gallery.
+
+Throughout 2020, we learned that audience interaction was a key value point for our events. Hence we paid particular attention to where the live chat would be positioned on the webpage.
+<br />
 
 ### User generated content
 
-Creating a system for handling user generated content at scale was a challenge of journey mapping and web development, requiring rigorous testing and coordination. The solution meant that artists could easily submit a profile and once approved, would immediately appear on our site.
-<MDXCarousel>
-<Img className="aspect-auto dark:bg-zinc-200 max-w-2xl"src="/images/user-journey-for-artists-pass.png" />
-<Img className="max-w-4xl dark:bg-zinc-200"src="/images/wireframe-for-artis-wall.png" alt="Snapshot of wireframes of the artist catalogue. As I handle both UX design and development of this project, the development was deployed in an iterative process."/>
-</MDXCarousel>
+Creating a system for handling user generated content at scale was a challenge of journey mapping and web development, requiring rigorous testing and coordination.
+
+The solution meant that artists could easily submit a profile and once approved, would immediately appear on our site.
+
+
+The high level process involved:
+1. User uploads their artist information to a web form.
+2. Information is approved manually, to ensure quality of applicants.
+3. The information is then piped through a series of APIs to optimise the image and to create sharable social assets.
+4. The information is pushed through to Webflow's CMS.
+5. The user recieves an automated message with a unique sharable link to their webpage.
 
 ### Web application API Journey for User Generated Content
 
@@ -85,49 +130,37 @@ The following scenario was built with Integromat. [Watch Video Walkthrough](/wri
   className="aspect-auto max-w-2xl  bg-[#F8F8F8] dark:bg-[#F8F8F8]   p-3 lg:p-8"
   src="/images/Intergromat-workflow.png"
 />
+<br/>
+Leveraging Integromat for low-code automations to connect APIs enabled us to build a CRUD app for Webflow CMS. This experiment pushed the boundaries of low-code development. One highlight was automating graphic design asset creation, like opengraph images, using Google Slides's API. I had hoped Canva had a public API, but it seemed unavailable then.
+<br/>
+<div className="grid md:grid-cols-2 gap-4 max-w-6xl mx-auto">
+<Img alt="The journey for artists passes. " className="aspect-auto p-3 lg:p-3 dark:bg-zinc-200 max-w-2xl"src="/images/user-journey-for-artists-pass.png" />
+<Img className="max-w-4xl p-3 lg:p-3 dark:bg-zinc-200"src="/images/wireframe-for-artis-wall.png" alt="Snapshot of wireframes of the artist catalogue. As I handle both design and development of this project, I would freely work between the code and wireframes to iteratively progress towards the final product."/>
+</div>
 
-Integromat allowed us to integrate various apps and flows using APIs. Allowing for app like interaction within a low-code environment. If you’re curious to learn more about what is happening in the above, watch my video that talks through it.
 
+### United Artist Catalogue
+<Img className="mt-12 relative aspect-[3/2] max-w-4xl w-full overflow-y-scroll h-full block p-0 lg:p-0" src="/projects/united/united-webpage.png"/>
+<Caption>The Artist Catalogue of TEDxMelbourne. Embeded from Webflow.</Caption>
 
-## Hybrid event design
-
-The design of the event required experimentation and collaboration between team members. This space was new for most of us however we were up for the challenge.
-
-Snapshot of wireframes of the artist catalogue. As I handle both UX design and development of this project, the development was deployed in an iterative process.
-
-<Img
-  className="mt-6 aspect-auto max-w-2xl overflow-clip p-4 dark:bg-neutral-400"
-  src="/images/prototyping-eventpage.png"
-  alt="Service Blueprint for Music Salon Event"
-/>
-
-<Img
-  className="aspect-auto overflow-clip bg-white p-4 dark:bg-white"
-  src="/images/MED-white-United-Service-Blueprint---TEDxMelbourne-Music-Salon-Event-Blueprint.jpg"
-  alt="Service Blueprint for Music Salon Event"
-/>
-<MiroMapLink
-  title="Service Blueprint for Music Salon Event"
-  href="https://miro.com/app/board/uXjVO6grHdY=/?share_link_id=779527562585"
-  linkText="Open In Miro"
-/>
 
 ## Learnings
 
 The design of the event required experimentation and collaboration between team members. This space was new for most of us however we were up for the challenge.
 
-To unpack and understand what would be required to run this event, we steps through every part of the event delivery in the form of a service blueprint.
-
-The process of mapping the journey allowed us to test and question aspects of the event, well ahead of the event launch.
+The activity of service blueprinting allowed us to test and answer questions around aspects of the event ahead of the event launch.
 
 ## Outcomes
 
-**Outcomes for the organization:**
-
+**Outcomes for the organisation:**
 - The artist pass catalog accounted for 8% of total unique page views across the TEDxMelbourne domain during Q1 of 2021, and the website saw a website viewership increase of 16%.
 - The organization gained strengths in experimentation, which has led us to push events further.
 
 **Outcomes for users:**
-
 - The event introduced new ways to engage with TEDxMelbourne and have a platform to be heard.
-- Participants from around the world had the ability to engage with TEDxMelbourne in a more authentic way than ever.
+- Participants from around the world had the ability to engage with TEDxMelbourne in a more authentic way than ever before.
+
+
+
+[^1]: A service blueprint is a form of journey mapping that illustrates interactions occurring along a linear timeline. The defining characteristic and primary purpose of service blueprints is to visualize interactions that are occurring for the customer experience as well as for the employee experience. This is commonly referred to as "Back of House" and "Front of House" interactions.
+
