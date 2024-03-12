@@ -32,7 +32,7 @@ export default function Home() {
         },
         {
           title: "TEDxMelbourne",
-          description: "Evolving the digital and inperson experience.",
+          description: "Evolving digital and in-person experiences.",
           href: "projects/tedxmelbourne",
           external: true,
         },
@@ -53,7 +53,7 @@ export default function Home() {
         },
         {
           title: "Miro Design Systems",
-          description: "An approach for structuring Miro boards",
+          description: "An atomic structure for Miro workshops.",
           href: "/writing/miro-design-system",
         },
       ],
@@ -69,7 +69,7 @@ export default function Home() {
         <div className="flex flex-col gap-3" data-animate="" basic-stagger="1">
           <p>
             I’m a designer and technologist with a background in design sprints,
-            lean ux, agile and web technology. I currently work as a service
+            lean ux, agile and web development. I currently work as a service
             designer at{" "}
             <Link
               href="https://designit.com"
@@ -105,7 +105,8 @@ export default function Home() {
           />
           <p>
             Outside of work, you’ll find me working on small web projects,
-            bouldering, and brewing coffee.
+            geeking out to music, and brewing filter coffee. Day by day, working
+            to improve all aspects of my craft.
           </p>
         </div>
       </div>
