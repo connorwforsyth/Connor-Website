@@ -101,7 +101,7 @@ export default function Home() {
             height="0"
             alt="ConnorForsythHeadshot"
             className="sr-only rounded-lg"
-            src="/images/connorforsyth-headshot.jpg"
+            src="/connorforsyth-headshot.jpg"
           />
           <p>
             Outside of work, you’ll find me working on small web projects,
