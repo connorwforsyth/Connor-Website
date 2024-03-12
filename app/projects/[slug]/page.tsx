@@ -52,8 +52,9 @@ const page = async ({ params }: PageProps) => {
       <>
         <Header />
         <p className="mx-auto w-full max-w-2xl">
-          Hey {session.name} 👋. Thanks for checking out my portfolio. If you
-          have any questions, please reach out.
+          Hey {session.name} 👋 Thanks for checking out my portfolio. Just a
+          reminder to please keep this project confidential. If you have any
+          questions, please reach out.
         </p>
         <Mdx code={doc.body.code} />
       </>
