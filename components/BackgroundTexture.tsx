@@ -9,13 +9,9 @@ export default function Texture() {
       ></div>
       <svg width={0} height={0} className="absolute inset-0">
         <filter id="grainy">
-          <feTurbulence
-            type="turbulence"
-            seed={20 * Math.random()}
-            baseFrequency="1"
-          />
+          <feTurbulence type="turbulence" seed={2} baseFrequency="1" />
           <feComponentTransfer in="coloredNoise">
-            <feFuncA type="linear" slope="0.4" />
+            <feFuncA type="linear" slope="0.1" />
           </feComponentTransfer>
         </filter>
       </svg>

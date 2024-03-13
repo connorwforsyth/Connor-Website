@@ -30,27 +30,10 @@ interface RootLayoutProps {
 export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <html lang="en">
-      <head>
-        <link
-          rel="preload"
-          href="/fonts/KynetonArtGrotesqueVF.ttf"
-          as="font"
-          type="font/ttf"
-          crossOrigin="anonymous"
-        />
-        <link
-          rel="preload"
-          href="/fonts/Rodney-LightItalic.woff"
-          as="font"
-          type="font/woff2"
-          crossOrigin="anonymous"
-        />
-      </head>
       <body className={`relative bg-zinc-100 antialiased dark:bg-zinc-900`}>
         <Offline />
         <div className="blur"></div>
-        {/* <Texture /> */}
-
+        <Texture />
         <Providers>
           <CSPostHogProvider>
             <div className="flex min-h-screen flex-col">

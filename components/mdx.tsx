@@ -220,7 +220,7 @@ const components = {
   a: ({ className, ...props }) => (
     <a
       className={cn(
-        "box-shadow-small hover:box-shadow-full  font-[450] text-stone-900 underline-offset-4 dark:text-stone-200",
+        "box-shadow-small hover:box-shadow-full font-[450] text-zinc-900 underline-offset-4 dark:text-white",
         className,
       )}
       {...props}
@@ -228,7 +228,10 @@ const components = {
   ),
   p: ({ className, ...props }) => (
     <p
-      className={cn("mx-auto mt-4 max-w-2xl leading-7", className)}
+      className={cn(
+        "mx-auto mt-4 max-w-2xl leading-7 dark:text-[#e4e4e4]",
+        className,
+      )}
       {...props}
     />
   ),
@@ -281,7 +284,7 @@ const components = {
   td: ({ className, ...props }) => (
     <td
       className={cn(
-        " text-left  [&[align=center]]:text-center [&[align=right]]:text-right",
+        " text-left align-top [&[align=center]]:text-center [&[align=right]]:text-right",
         className,
       )}
       {...props}
@@ -294,7 +297,7 @@ const components = {
     />
   ),
   code: ({ className, ...props }) => (
-    <code className={cn("text-sm ", className)} {...props} />
+    <code className={cn("text-sm", className)} {...props} />
   ),
 };
 

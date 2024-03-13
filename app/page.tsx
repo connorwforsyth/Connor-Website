@@ -62,8 +62,8 @@ export default function Home() {
 
   return (
     <div className="mx-auto w-full max-w-2xl flex-col ">
-      <div className="flex flex-col gap-3 dark:text-gray-300">
-        <h1 className="pb-4 text-xl text-gray-800  dark:text-gray-50">
+      <div className="flex flex-col gap-3 dark:text-zinc-300">
+        <h1 className="pb-4 text-xl text-zinc-800  dark:text-zinc-50">
           Connor Forsyth
         </h1>
         <div className="flex flex-col gap-3" data-animate="" basic-stagger="1">
@@ -116,14 +116,14 @@ export default function Home() {
       <div
         data-animate=""
         basic-stagger="2"
-        className=" my-8 flex flex-col gap-4 sm:w-[90%]"
+        className=" my-8 flex flex-col gap-4 sm:w-[95%]"
       >
         {contents.map((column) => (
           <div
             key={column.title}
             className="border-dotted border-t-zinc-300  dark:border-t-zinc-700  sm:border-none"
           >
-            <h2 className="mb-4 text-zinc-700 dark:text-zinc-300">
+            <h2 className="mb-4 text-zinc-700 dark:text-zinc-100">
               <em>{column.title}</em>
             </h2>
             <div className="grid gap-4 sm:grid-cols-3 ">

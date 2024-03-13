@@ -4,24 +4,106 @@
 
 @font-face {
   font-family: "kag";
-  src: url(/fonts/KynetonArtGrotesqueVF.ttf) format("woff2");
-  font-weight: 100, 200, 300, 500, 600, 700, 800, 900;
-  font-style: light, medium, italic, bold;
-  font-display: optional;
+  src: url("/fonts/KAG/KynetonArtGrotesque-Light.woff2") format("woff2");
+  font-weight: 200;
+  font-style: normal;
+  font-display: swap;
 }
 
 @font-face {
-  font-family: "rodney";
-  src: url(/fonts/Rodney-LightItalic.woff2) format("woff2");
+  font-family: "kag";
+  src: url("/fonts/KAG/KynetonArtGrotesque-Regular.woff2") format("woff2");
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "kag";
+  src: url("/fonts/KAG/KynetonArtGrotesque-DemiBold.woff2") format("woff2");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "kag";
+  src: url("/fonts/KAG/KynetonArtGrotesque-Bold.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "kag";
+  src: url("/fonts/KAG/KynetonArtGrotesque-Black.woff2") format("woff2");
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* // Italic styles */
+@font-face {
+  font-family: "kag";
+  src: url("/fonts/KAG/KynetonArtGrotesque-LightItalic.woff2") format("woff2");
+  font-weight: 200;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "kag";
+  src: url("/fonts/KAG/KynetonArtGrotesque-Italic.woff2") format("woff2");
   font-weight: 300;
   font-style: italic;
   font-display: swap;
 }
 
 @font-face {
-  font-family: "rodney-medium";
-  src: url(/fonts/Rodney-RegularItalic.woff) format("woff");
+  font-family: "kag";
+  src: url("/fonts/KAG/KynetonArtGrotesque-DemiBoldItalic.woff2")
+    format("woff2");
   font-weight: 500;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "kag";
+  src: url("/fonts/KAG/KynetonArtGrotesque-BoldItalic.woff2") format("woff2");
+  font-weight: 700;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "kag";
+  src: url("/fonts/KAG/KynetonArtGrotesque-BlackItalic.woff2") format("woff2");
+  font-weight: 900;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "rodney";
+  src: url(/fonts/Rodney/Rodney-RegularItalic.woff2) format("woff2");
+  font-weight: 300;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "rodney";
+  src: url(/fonts/Rodney/Rodney-MediumItalic.woff2) format("woff");
+  font-weight: 500;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "rodney";
+  src: url(/fonts/Rodney/Rodney-BoldItalic.woff2) format("woff");
+  font-weight: 600;
   font-style: italic;
   font-display: swap;
 }
@@ -133,6 +215,8 @@ body {
   }
 
   * {
+    @apply leading-relaxed;
+    text-wrap: pretty;
     scrollbar-width: thin;
     scrollbar-color: hsla(0, 0%, 100%, 0.5) none;
   }
@@ -158,6 +242,7 @@ body {
   .font-rodney-medium {
     font-family: rodney, serif;
     font-weight: 600;
+    font-style: italic;
   }
 
   body {
@@ -165,20 +250,16 @@ body {
   }
 
   .box-shadow-small {
-    box-shadow: inset 0px 0px 3px -4px var(--highlight-light);
-    @apply inline px-[1px]  text-[var(--text-highlight)] underline decoration-[var(--highlight-light)] transition-all hover:text-[var(--text-highlight)] hover:no-underline;
-    text-decoration-thickness: 1px;
-    text-underline-offset: 1px;
+    box-shadow: inset 0px -1.5px 0px 0px var(--highlight);
+    @apply inline px-[1px] pb-[2px]  font-[450] text-[var(--text-highlight)] transition-all hover:text-[var(--text-highlight)];
     transition-property: all;
     transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-    transition-duration: 300ms;
-
-    padding-top: 4px;
+    transition-duration: 200ms;
   }
 
   .box-shadow-full {
-    box-shadow: inset 0px -50px 0px 0px var(--highlight);
-    padding-top: 4px;
+    @apply font-[450];
+    box-shadow: inset 0px -24px 0px 0px var(--highlight);
   }
 
   .box-shadow-small-pill {
@@ -196,19 +277,22 @@ body {
   }
 
   p a {
-    @apply box-shadow-small hover:box-shadow-full  font-[450] text-stone-900 underline-offset-4 dark:text-stone-200;
+    @apply box-shadow-small hover:box-shadow-full   text-zinc-900 underline-offset-4 dark:text-zinc-200;
   }
 
+  p code {
+    @apply mx-[1px] rounded-sm border px-[2px];
+  }
   table a {
-    @apply box-shadow-small hover:box-shadow-full  font-[450] text-stone-900 underline-offset-4 dark:text-stone-200;
+    @apply box-shadow-small hover:box-shadow-full  text-zinc-900 underline-offset-4 dark:text-zinc-200;
   }
 
   [basics-link] {
-    @apply box-shadow-small hover:box-shadow-full  font-[450] text-stone-900 underline-offset-4 dark:text-stone-200;
+    @apply box-shadow-small hover:box-shadow-full   text-zinc-900 underline-offset-4 dark:text-zinc-200;
   }
 
   [basics-link-pill] {
-    @apply box-shadow-small-pill hover:box-shadow-full-pill  font-[450] text-stone-900 underline-offset-4 dark:text-stone-200;
+    @apply box-shadow-small-pill hover:box-shadow-full-pill  text-zinc-900 underline-offset-4 dark:text-zinc-200;
   }
 
   .blur {
