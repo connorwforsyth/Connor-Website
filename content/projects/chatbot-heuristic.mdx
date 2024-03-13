@@ -7,10 +7,133 @@ protected: true
 
 <Collaborators people="Andrew Barrie"/>
 
+## Overview
+Woolworths is the leading grocery supplier in Australia serving millions Australians daily. They've invested heavily into digital experiences and ecommerce, with nearly a majority of their transactions happening through their ecommerce website.
+
+
+
+## Challenge
+
+<Img className="max-w-2xl items-end p-0 lg:p-0 pt-64 cpx-32" ImgClassName="object-scale-down" src="/projects/woolies-chat/olive.png"/>
+WooliesX, Woolworths's digital capability, operates a suite of chatbots that collectively handly 10,000 conersation per day across multiple brands and e-commerce sites.
+
+This conversational UI is an important component of Woolies' digital customer service strategy. However, to date, they have found it difficult to increase user adoption and enable more opportunities for self-service.
+
+> WooliesX engaged Designit to help evaluate the performance of these services and identify areas where customer service interaction could be improved.
+
+## Our Process
+
+- We worked with the client to define the key tasks that were key to get right to deliver a great customer service.
+
+
+### Conversation design
+
+So to get our heads around how we would best research and describe our analysis, we leveraged the principles and language of conversation designers to build an anatomy of what users say.
+- We levaged principles from conversational design[^1] and read up on some practices and techniques from likes of [Erika Hall](https://abookapart.com/products/conversational-design), [Diana Deibel](https://twitter.com/dianadoesthis) and [Rebecca Evanhoe](https://twitter.com/revanhoe).
+
+<div className="grid my-3 max-w-xl mx-auto gap-4 grid-cols-2">
+<div className="flex items-center justify-center">
+<img className="max-h-80" src="/projects/woolies-chat/conversation-design.png"/>
+</div>
+<div className="flex items-center justify-center">
+<img className="max-h-80" src="/projects/woolies-chat/conversations-with-things.png"/>
+</div>
+</div>
+<Caption>Selected books of study as part of this project.</Caption>
+
+<br/>
+#### Utterances and intents
+We would be approaching the hueristic evaluation through a task based lens. Within conversaion design, tasks are commonly refered to as Intents[^2], not to confused with utterances[^3].
+<br/>
+<Img className="max-w-3xl mx-auto rounded-lg overflow-clip" type="slide" src="/projects/woolies-chat/intent-examples.png"/>
+<Caption>Socialization session with our design team to review the nuances of conversation design terminology.</Caption>
+
+### Chosen Heuristics
+
+A heurstic[^4] evaluation isn't commonly used for evaluating the experience of a chatbot, nevertheless, we could certainly adopt an evaulation to measure the performance of the chatbot.
+
+We leveraged a combination of the [NN/g principles](https://www.nngroup.com/articles/ten-usability-heuristics/) as well as [Tog's List](https://www.designprinciplesftw.com/collections/first-principles-of-interaction-design) of First principles of interaction to arrive at our chosen heuristics.
+
+| Metrics | Heuristics | 
+| --- | --- |
+| Time on tasks (Seconds)<br/>Severity (0-1-2-3)<br/> Task Completion (0-1-2) | - Match between the system and the real world <br/> - Findability and Discoverability <br/> - Recognition rather than recall <br /> - Aesthetics and Minimalist Design|
+
+
+### Conducting the heuristic evaluation
+
+To complete and document the evaluation, our team decided to use a combination of notion databases and loom to screen record each of our processes.
+
+Three of us evaluated to minimize bias and obtain a variety of test results.
+
+Using templated databases within notion enabled us to quickly setup a testing file that was consistent and all linked back to master databases.
+
+This also meant that we could rollup the results from each test to do some high level benchmarking against each of the intents, hueristics and severity
+
 <MDXCarousel>
-<Img src="/projects/woolies-chat/Front-cover.png" type="slides"/>
-<Img src="/projects/woolies-chat/Intro.png" type="slides"/>
-<Img src="/projects/woolies-chat/Challenge.png" type="slides"/>
-<Img src="/projects/woolies-chat/Approach.png" type="slides"/>
-<Img src="/projects/woolies-chat/Impact.png" type="slides"/>
+<Img className="max-w-3xl mx-auto p-14 lg:p-14 dark:bg-indigo-600"src="/projects/woolies-chat/notion/notion-gif.gif" alt="Sandbox environemnt I set up for the team."/>
+<Img alt="Notion was what we used to run the evaluation." className="max-w-3xl mx-auto  dark:bg-indigo-600"src="/projects/woolies-chat/notion/notion-1.png"/>
+<Img alt="Overview of the DB structure and research structure."className="max-w-3xl mx-auto  dark:bg-indigo-600"src="/projects/woolies-chat/notion/database-structure.png"/>
+<Img alt="View of the databases" className="max-w-3xl mx-auto  dark:bg-indigo-600"src="/projects/woolies-chat/notion/notion-twopages.png"/>
+<Img alt="View of the issues page." className="max-w-3xl p-12 mx-auto  dark:bg-indigo-600"src="/projects/woolies-chat/notion/issue-page.png"/>
 </MDXCarousel>
+
+### Deliverables:
+In total, we conducted an evaluation of 6 key journeys, each of which was crucial across the three different chatbots we assessed.
+
+We provided a report outlining key findings, recommendations, and design explorations. Additionally, we delivered the heuristic evaluation as raw data, ready for them to upload into their backlog to start working on in their sprint cycles.
+<br/>
+
+<MDXCarousel>
+<Img src="/projects/woolies-chat/deliverable/1.png" alt="The six intents we chose for the evaluation." type="slides"/>
+<Img alt="Example issue identified and inspiration of best-in-class chatbots." src="/projects/woolies-chat/deliverable/2.png" type="slides"/>
+<Img alt="Example recommendations as 'What ifs.'" src="/projects/woolies-chat/deliverable/3.png" type="slides"/>
+<Img alt="Example of a transparent chatbot interface." src="/projects/woolies-chat/deliverable/4.png" type="slides"/>
+<Img alt="Overview pages and key metrics." src="/projects/woolies-chat/deliverable/5.png" type="slides"/>
+<Img alt="Deliverable as csv for easy upload and backlog." src="/projects/woolies-chat/deliverable/6.png" type="slides"/>
+<Img alt="Some basic visualisation and of evaluation results." src="/projects/woolies-chat/deliverable/7.png" type="slides"/>
+
+</MDXCarousel>
+
+
+
+## Learnings
+
+This was my first deep dive into conversational design, and reflecting on where the state of interaction is heading, conversational design is going to be more and more important through chat based or language based interfaces.
+
+This project was rewarding as it enabled us to focus deeply on the needs and intents of the user. In some projects, lots of content and workshops get in the way of just focusing and designing for the task at hand.
+
+div className=" my-5 max-w-2xl mx-auto w-full gap-4 grid md:grid-cols-2">
+<p>
+Loved 😍
+- Leveraging Notion + Loom to systemise the research phase.
+- Learning new principles of design.
+</p>
+<p>
+Learned 💡
+- Conversation Design Practices.
+- Different patterns in UX that influence eCommerce + organisations.
+</p>
+<p>
+Loathed 😞
+- When Notion was becoming heavy.
+- Not much time to get our heads around the aspirations.
+- Not getting a “Look under the hood.”
+</p>
+<p>
+Longed for 🔍
+- Some more time to explore other mediums of IVR / Voice Chat.
+- Understanding more about how the chatbot Impacts the contact centre.
+</p>
+</div>
+
+## Acknowledgement
+
+Huge thanks to <Person name="Andrew Barrie"/> for the mentoring and leadership through this project. And thank you for allowing our project team to test our Notion as a way to structure the heurstic analysis.
+
+[^1]: Conversation design is a design language based on human conversation. The more an interface leverages human conversation, the less users have to be taught how to use it. It’s a synthesis of several design disciplines, including voice user interface design, interaction design, visual design, motion design, audio design, and UX writing. ([Source](https://arc.net/l/quote/owkczxyp))
+
+[^2]: __Intent__ describes the types of requests people have, or tasks they want to do.
+
+[^3]: __Utterance__ can be thought of as _query_, refers to what a user says to make such a request, whether it's a specific word, phrase, or full sentence.
+
+[^4]:Put simply, they are recognised usability principles Heuristics help us identify and categorise usability problems found within the design of a digital product. We examine the product and assess it against a chosen set of heuristics.
