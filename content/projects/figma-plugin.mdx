@@ -5,15 +5,13 @@ p2: I couldn't find a native way to do it in Figma, so I looked into creating a 
 date: 2024-03-09
 ---
 
-> This post is WIP.
-
 In the past, such as for a [chatbot heuristic evaluation](./chatbot-heuristic) I've used a speadsheet tool like Notion or Google Sheets as a way to track and measure observations within a Heuristic Evaluation line by line.
 
 However during an <Comment text="the project that kicked off this experiment">intranet project</Comment>, we used Figma to document the evaluation, as it enabled evaluators to take screenshots of the interfaces and directly markup the elements that were being analyzed.
 
 <Img
   alt="View of Figma during the recent evaluation (Content redacted)."
-  className="mt-5 max-w-3xl items-start p-0 lg:p-0"
+  className="mt-5 max-w-5xl items-start p-0 lg:p-0"
   src="/projects/figma-plugin/figma-evaluation-redacted.png"
 />
 <br />
@@ -100,31 +98,309 @@ When you initialise the plugin template, you are greeted with several files incl
 
 The figma plugin runs like a traditional webpage, so as you'd expect, the `code.js` file is just a compliled version of whatever is written in the `.ts` file.
 
-By default, the figma client requires a `manifest.json` file for the compiler.
+### Building the logic
+
+**My goals were to be able to:**
+
+1. Make a selection of components I wanted to get data from
+2. Click a button
+3. See a readout of all the content within the components selected.
+
+Accessing Figma's node is made simple through their global javascript object `figma`.
+
+By entering `figma` into the browser console, it will reveal a variety of elements for you to interact with.
+
+In our case, getting the current selected nodes.
+
+`figma.currentPage.selection` will references the selected nodes as an array.
 
 ```json
-//manifest.json
-{
-  "name": "figma-plugin",
-  "id": "1350705405232310848",
-  "api": "1.0.0",
-  "main": "code.js",
-  "capabilities": [],
-  "enableProposedApi": false,
-  "editorType": ["figma"],
-  "ui": "ui.html",
-  "networkAccess": {
-    "allowedDomains": ["none"]
-  },
-  "documentAccess": "dynamic-page"
+// I've selected 4 component variables.
+> figma.currentPage.selection (4)
+[InstanceNode, InstanceNode, InstanceNode, InstanceNode] 0 : InstanceNode {id:
+'512:7158'} 1 : InstanceNode {id: '512:7244'} 2 : InstanceNode {id: '512:7249'}
+3 : InstanceNode {id: '512:7254'}
+```
+
+Step 1 complete ✅.
+
+Now for the tricky part of accessing the child component information from the selection.
+
+I realised you could loop through the selected nodes.
+
+```ts showLineNumbers
+// This prints how many component instances are selected.
+const node = figma.currentPage.selection;
+let totalInstances = 0;
+let nonInstance = 0;
+
+for (let i = 0; i < node.length; i++) {
+  node[i];
+  // Check if the selected item is a not instance.
+  if (node[i].type === "INSTANCE") {
+    totalInstances++;
+    // initialise the recursive function.
+    printChildNames(node[i]);
+  } else {
+    nonInstance++;
+  }
+}
+console.log(
+  `There are ${totalInstances} Component instances selected and ${nonInstances} non component instances  selected.`,
+);
+```
+
+By unrapping the InstanceNodes, I found that if you go deep enough, you can access the name variable, and the the inner characters of the text nodes within those variables.
+
+I used a recursive function, to check inside each of the instances within the selection array, and stored each occurance to a new json object.
+
+```ts
+let count = {};
+// Recursive function to identify each of the variants and children.
+function printChildNames(node: InstanceNode) {
+  if ("children" in node) {
+    for (let child of node.children) {
+      // Characters is where I'm referencing the child component information.
+      if ("characters" in child) {
+        let text;
+        // If the child.name === child.characters, is checking if the child boolean. Not a pefect solution. Still needs work.
+        if (child.name === child.characters) {
+          text = { [child.name]: true };
+          if (child.name in count) {
+            count[child.name]++;
+          } else {
+            count[child.name] = 1;
+          }
+        } else {
+          text = { [child.name]: child.characters };
+          if (child.name in count) {
+            count[child.name]++;
+          } else {
+            count[child.name] = 1;
+          }
+        }
+      }
+      // Call printChildNames only for the current child.
+      printChildNames(child as InstanceNode);
+    }
+  }
 }
 ```
 
+This was then referencing the count of children instances as new variables and could be printed to the console.
+
+```ts
+console.log(`The TOTAL component instances: ${totalInstances}. The COUNT OF variants is as follows: ${count}`;)
+```
+
+You can even play with a version of this in the console simply by selecting a component instance and pasting this in the console.
+
+```
+figma.currentPage.selection[0].children[0].name
+```
+
+<Img
+  alt="Hopefully this helps demonstrate why the recursive function was necessary."
+  className="mx-auto aspect-auto max-w-2xl border-none p-0 lg:p-0"
+  src="/projects/figma-plugin/walkthrough/console-browser.png"
+/>
+
+### Adding a UI
+
+At first I wasn't expecting to create a ui. But I thought it could be useful as a way to represent the print out after running the function.
+
+Figma enables a basic ui through a `ui.html` file. You can initialise the plugin ui to open via the backend by running the command: `figma.showUI(__html__);`.
+
+At first I was struggling to add styles to my ui, until I realised that the manifest.json restricts certain files from being accessed and compiled, such as .css files.
+
+There are ways of getting past this in fact there's even a [figma plugin design system](https://github.com/thomas-lowry/figma-plugin-ds) that [Thomas Lowry](https://github.com/thomas-lowry) created. However for my purposes decided to just add a `<style>` tag to my html.
+
+```html
+<!-- ui.html -->
+<div class="p-3">
+  <h1>Rollup Component Information</h1>
+
+  <p>This plugin retrieves and consolidates component information.</p>
+
+  <p class="mt-1"><strong>Select</strong> your components and click "Calculate".</p>
+
+  <p>You will recieve a JSON representation of the data in your component.</p>
+
+  <button class="button button--primary" id="submit">Calculate</button>
+
+  <div class="flex mt-1">
+      <p class="">
+        Contribute, provide feedback or fork the code
+        <a
+          href="https://github.com/connorwforsyth/Rollup-Component-Instance"
+          target="_blank"
+          >here</a
+        >. Built by
+        <a href="https://www.github.com/connorwforsyth" target="_blank"
+          >Connor</a
+        >.
+      </p>
+    </div>
+  </div>
+
+  <script>
+    document.getElementById("submit").onclick = () => {
+        //This simply initialises the logic o the backend.
+      parent.postMessage({ pluginMessage: { type: "rollup" } }, "*");
+    };
+  </script>
+
+  <style>
+    /* Global styles */
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      position: relative;
+      box-sizing: border-box;
+      font-family: "Inter", sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    /*  FONTS */
+    @font-face {
+      font-family: "Inter";
+      font-weight: 400;
+      font-style: normal;
+      src: url("https://rsms.me/inter/font-files/Inter-Regular.woff2?v=3.7")
+          format("woff2"),
+        url("https://rsms.me/inter/font-files/Inter-Regular.woff?v=3.7")
+          format("woff");
+    }
+
+    @font-face {
+      font-family: "Inter";
+      font-weight: 500;
+      font-style: normal;
+      src: url("https://rsms.me/inter/font-files/Inter-Medium.woff2?v=3.7")
+          format("woff2"),
+        url("https://rsms.me/inter/font-files/Inter-Medium.woff2?v=3.7")
+          format("woff");
+    }
+
+    @font-face {
+      font-family: "Inter";
+      font-weight: 600;
+      font-style: normal;
+      src: url("https://rsms.me/inter/font-files/Inter-SemiBold.woff2?v=3.7")
+          format("woff2"),
+        url("https://rsms.me/inter/font-files/Inter-SemiBold.woff2?v=3.7")
+          format("woff");
+    }
+
+    button {
+      font-size: large;
+      padding: 0.5rem 1.5rem;
+      border-top-left-radius: 16px 14px;
+      border-top-right-radius: 16px 14px;
+      border-bottom-left-radius: 16px 14px;
+      border-bottom-right-radius: 16px 14px;
+      background: blue;
+      color: white;
+      transition:  500ms cubic-bezier(0.075, 0.82, 0.165, 1);
+      border-width: 2px;
+      border-style: solid;
+      border-color: black;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: rgb(0, 0, 0);
+    }
+
+
+    .p-3 {
+      padding: 0.75rem;
+    }
+
+    .mt-1 {
+      margin-top: 2rem;
+    }
+    .flex {
+      display: flex;
+      flex-direction: column;
+      padding-top: 0.5rem;
+      border-style: solid;
+      border-width: 0;
+      border-top-width: 1px;
+  </style>
+</div>
+```
+
+<UIWrapper>
+  <Img
+    alt="Hopefully this helps demonstrate why the recursive function was necessary."
+    className="mx-auto aspect-auto max-w-2xl rounded-none p-0 lg:p-0"
+    src="/projects/figma-plugin/walkthrough/plugin-ui.png"
+  />
+</UIWrapper>
+<Caption>
+  A super basic UI, really just to help users with context of what the plugin
+  does.
+</Caption>
+
+## Adding the printout to the figma interface
+
+So far, the results from my `code.ts` was only printing the results to the console. I wanted this result to be printed to the ui. Figma has this handy function called `figma.showUI(<div>hello world!<div>);` which enables elements to be printed to the ui.
+
+However while I was prototyping this out, I totally missed that function. So I attempted to get the plugin to actually create a figma text node.
+
+This was the least fun part of the process. But I eventually came up with this:
+
+```ts
+// Render the result into a figma text node.
+async function renderText(totalInstances: any, nonInstance: any, count: any) {
+  await figma.loadFontAsync({
+    family: "Inter",
+    style: "Regular",
+  });
+  const nodes: SceneNode[] = [];
+  let text = figma.createText();
+  // Load the font in the text node before setting the characters
+  text.characters = `The TOTAL component instances: ${totalInstances}. The COUNT OF variants is as follows: ${JSON.stringify(
+    count,
+  )}`;
+  text.fontSize = 256;
+  text.fills = [{ type: "SOLID", color: { r: 0, g: 1, b: 0 } }];
+  nodes.push(text);
+  console.log(count);
+  figma.viewport.scrollAndZoomIntoView(nodes);
+  figma.closePlugin();
+}
+```
+
+This just drops a very large green chunk of text onto the screen. But at least the user can't miss it!
+Soon, I'd love to revisit this plugin and rebuild the ui so the text doesn't render have to render into the figma canvas.
+
+<Img
+  className="mx-auto my-5 aspect-auto max-w-2xl border-none p-0 lg:p-0"
+  src="/projects/figma-plugin/walkthrough/green-text.png"
+/>
+
 ## Reflection
 
-There's something so delightful about creating a simple tool to achieve a specific problem that you're facing. Even if it's not perfected, it's aleady solving something that you may never have to face again. And who knows, perhaps more people might pick this up and tailor it to work for their problems.
+There's something so delightful about creating a simple tool to achieve a specific problem that you're facing. Even if it's not perfected.
 
-I'd encourage others to experiment with the figma plugin ecosystem.
+I think extending a plugin like this could help many teams who are struggling to choose how to conduct a hueristic evaluation. Being intentional for how one set's up the component structure can also pay off in the long run.
+
+<img
+  className="mx-auto mt-5 aspect-auto max-w-2xl rounded-none border-none p-0 lg:p-0"
+  src="/projects/figma-plugin/walkthrough/demo.gif"
+/>
+<Caption>
+  To quickly format the text I'm using an AI function that [I created using
+  Raycast](https://twitter.com/connorwforsyth/status/1765161287754121316).
+</Caption>
+
+I'd encourage others to experiment with the figma plugin ecosystem. If anyone wants to check out the source code for this, [it's available on github](https://github.com/connorwforsyth/Rollup-Component-Instance).
+
+Check out this post again in the future for potential updates.
 
 If you have an idea for a plugin or have question about this process, feel free to reach out at c@connorforsyth.co
 
