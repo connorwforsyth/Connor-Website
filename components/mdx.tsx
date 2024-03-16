@@ -5,6 +5,7 @@ import { cn } from "@/lib/utils";
 import Link from "next/link";
 import { Collaborators, Person } from "./Collaborators";
 import MDXCarousel from "./mdx-carousel";
+import Comment from "./inlineComment";
 
 ("use-client");
 import {
@@ -24,6 +25,7 @@ export function UIWrapper({ children }: { children: React.ReactNode }) {
 }
 
 const components = {
+  Comment,
   Image,
   Person,
   MDXCarousel,
@@ -110,7 +112,7 @@ const components = {
       <div
         className={cn(
           !type ? (
-            "relative mx-auto flex aspect-[3/2] w-full items-center overflow-clip rounded-md border p-4 dark:bg-zinc-900 lg:p-24"
+            "p- 4 relative mx-auto flex aspect-[3/2] w-full items-center overflow-clip rounded-md border bg-zinc-100 dark:bg-zinc-900 lg:p-24"
           ) : type === "slides" ? (
             "mx-auto flex aspect-auto w-full items-center overflow-clip rounded-md p-0 lg:p-0"
           ) : type === "hero" ? (
@@ -229,7 +231,7 @@ const components = {
   p: ({ className, ...props }) => (
     <p
       className={cn(
-        "mx-auto mt-4 max-w-2xl leading-7 dark:text-[#e4e4e4]",
+        "relative mx-auto mt-4 max-w-2xl leading-7 dark:text-[#e4e4e4]",
         className,
       )}
       {...props}
