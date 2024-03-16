@@ -1,20 +1,139 @@
 ---
 title: A plugin for rolling up Figma components
 description: While conducting a heuristic evaluation, I wanted to rollup information that was stored inside Figma component variables.
+p2: I couldn't find a native way to do it in Figma, so I looked into creating a plugin.
 date: 2024-03-09
 ---
- 
+
+> This post is WIP.
+
 In the past, such as for a [chatbot heuristic evaluation](./chatbot-heuristic) I've used a speadsheet tool like Notion or Google Sheets as a way to track and measure observations within a Heuristic Evaluation line by line.
 
-However during an <Comment text="the project that kicked off this experiment">intranet project</Comment>, we chose Figma to document the heuristic observations, as it enabled evaluators to take screenshots of the interfaces and directly markup the elements that were being analyzed. 
-<Img />
+However during an <Comment text="the project that kicked off this experiment">intranet project</Comment>, we used Figma to document the evaluation, as it enabled evaluators to take screenshots of the interfaces and directly markup the elements that were being analyzed.
 
-## Benchmarking during an observation
+<Img
+  alt="View of Figma during the recent evaluation (Content redacted)."
+  className="mt-5 max-w-3xl items-start p-0 lg:p-0"
+  src="/projects/figma-plugin/figma-evaluation-redacted.png"
+/>
+<br />
 
-The downside we faced for using Figma, is that we find that it's useful to benchmark and summarise how often certain heuristcs are arrising at a high level.
+# Figma Setup
 
-<Img />
+We created some components to streamline our evaluation process. Ranging from useful utilities that we include in all projects such as status indicators thanks @<Person name="Lauren Conti"/>.
 
-This is useful to track performance of certain pages, and to have a birds eye view of how many issues are occuring against a given heuristic. Or what the average severity is for a given page.
+<Img
+  className="mb-5 max-w-2xl items-start p-0 lg:p-0"
+  src="/projects/figma-plugin/component-variables.png"
+/>
 
+The main goal was to create a component that could be used for data modelling. This involved nesting components within one another to create a consistent representation of the data.
 
+Creating variants of the heuristic observation component enabled us to view the component in a card as well as a table format. This made it suitable for repurposing the Figma component to be shared in presentations or other activities like for affinity diagramming[^1].
+
+<br />
+
+<UIWrapper>
+  <img className="h-[40vh]" src="/projects/figma-plugin/component-design.gif" />
+</UIWrapper>
+<Caption>
+  The severity and heuristic selectors were designed to be nested components.
+</Caption>
+
+## Benchmarking during an observation.
+
+Typically when we do an evaluation, we find that it's useful to perform some basic data analysis to benchmark and summarise certain metrics or how often certain heuristics are arising and where.
+
+**For example you may want to track:**
+
+- The _average time_ evaluators took to complete a certain task on the interface.
+- The _total count_ of certain heuristic issue within a specific page.
+- The _average severity_ of heuristics across the entire evaluation.
+
+### We often include a breakdown of these results at a glance:
+
+<Img
+  alt="Example results at a glance for a task within a heuristic evaluation."
+  className="mt-5 aspect-auto max-w-2xl bg-white p-3 dark:bg-white lg:p-4"
+  src="/projects/figma-plugin/glance.png"
+/>
+
+### The gotcha
+
+The downside we faced when using Figma is that _you're not working with a
+database_, so it's difficult to track information dynamically.
+
+You can try your best by neatly structuring a page and visually get a sense of 'how much' you've made. You can try and `⌘F` search a term to see a count of how often the term occurs. But what happens if you delete a few elements? Or add a few more?
+
+Ultimately, these options \*are not\* as reliable as a spreadsheet.
+
+After checking with our resident figma expert <Person name="Lauren Conti"/> about what might be possible, and looking over potential figma component export plugins, I couldn't find any that specifically would solve my problem.
+
+_So I started looking into figma plugins._
+
+## Figma Plugins
+
+I've never really been one to reach for a figma plugin to solve a specific problem, I try to get most of what I need to do with their build in features.
+
+Don't get me wrong there are some great ones like [Sorter](https://www.figma.com/community/plugin/742038190980789811) that I often reach for.
+
+However exporting component data I thought would be a useful thing to experiment with.
+
+### Process
+
+Figma have made it really easy to get started with plugins, within the figma application, they've created an awesome onboarding which helped me get started.
+
+However I spent most of my time consulting the [Figma Developer Docs](https://www.figma.com/plugin-docs/plugin-quickstart-guide/) and Figma's [Build your first plugin](https://help.figma.com/hc/en-us/articles/4407260620823--BYFP-1-Overview) video series.
+
+<div className="mx-auto grid max-w-3xl gap-3 sm:grid-cols-2">
+  <Img
+    className="aspect-auto lg:p-0"
+    src="/projects/figma-plugin/walkthrough/step-1.png"
+  />
+  <Img
+    className="aspect-auto  lg:p-0"
+    src="/projects/figma-plugin/walkthrough/step-2.png"
+  />
+</div>
+
+When you initialise the plugin template, you are greeted with several files including a `code.ts` file, a `code.js` file, a `manifest.json` file, and if you're using the ui template you'll also have a `ui.html`.
+
+The figma plugin runs like a traditional webpage, so as you'd expect, the `code.js` file is just a compliled version of whatever is written in the `.ts` file.
+
+By default, the figma client requires a `manifest.json` file for the compiler.
+
+```json
+//manifest.json
+{
+  "name": "figma-plugin",
+  "id": "1350705405232310848",
+  "api": "1.0.0",
+  "main": "code.js",
+  "capabilities": [],
+  "enableProposedApi": false,
+  "editorType": ["figma"],
+  "ui": "ui.html",
+  "networkAccess": {
+    "allowedDomains": ["none"]
+  },
+  "documentAccess": "dynamic-page"
+}
+```
+
+## Reflection
+
+There's something so delightful about creating a simple tool to achieve a specific problem that you're facing. Even if it's not perfected, it's aleady solving something that you may never have to face again. And who knows, perhaps more people might pick this up and tailor it to work for their problems.
+
+I'd encourage others to experiment with the figma plugin ecosystem.
+
+If you have an idea for a plugin or have question about this process, feel free to reach out at c@connorforsyth.co
+
+## Acknowledgements
+
+While not directly involved in the plugin, shoutout to <Person name="Cimara Carneiro"/> and <Person name="Amelia Campbell"/> who were involved in the intranet project itself and for other Designit team members who helped with discussions on usecases.
+
+[^1]: Affinity diagramming is a common technique used during synthsis of qualitiative research studies including heuristic evaluations.
+
+```
+
+```

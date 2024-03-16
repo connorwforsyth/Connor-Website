@@ -2,6 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
+@media (min-width: 2000px) {
+  * {
+    font-size: 17px;
+  }
+}
+
 @font-face {
   font-family: "kag";
   src: url("/fonts/KAG/KynetonArtGrotesque-Light.woff2") format("woff2");
@@ -243,10 +249,6 @@ body {
     font-family: rodney, serif;
     font-weight: 600;
     font-style: italic;
-  }
-
-  body {
-    @apply bg-background text-foreground;
   }
 
   .box-shadow-small {
