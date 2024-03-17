@@ -29,7 +29,7 @@ interface RootLayoutProps {
 
 export default function RootLayout({ children }: RootLayoutProps) {
   return (
-    <html lang="en">
+    <html className="scroll-p-32 scroll-smooth" lang="en">
       <body className={`relative bg-zinc-100 antialiased dark:bg-zinc-900`}>
         <Offline />
         <div className="blur"></div>
