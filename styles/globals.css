@@ -279,7 +279,7 @@ body {
   }
 
   p a {
-    @apply box-shadow-small hover:box-shadow-full   text-zinc-900 underline-offset-4 dark:text-zinc-200;
+    @apply box-shadow-small hover:box-shadow-full active:box-shadow-full text-zinc-900  underline-offset-4 active:text-zinc-200 dark:text-zinc-200;
   }
 
   p code {
