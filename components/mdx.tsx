@@ -294,7 +294,7 @@ const components = {
   ),
   pre: ({ className, ...props }) => (
     <pre
-      className="scrollbar-none mx-auto my-8 max-h-96 max-w-2xl overflow-x-auto rounded-xl p-6 text-sm"
+      className="*:text-xs scrollbar-none mx-auto my-8 max-h-96 max-w-2xl overflow-x-auto rounded-xl p-6 text-sm"
       {...props}
     />
   ),
