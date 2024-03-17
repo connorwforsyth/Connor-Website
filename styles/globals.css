@@ -429,7 +429,7 @@ a:hover > [basics-css-icon] {
   border: 0;
 }
 .data-footnote-backref {
-  font-family: Georgia, "Times New Roman", Times, serif;
+  font-family: monospace;
 }
 /* Place `[` and `]` around footnote references. */
 [data-footnote-ref]::before {
