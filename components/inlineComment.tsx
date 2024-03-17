@@ -12,7 +12,7 @@ export default function Comment({ text, children }: comment) {
         {children}
         <span
           className={cn(
-            ` before:content-['_('] after:content-[')'] lg:absolute  lg:right-[-11.25rem] lg:w-[11rem] lg:border-l-[1.5px] lg:border-zinc-500 lg:pl-2.5  lg:text-sm lg:normal-case lg:first-letter:uppercase lg:before:content-none lg:after:content-['.']  xl:right-[-20rem] xl:w-[18rem]`,
+            ` before:content-['_('] after:content-[')'] lg:absolute lg:right-[-11.25rem] lg:w-[11rem] lg:border-l-[1.5px] lg:border-zinc-500 lg:pl-2.5  lg:text-sm lg:normal-case lg:first-letter:uppercase lg:before:content-none lg:after:content-['.']  xl:right-[-20rem] xl:w-[18rem]`,
           )}
         >
           {text}

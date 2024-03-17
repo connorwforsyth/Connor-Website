@@ -283,7 +283,7 @@ body {
   }
 
   p code {
-    @apply mx-[1px] rounded-sm border px-[2px] dark:border-zinc-500;
+    @apply mx-[1px] rounded-sm border px-[2px] text-sm dark:border-zinc-500;
   }
   table a {
     @apply box-shadow-small hover:box-shadow-full  text-zinc-900 underline-offset-4 dark:text-zinc-200;
