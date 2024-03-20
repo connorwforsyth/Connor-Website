@@ -4,8 +4,12 @@ import { format } from "date-fns";
 import BackButton from "@/components/BackButton";
 
 type PostWithElement = { element: JSX.Element; date: string };
+// const metadata = {
+//   title: Projects,
+// };
 
 export default function Projects() {
+  const title = "Projects and Case Studies";
   return (
     <>
       <div></div>

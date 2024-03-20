@@ -5,6 +5,8 @@ import BackButton from "@/components/BackButton";
 import { format } from "date-fns";
 import PasswordForm from "@/components/password-form";
 import { getSession } from "@/server-actions/actions";
+import { Metadata, ResolvingMetadata } from "next";
+import siteMetadata from "@/config/site-metadata";
 
 interface PageProps {
   params: {
@@ -18,7 +20,46 @@ async function getDocFromParams(slug: string) {
   return doc;
 }
 
-const page = async ({ params }: PageProps) => {
+// export async function generateMetaData(
+//   { params }: PageProps,
+//   parent: ResolvingMetadata,
+// ): Promise<Metadata> {
+//   const doc = await getDocFromParams(params.slug);
+
+//   if (!doc || !doc.title) return {};
+
+//   const url = siteMetadata.siteUrl;
+//   const ogURL = new URL(`${url}/api/og`);
+//   ogURL.searchParams.set("title", doc.title);
+//   // ogURL.searchParams.set("type", "Project");
+//   // ogURL.searchParams.set("url", doc.slug);
+//   return {
+//     title: doc.title,
+//     description: doc.description,
+//     authors: {
+//       name: "Connor Forsyth",
+//     },
+//     alternates: {
+//       canonical: `${siteMetadata.siteUrl}/projects/${doc.slug}`,
+//     },
+//     openGraph: {
+//       title: doc.title,
+//       description: doc.description,
+//       type: "article",
+//       url: `${siteMetadata.siteUrl}/projects/${doc.slug}`,
+//       images: [
+//         {
+//           url: ogURL.toString(),
+//           width: 1200,
+//           height: 630,
+//           alt: doc.title,
+//         },
+//       ],
+//     },
+//   };
+// }
+
+export default async function Page({ params }: PageProps) {
   const doc = await getDocFromParams(params.slug);
   const session = await getSession();
 
@@ -65,6 +106,4 @@ const page = async ({ params }: PageProps) => {
       <Mdx code={doc.body.code} />
     </>
   );
-};
-
-export default page;
+}

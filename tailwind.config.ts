@@ -19,7 +19,9 @@ const config = {
       },
     },
     extend: {
-      fontFamily: {},
+      fontFamily: {
+        kag: "var(--kag)",
+      },
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",

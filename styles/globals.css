@@ -245,6 +245,9 @@ body {
     font-style: italic;
   }
 
+  --kag {
+    font-family: kag;
+  }
   .font-rodney-medium {
     font-family: rodney, serif;
     font-weight: 600;
