@@ -6,12 +6,11 @@ import { ImageResponse } from "next/og";
 
 export const runtime = "edge";
 export async function GET(request: Request) {
-  const connorIcon = await fetch(
-    new URL("../../../public/images/connoricon.png", import.meta.url),
-  ).then((res) => res.arrayBuffer());
-
   const connorHeadshot = await fetch(
-    new URL("../../../public/connorforsythheadshot.png", import.meta.url),
+    new URL(
+      "../../../public/connorforsythheadshot-Medium.png",
+      import.meta.url,
+    ),
   ).then((res) => res.arrayBuffer());
 
   const fontData = await fetch(
