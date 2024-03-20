@@ -1,3 +1,7 @@
+/* eslint-disable @next/next/no-img-element */
+/* eslint-disable jsx-a11y/alt-text */
+// @ts-nocheck
+
 import { ImageResponse } from "next/og";
 
 export const runtime = "edge";
@@ -55,6 +59,7 @@ export async function GET(request: Request) {
                 height="600"
                 tw="rounded-xl border-2 shadow-lg border-white"
                 src={connorHeadshot}
+                alt="Connor's headshot"
               />
             </div>
           </div>
