@@ -2,6 +2,24 @@ import Link from "next/link";
 import "../styles/icons.css";
 import { Collaborators } from "@/components/Collaborators";
 import Image from "next/image";
+import { Metadata } from "next";
+import siteMetadata from "@/config/site-metadata";
+
+export const metadata: Metadata = {
+  metadataBase: new URL(siteMetadata.siteUrl),
+  title: siteMetadata.title,
+  description: siteMetadata.description,
+  openGraph: {
+    type: "website",
+    url: siteMetadata.siteUrl,
+    title: siteMetadata.title,
+    description: siteMetadata.description,
+    siteName: siteMetadata.title,
+    images: {
+      url: `${siteMetadata.siteUrl}/api/og/?title=${siteMetadata.title}`,
+    },
+  },
+};
 
 export default function Home() {
   type ContentItem = {

@@ -6,26 +6,69 @@ import Texture from "@/components/BackgroundTexture";
 import Footer from "@/components/Footer";
 import Offline from "@/components/Offline";
 import { CSPostHogProvider } from "./providers";
+import { Metadata } from "next";
+import siteMetadata from "@/config/site-metadata";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
-
-export const metadata = {
-  metadataBase: new URL("https://connorforsyth.co"),
-  title: "Connor Forsyth",
-  description: "Design Technologist currently based in Sydney, Australia.",
-  openGraph: {
-    images: "/opengraph-image.jpg",
-    type: "website",
-    url: "https://connorforsyth.co",
-    title: "Connor Forsyth",
-    description: "Design Technologist currently based in Sydney, Australia.",
-    siteName: "Connor Forsyth",
-  },
-};
 
 interface RootLayoutProps {
   children: React.ReactNode;
 }
+
+// export const metadata: Metadata = {
+//   title: {
+//     default: siteMetadata.title,
+//     template: `%s | ${siteMetadata.title}`,
+//   },
+//   metadataBase: new URL(siteMetadata.siteUrl),
+//   description: siteMetadata.description,
+//   keywords: [
+//     "Design",
+//     "Product Design",
+//     "Service Design",
+//     "Connor Forsyth",
+//     "Design Engineer",
+//     "TEDx",
+//     "Designit",
+//   ],
+//   authors: [
+//     {
+//       name: "Connor Forsyth",
+//       url: "https://connorforsyth.co",
+//     },
+//   ],
+//   creator: "Connor Forsyth",
+//   openGraph: {
+//     type: "website",
+//     locale: siteMetadata.locale,
+//     url: siteMetadata.siteUrl,
+//     title: siteMetadata.title,
+//     description: siteMetadata.description,
+//     siteName: siteMetadata.title,
+//     images: [
+//       {
+//         url: `${siteMetadata.siteUrl}api/og/?title=${siteMetadata.title}`,
+//         alt: siteMetadata.title,
+//       },
+//     ],
+//   },
+// };
+
+export const metadata: Metadata = {
+  metadataBase: new URL(siteMetadata.siteUrl),
+  title: siteMetadata.title,
+  description: siteMetadata.description,
+  openGraph: {
+    type: "website",
+    url: siteMetadata.siteUrl,
+    title: siteMetadata.title,
+    description: siteMetadata.description,
+    siteName: siteMetadata.title,
+    images: {
+      url: `${siteMetadata.siteUrl}/api/og/?title=${siteMetadata.title}`,
+    },
+  },
+};
 
 export default function RootLayout({ children }: RootLayoutProps) {
   return (
