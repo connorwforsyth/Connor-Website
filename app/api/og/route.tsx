@@ -8,7 +8,7 @@ export const runtime = "edge";
 export async function GET(request: Request) {
   const connorHeadshot = await fetch(
     new URL(
-      "../../../public/connorforsythheadshot-Medium.png",
+      "../../../public/connorforsythheadshot-Medium.jpeg",
       import.meta.url,
     ),
   ).then((res) => res.arrayBuffer());
