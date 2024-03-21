@@ -28,7 +28,7 @@ export const siteMetadata: SiteConfig = {
     "I’m a designer and technologist with a background in design sprints, lean ux, agile and web development. I currently work as a service designer at Designit and as an academic tutor at The University of Sydney.",
   language: "en-us",
   theme: "system", // system, dark or light
-  siteUrl: "http://localhost:3000",
+  siteUrl: "https://connorforsyth.co",
   siteRepo: "https://github.com/connorwforsyth/connorforsyth.co",
   siteLogo: "/",
   image: "",
