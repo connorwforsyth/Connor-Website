@@ -261,7 +261,12 @@ const components = {
       {...props}
     />
   ),
-  hr: ({ ...props }) => <hr className="my-4 md:my-8" {...props} />,
+  hr: ({ ...props }) => (
+    <hr
+      className="mx-auto my-4 flex max-w-2xl items-center justify-center overflow-visible border-none text-center opacity-50 after:content-['*_*_*'] md:my-8"
+      {...props}
+    />
+  ),
   table: ({ className, ...props }: React.HTMLAttributes<HTMLTableElement>) => (
     <div className=" mx-auto my-6 w-full max-w-2xl overflow-y-auto">
       <table
