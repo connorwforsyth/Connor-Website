@@ -86,9 +86,9 @@ export default function Home() {
         </h1>
         <div className=" flex flex-col gap-3" data-animate="" basic-stagger="1">
           <p>
-            I am designer and technologist with a focus on design sprints, agile
-            methodologies, and web development. I currently work as a service
-            designer at{" "}
+            I am a designer and technologist with a focus on design sprints,
+            agile methodologies, and web development. I currently work as a
+            service designer at{" "}
             <Link
               href="https://designit.com"
               target="_blank"
