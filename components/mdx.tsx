@@ -6,6 +6,8 @@ import Link from "next/link";
 import { Collaborators, Person } from "./Collaborators";
 import MDXCarousel from "./mdx-carousel";
 import Comment from "./inlineComment";
+import CompPlayer from "./VideoPlayer";
+import { Tweet } from "react-tweet";
 
 ("use-client");
 import {
@@ -25,6 +27,8 @@ export function UIWrapper({ children }: { children: React.ReactNode }) {
 }
 
 const components = {
+  Tweet,
+  CompPlayer,
   Comment,
   Image,
   Person,
@@ -299,7 +303,7 @@ const components = {
   ),
   pre: ({ className, ...props }) => (
     <pre
-      className="*:text-xs scrollbar-none mx-auto my-8 max-h-96 max-w-2xl overflow-x-auto rounded-xl p-6 text-sm"
+      className="scrollbar-none mx-auto my-8 max-h-96 max-w-2xl overflow-x-auto rounded-xl p-6 text-sm *:text-xs"
       {...props}
     />
   ),
