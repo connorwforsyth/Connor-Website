@@ -15,7 +15,8 @@ export default function CompPlayer() {
         className="react-player absolute inset-0"
         loop={true}
         playing={true}
-        url="https://vimeo.com/930249725?autoplay=1&loop=1&autopause=0"
+        autoplay={true}
+        url="https://player.vimeo.com/930249725?autoplay=1&loop=1&autopause=0"
         muted={true}
         height="100"
         width="100"
