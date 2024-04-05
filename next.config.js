@@ -1,5 +1,4 @@
-const { withNextVideo } = require('next-video/process')
-
+const { withNextVideo } = require("next-video/process");
 const { withContentlayer } = require("next-contentlayer");
 
 /** @type {import('next').NextConfig} */

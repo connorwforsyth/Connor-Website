@@ -35,10 +35,10 @@ const page = async ({ params }: PageProps) => {
   };
 
   return (
-    <>
+    <article>
       <Header />
       <Mdx code={doc.body.code} />
-    </>
+    </article>
   );
 };
 
