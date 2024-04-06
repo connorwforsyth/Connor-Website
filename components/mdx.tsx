@@ -8,6 +8,7 @@ import MDXCarousel from "./mdx-carousel";
 import Comment from "./inlineComment";
 import CompPlayer from "./VideoPlayer";
 import { Tweet } from "react-tweet";
+import ZenVideo from "./next-video-component";
 
 ("use-client");
 import {
@@ -27,6 +28,7 @@ export function UIWrapper({ children }: { children: React.ReactNode }) {
 }
 
 const components = {
+  ZenVideo,
   Tweet,
   CompPlayer,
   Comment,

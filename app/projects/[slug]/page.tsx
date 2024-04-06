@@ -72,7 +72,7 @@ export default async function Page({ params }: PageProps) {
             {doc.title}
           </h1>{" "}
           <span className="hidden md:inline"> | </span>
-          {format(new Date(doc.date), "EEE dd MMM yyyy")}
+          {format(new Date(doc.date), "EEE dd MMM yyy")}
         </div>
         <p className="mx-auto mb-3 w-full max-w-2xl">{doc.description}</p>
         {doc.p2 && <p className="mx-auto mb-3 w-full max-w-2xl">{doc.p2}</p>}
