@@ -16,7 +16,7 @@ export default function CompPlayer() {
         loop={true}
         playing={true}
         autoplay={true}
-        url="https://player.vimeo.com/930249725?autoplay=1&loop=1&autopause=0"
+        url="https://player.vimeo.com/930249725?autoplay"
         muted={true}
         height="100"
         width="100"
