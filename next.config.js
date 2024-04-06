@@ -19,4 +19,4 @@ const nextConfig = {
   },
 };
 
-module.exports = withContentlayer(nextConfig);
+module.exports = withNextVideo(withContentlayer(nextConfig));
