@@ -10,7 +10,7 @@ type CompTypes = {
 // Render a YouTube video player
 export default function CompPlayer() {
   return (
-    <div className="relative mx-auto my-5 flex aspect-video h-full w-full max-w-3xl overflow-clip rounded-md">
+    <div className="relative mx-auto my-5 flex aspect-video h-full w-full max-w-5xl overflow-clip rounded-md">
       <ReactPlayer
         className="react-player absolute inset-0"
         loop={true}
