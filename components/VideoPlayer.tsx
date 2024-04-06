@@ -19,6 +19,7 @@ export default function CompPlayer() {
         url="https://player.vimeo.com/930249725?autoplay"
         muted={true}
         height="100"
+        playsinline
         width="100"
       />
     </div>
