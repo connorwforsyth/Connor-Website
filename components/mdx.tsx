@@ -116,7 +116,7 @@ const components = {
       <div
         className={cn(
           !type ? (
-            "p- 4 relative mx-auto flex aspect-[3/2] w-full items-center overflow-clip rounded-md border bg-zinc-100 dark:bg-zinc-900 lg:p-24"
+            "relative mx-auto flex aspect-[3/2] w-full items-center overflow-clip rounded-md border bg-zinc-100 dark:bg-zinc-900 lg:p-24"
           ) : type === "slides" ? (
             "mx-auto flex aspect-auto w-full items-center overflow-clip rounded-md p-0 lg:p-0"
           ) : type === "hero" ? (
