@@ -36,7 +36,7 @@ export function Collaborators({ people, className }: CollaboratorsProps) {
           >
             <Image
               className="h-6 w-6 rounded-full"
-              src={i.image}
+              src={`../${i.image}`}
               width={16}
               height={16}
               alt={i.name}
