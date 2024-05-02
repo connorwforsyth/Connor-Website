@@ -76,6 +76,7 @@ export default function PasswordForm() {
             <input
               className="rounded-lg border border-zinc-500 bg-transparent p-2 px-3"
               type="email"
+              name="email"
               required
             />
           </label>
