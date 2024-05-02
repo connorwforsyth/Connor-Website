@@ -30,7 +30,7 @@ export function Collaborators({ people, className }: CollaboratorsProps) {
         {searchedPeople.map((i: Collaborator) => (
           <Link
             basics-link-pill=""
-            className="align-center flex items-center gap-1 rounded-full bg-zinc-300 bg-opacity-70  p-1 pr-2 text-sm no-underline dark:bg-transparent dark:bg-opacity-90 dark:text-zinc-100 dark:hover:text-white"
+            className="align-center flex items-center gap-1 rounded-full bg-zinc-300 bg-opacity-70  p-1 pr-2 text-sm no-underline dark:bg-zinc-700 dark:bg-opacity-90 dark:text-zinc-100 dark:hover:text-white"
             key={i.name}
             href={i.link}
           >
