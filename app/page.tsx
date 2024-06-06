@@ -79,7 +79,7 @@ export default function Home() {
   ];
 
   return (
-    <div className="text-pretty mx-auto w-full max-w-2xl flex-col ">
+    <div className="mx-auto w-full max-w-2xl flex-col text-pretty ">
       <div className="flex flex-col gap-3 dark:text-zinc-300">
         <h1 className="pb-4 text-xl text-zinc-800  dark:text-zinc-50">
           Connor Forsyth
@@ -132,14 +132,11 @@ export default function Home() {
       <div
         data-animate=""
         basic-stagger="2"
-        className=" my-8 flex flex-col gap-4 sm:w-[95%]"
+        className=" my-8 flex flex-col gap-4"
       >
         {contents.map((column) => (
-          <div
-            key={column.title}
-            className="border-dotted border-t-zinc-300  dark:border-t-zinc-700  sm:border-none"
-          >
-            <h2 className="mb-4 text-zinc-700 dark:text-zinc-100">
+          <div key={column.title} className="">
+            <h2 className="mb-2 text-zinc-700 dark:text-zinc-100">
               <em>{column.title}</em>
             </h2>
             <div className="grid gap-4 sm:grid-cols-3 ">
@@ -193,7 +190,7 @@ export default function Home() {
         <Collaborators />
       </div>
       <div data-animate="" basic-stagger="4" className="">
-        <h2>
+        <h2 className="mb-3 text-zinc-700 dark:text-zinc-100">
           <em>Connect</em>
         </h2>
         <p>

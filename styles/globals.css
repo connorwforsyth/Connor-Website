@@ -192,7 +192,7 @@ body {
   }
 
   :root {
-    --highlight-light: #0033ff;
+    --highlight-light: rgb(66, 88, 255);
     --highlight: #000dff;
     --text-highlight: white;
   }
@@ -259,6 +259,26 @@ body {
     transition-duration: 200ms;
   }
 
+  .underline-grow {
+    background-image: linear-gradient(
+      to right,
+      var(--highlight-light),
+      var(--highlight)
+    );
+    background-size: 110% 2px;
+    background-repeat: no-repeat;
+    background-position: left 1.2rem;
+    transition: all 100ms ease-in-out;
+  }
+
+  .underline-grow:hover {
+    background-size: 110% 110%; /* Increased background size on hover to be larger than the element */
+    border-radius: 2px;
+    overflow: visible; /* Changed to visible to allow the background to extend outside the bounding box */
+    background-position: left bottom;
+    color: white;
+  }
+
   .box-shadow-full {
     @apply font-[450];
     box-shadow: inset 0px -24px 0px 0px var(--highlight);
@@ -279,7 +299,7 @@ body {
   }
 
   p a {
-    @apply box-shadow-small hover:box-shadow-full active:box-shadow-full text-zinc-900  underline-offset-4 active:text-zinc-200 dark:text-zinc-200;
+    @apply underline-grow active:box-shadow-full text-zinc-900  underline-offset-4 active:text-zinc-200 dark:text-zinc-200;
   }
 
   p code {
