@@ -258,7 +258,7 @@ body {
     transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
     transition-duration: 200ms;
   }
-
+/* eventually change this to the new underline link */
   .underline-grow {
     background-image: linear-gradient(
       to right,
@@ -299,8 +299,9 @@ body {
   }
 
   p a {
-    @apply underline-grow active:box-shadow-full text-zinc-900  underline-offset-4 active:text-zinc-200 dark:text-zinc-200;
+    @apply box-shadow-small hover:box-shadow-full transition-all text-zinc-900  underline-offset-4 active:text-zinc-200 dark:text-zinc-200;
   }
+
 
   p code {
     @apply mx-[1px] rounded-sm border px-[2px] text-sm dark:border-zinc-500;

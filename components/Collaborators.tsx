@@ -16,11 +16,15 @@ interface CollaboratorsProps {
 }
 
 export function Collaborators({ people, className }: CollaboratorsProps) {
-  const searchedPeople = people
+  let searchedPeople = people
     ? collaboratorsData
         .filter((i) => people.includes(i.name))
         .sort(() => 0.5 - Math.random())
     : collaboratorsData.sort(() => 0.5 - Math.random());
+
+  // Limit to a maximum of 16 entries
+  searchedPeople = searchedPeople.slice(0, 14);
+
   return (
     <div className={cn("mx-auto my-8 w-full max-w-2xl", className)}>
       <h2 className="mb-2 text-zinc-700 dark:text-zinc-100">
