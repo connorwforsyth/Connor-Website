@@ -4,5 +4,6 @@ User-agent: *
 Disallow: /images
 Disallow: /projects
 Disallow: /writing
-
+Disallow: /cv
+Disallow: /chat
 Allow: /api/og/*

@@ -1,0 +1,26 @@
+---
+title: Spinning up a reverse server proxy Notion website
+date: 2024-04-20
+description: For a long time, I've been curious to deploy my own implementation of a custom notion website. I finally did it.
+---
+
+Like any Notion fanboy, I’m often curious to push the limits of what notion is capable of doing.
+
+Years ago I came across the website of [work.ryo.lu](https://work.ryo.lu/), one of the designers at Notion, and wondered how he seemingly achieved his own instance of a Notion site for his portfolio.
+
+Little did I know at the time, Ryo was using cloudflare reverse server proxies to point his domain to Notion pages, while also manipulating some of the UI elements to make the Notion site appear white-labelled.
+
+This is actually quite a simple technique that I think is useful for community groups who need a simple website to store and manage their content. It's fast, it's simple, it's intuitive, and it looks good.
+
+If they ever want to switch to another deployment option in the future, they can, while also maintaining and building indexing of their domain.
+
+You can view my implementation of this here:
+[stateofinteraction.net](https://stateofinteraction.net)
+
+The idea for state of interaction is still in the works. It may be a blog, it may be experiments, or it may be a studio one day.
+
+There are many resources[^1] and tutorials online to follow this implementation. I will add a few more links that I used in the coming weeks.
+
+
+[^1]: [Using the Notion page as a personal website with your domain on Cloudflare](https://dev.to/koddr/using-the-notion-page-as-a-personal-website-with-your-domain-on-cloudflare-1pi7)
+

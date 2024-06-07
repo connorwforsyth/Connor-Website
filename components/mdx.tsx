@@ -6,6 +6,8 @@ import Link from "next/link";
 import { Collaborators, Person } from "./Collaborators";
 import MDXCarousel from "./mdx-carousel";
 import Comment from "./inlineComment";
+import CompPlayer from "./VideoPlayer";
+import { Tweet } from "react-tweet";
 
 ("use-client");
 import {
@@ -25,6 +27,8 @@ export function UIWrapper({ children }: { children: React.ReactNode }) {
 }
 
 const components = {
+  Tweet,
+  CompPlayer,
   Comment,
   Image,
   Person,
@@ -112,7 +116,7 @@ const components = {
       <div
         className={cn(
           !type ? (
-            "p- 4 relative mx-auto flex aspect-[3/2] w-full items-center overflow-clip rounded-md border bg-zinc-100 dark:bg-zinc-900 lg:p-24"
+            "relative mx-auto flex aspect-[3/2] w-full items-center overflow-clip rounded-md border bg-zinc-100 dark:bg-zinc-900 lg:p-24"
           ) : type === "slides" ? (
             "mx-auto flex aspect-auto w-full items-center overflow-clip rounded-md p-0 lg:p-0"
           ) : type === "hero" ? (
@@ -255,13 +259,18 @@ const components = {
   blockquote: ({ className, ...props }) => (
     <blockquote
       className={cn(
-        "font-rodney mx-auto my-6 max-w-2xl border-l-2 pl-6 pr-32 text-lg italic leading-10 ",
+        "font-rodney mx-auto my-6 max-w-2xl border-l-2 pl-6 text-lg italic leading-10 lg:pr-32 ",
         className,
       )}
       {...props}
     />
   ),
-  hr: ({ ...props }) => <hr className="my-4 md:my-8" {...props} />,
+  hr: ({ ...props }) => (
+    <hr
+      className="mx-auto my-4 flex max-w-2xl items-center justify-center overflow-visible border-none text-center opacity-50 after:content-['*_*_*'] md:my-8"
+      {...props}
+    />
+  ),
   table: ({ className, ...props }: React.HTMLAttributes<HTMLTableElement>) => (
     <div className=" mx-auto my-6 w-full max-w-2xl overflow-y-auto">
       <table
@@ -294,7 +303,7 @@ const components = {
   ),
   pre: ({ className, ...props }) => (
     <pre
-      className="*:text-xs scrollbar-none mx-auto my-8 max-h-96 max-w-2xl overflow-x-auto rounded-xl p-6 text-sm"
+      className="scrollbar-none mx-auto my-8 max-h-96 max-w-2xl overflow-x-auto rounded-xl p-6 text-sm *:text-xs"
       {...props}
     />
   ),

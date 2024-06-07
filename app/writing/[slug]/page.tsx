@@ -28,17 +28,17 @@ const page = async ({ params }: PageProps) => {
             {doc.title}
           </h1>{" "}
           <span className="hidden md:inline"> | </span>
-          {format(new Date(doc.date), "EEE dd MMM yyyy")}
+          {format(new Date(doc.date), "EEE dd MMM yyy")}
         </div>
       </>
     );
   };
 
   return (
-    <>
+    <article>
       <Header />
       <Mdx code={doc.body.code} />
-    </>
+    </article>
   );
 };
 
