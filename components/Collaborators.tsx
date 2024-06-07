@@ -23,7 +23,7 @@ export function Collaborators({ people, className }: CollaboratorsProps) {
     : collaboratorsData.sort(() => 0.5 - Math.random());
 
   // Limit to a maximum of 16 entries
-  searchedPeople = searchedPeople.slice(0, 14);
+  searchedPeople = searchedPeople.slice(0, 13);
 
   return (
     <div className={cn("mx-auto my-8 w-full max-w-2xl", className)}>
