@@ -65,8 +65,8 @@ export default function Home() {
           href: "/writing",
         },
         {
-          title: "Portfolio 2024 Readme",
-          description: "A guide to reading my portfolio and website.",
+          title: "2024 Portfolio Readme",
+          description: "A guide to my portfolio and website.",
           href: "/writing/readme",
         },
         {
@@ -79,16 +79,16 @@ export default function Home() {
   ];
 
   return (
-    <div className="mx-auto w-full max-w-2xl flex-col ">
+    <div className="mx-auto w-full max-w-2xl flex-col text-pretty ">
       <div className="flex flex-col gap-3 dark:text-zinc-300">
         <h1 className="pb-4 text-xl text-zinc-800  dark:text-zinc-50">
           Connor Forsyth
         </h1>
-        <div className="flex flex-col gap-3" data-animate="" basic-stagger="1">
+        <div className=" flex flex-col gap-3" data-animate="" basic-stagger="1">
           <p>
-            I’m a designer and technologist with a background in design sprints,
-            lean ux, agile and web development. I currently work as a service
-            designer at{" "}
+            I am a designer and technologist with a focus on design sprints,
+            agile methodologies, and web development. I currently work as a
+            service designer at{" "}
             <Link
               href="https://designit.com"
               target="_blank"
@@ -97,15 +97,13 @@ export default function Home() {
               Designit
             </Link>{" "}
             and as an academic tutor at{" "}
-            <span>
-              <Link
-                target="_blank"
-                rel="noopener noreferrer"
-                href="https://sydney.edu.au"
-              >
-                The University of Sydney
-              </Link>
-            </span>
+            <Link
+              target="_blank"
+              rel="noopener noreferrer"
+              href="https://sydney.edu.au"
+            >
+              The University of Sydney
+            </Link>
             .
           </p>
           {/* <p>
@@ -134,14 +132,11 @@ export default function Home() {
       <div
         data-animate=""
         basic-stagger="2"
-        className=" my-8 flex flex-col gap-4 sm:w-[95%]"
+        className=" my-8 flex flex-col gap-4"
       >
         {contents.map((column) => (
-          <div
-            key={column.title}
-            className="border-dotted border-t-zinc-300  dark:border-t-zinc-700  sm:border-none"
-          >
-            <h2 className="mb-4 text-zinc-700 dark:text-zinc-100">
+          <div key={column.title} className="">
+            <h2 className="mb-2 text-zinc-700 dark:text-zinc-100">
               <em>{column.title}</em>
             </h2>
             <div className="grid gap-4 sm:grid-cols-3 ">
@@ -195,7 +190,7 @@ export default function Home() {
         <Collaborators />
       </div>
       <div data-animate="" basic-stagger="4" className="">
-        <h2>
+        <h2 className="mb-3 text-zinc-700 dark:text-zinc-100">
           <em>Connect</em>
         </h2>
         <p>

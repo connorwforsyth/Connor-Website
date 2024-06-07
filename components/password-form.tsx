@@ -8,6 +8,29 @@ import { posthog } from "posthog-js";
 export default function PasswordForm() {
   const [state, formAction] = useFormState<any, FormData>(login, undefined);
 
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    const formData = new FormData(e.currentTarget);
+    // Extract form data
+    const body = {
+      name: formData.get("name") as string,
+      email: formData.get("email") as string,
+    };
+
+    // Identify the user with PostHog
+    posthog.identify(body.name, { email: body.email, name: body.name });
+
+    // Perform the server action with the form data
+    try {
+      await formAction(formData);
+
+      // Handle successful server action
+    } catch (error) {
+      // Handle error from server action
+    }
+  };
+
   return (
     <>
       <style jsx>{`
@@ -38,7 +61,7 @@ export default function PasswordForm() {
         }
       `}</style>
       <div className="mx-auto mt-4 max-w-2xl">
-        <form action={formAction} className="flex max-w-sm flex-col gap-5">
+        <form onSubmit={handleSubmit} className="flex max-w-sm flex-col gap-5">
           <label className="flex flex-col gap-2">
             Name
             <input
@@ -53,6 +76,7 @@ export default function PasswordForm() {
             <input
               className="rounded-lg border border-zinc-500 bg-transparent p-2 px-3"
               type="email"
+              name="email"
               required
             />
           </label>

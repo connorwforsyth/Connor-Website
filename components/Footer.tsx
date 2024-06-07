@@ -8,7 +8,7 @@ export default function Footer() {
         Last Visit: <span>Location</span>
         <div className="flex-grow"></div>
       </div> */}
-      <div className="mx-auto flex w-full max-w-2xl p-3 align-baseline">
+      <div className="mx-auto flex w-full max-w-2xl px-3 py-3 align-baseline sm:px-0">
         <div className="h-full gap-0.5 p-1">
           <svg
             xmlns="http://www.w3.org/2000/svg"

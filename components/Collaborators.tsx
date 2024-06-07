@@ -23,7 +23,7 @@ export function Collaborators({ people, className }: CollaboratorsProps) {
     : collaboratorsData.sort(() => 0.5 - Math.random());
   return (
     <div className={cn("mx-auto my-8 w-full max-w-2xl", className)}>
-      <h2 className="mb-2">
+      <h2 className="mb-2 text-zinc-700 dark:text-zinc-100">
         <em>Collaborators</em>
       </h2>
       <div className="flex flex-wrap gap-2">
@@ -34,14 +34,16 @@ export function Collaborators({ people, className }: CollaboratorsProps) {
             key={i.name}
             href={i.link}
           >
-            <Image
-              className="h-6 w-6 rounded-full"
-              src={i.image}
-              width={16}
-              height={16}
-              alt={i.name}
-              unoptimized={true}
-            />
+            <div className="flex h-6 w-6 items-center overflow-hidden rounded-full">
+              <Image
+                className="h-full w-full object-cover"
+                src={`../${i.image}`}
+                width={24}
+                height={24}
+                alt={i.name}
+                unoptimized={true}
+              />
+            </div>
             <span className="translate-y-[1px] ">{i.name}</span>
           </Link>
         ))}

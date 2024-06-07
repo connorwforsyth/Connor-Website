@@ -26,13 +26,13 @@
     }
   },
   "include": [
+    "video.d.ts",
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
     ".contentlayer/generated",
     "components/mdx.jsx",
-    "app/api/auth/[kindeAuth]/route.js",
     "app/providers.js"
   ],
   "exclude": ["node_modules"]
