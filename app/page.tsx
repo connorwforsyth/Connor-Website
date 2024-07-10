@@ -121,8 +121,15 @@ export default function Home() {
           />
           <p>
             Outside of work, you’ll find me working on small web projects,
-            geeking out to music, and brewing filter coffee. Day by day, working
-            to improve all aspects of my craft.
+            taking{" "}
+            <Link
+              href="https://photos.connorforsyth.co/"
+              rel="noopener noreferrer"
+            >
+              photos
+            </Link>
+            , and brewing filter coffee. Day by day, working to improve all
+            aspects of my craft.
           </p>
         </div>
       </div>
