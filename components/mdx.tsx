@@ -160,7 +160,7 @@ const components = {
   }) => {
     return (
       <Image
-        className={cn("my-8", className)}
+        className={cn("my-8 rounded-lg", className)}
         src={src}
         alt={alt}
         width={1}
@@ -181,7 +181,7 @@ const components = {
   h2: ({ className, ...props }) => (
     <h2
       className={cn(
-        "mx-auto  mt-8 max-w-2xl scroll-m-20 pb-1 text-2xl font-medium first:mt-0",
+        "mx-auto  mt-8 max-w-2xl scroll-m-20 pb-1 text-xl font-medium first:mt-0",
         className,
       )}
       {...props}
