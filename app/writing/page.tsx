@@ -24,8 +24,8 @@ export default function Writing() {
                 (item) => new Date(item.date).getFullYear() === year,
               );
               const element = (
-                <li basic-list-item="" className="">
-                  <Link className="flex " href={post.slug} key={post.title}>
+                <li basic-list-item="" className="" key={post.title}>
+                  <Link className="flex " href={post.slug}>
                     {/* {isFirstOfYear ? (
                       <span
                         basic-list-year=""

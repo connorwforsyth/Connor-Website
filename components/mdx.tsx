@@ -165,7 +165,6 @@ const components = {
         alt={alt}
         width={1}
         height={1}
-        layout="responsive"
       />
     );
   },
