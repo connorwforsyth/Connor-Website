@@ -19,6 +19,7 @@ export default function Projects() {
 
         <ol basic-list="" className="border-b border-zinc-300">
           {allProjects
+            .filter((post) => post.published)
             .sort(
               (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
             )
