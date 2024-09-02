@@ -2,14 +2,14 @@ import { cn } from "@/lib/utils";
 import { ReactElement } from "react";
 type comment = {
   text: ReactElement;
-  children: any;
+  children: ReactElement;
 };
 
 // lg:bg-zinc-300 lg:dark:bg-zinc-700
 export default function Comment({ text, children }: comment) {
   return (
-    <span className="lg:cursor-crosshair">
-      <span className="decoration-zinc-500 decoration-[1.5px] underline-offset-4 transition-all *:transition-all hover:decoration-zinc-950 hover:dark:decoration-zinc-400 lg:bg-zinc-300 lg:underline *:hover:lg:border-l-zinc-950 lg:dark:bg-zinc-800 *:hover:dark:lg:border-l-zinc-400 ">
+    <span className="inline lg:cursor-crosshair">
+      <mark className="bg-transparent decoration-zinc-500 decoration-[1.5px] underline-offset-4 transition-all *:transition-all hover:decoration-zinc-950 dark:text-zinc-100 hover:dark:decoration-zinc-400 lg:bg-zinc-300 lg:underline *:hover:lg:border-l-zinc-950 lg:dark:bg-zinc-800 lg:dark:text-zinc-300 lg:hover:dark:text-zinc-100 *:hover:dark:lg:border-l-zinc-400 ">
         {children}
         <span
           className={cn(
@@ -18,7 +18,7 @@ export default function Comment({ text, children }: comment) {
         >
           {text}
         </span>
-      </span>
+      </mark>
     </span>
   );
 }

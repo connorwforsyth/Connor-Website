@@ -1,5 +1,4 @@
 import "../styles/globals.css";
-import { Inter } from "next/font/google";
 import { Providers } from "@/components/theme-provider";
 import { Analytics } from "@/components/analytics";
 import Texture from "@/components/BackgroundTexture";
@@ -8,8 +7,6 @@ import Offline from "@/components/Offline";
 import { CSPostHogProvider } from "./providers";
 import { Metadata } from "next";
 import siteMetadata from "@/config/site-metadata";
-
-const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 
 interface RootLayoutProps {
   children: React.ReactNode;

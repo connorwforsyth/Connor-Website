@@ -1,0 +1,104 @@
+---
+title: "Crafting a recipe organiser app"
+date: "08-20-2024"
+description: "ReciMe — an New York based startup is redefine how people organise, cook and share recipes."
+p2: "They initially launched an IOS application that has 1 million users globally and generates $1 Million ARR, with projections of $3M by the end of 2024. To keep up with their growth trajectory, ReciMe is developing a web application that aims to deliver and extend the current experience of the mobile app to ulitmately service more users."
+---
+
+<Collaborators people="Christine Nguyen" />
+{/* <Img
+  src="/projects/recime/recime-full.png"
+  type="hero"
+  className="bg-gradient from-orange-300 to-orange-500 *:max-w-5xl"
+/> */}
+
+<div className="relative z-10 flex w-full flex-col justify-center rounded-lg from-orange-300  to-orange-500 md:border md:bg-gradient-to-r md:p-24">
+  <div className="mx-auto w-full max-w-7xl rounded-[8px] border border-zinc-300 bg-zinc-300 p-[4px] shadow-md *:rounded-[4px] dark:bg-white dark:bg-opacity-50 md:rounded-[12px] md:border-white md:bg-white md:bg-opacity-50 md:p-[8px] md:*:rounded-[4px]">
+    <iframe
+      className="relative aspect-[1440/1024] w-full overflow-clip *:bg-white"
+      src="https://www.figma.com/embed?embed_host=share&url=https%3A%2F%2Fwww.figma.com%2Fproto%2Fq9CGPhULq8nuBvbLTtFwSr%2FReciMe-Product-Design%252C-Design-Challenge%3Fpage-id%3D26%253A44807%26node-id%3D26-44808%26node-type%3DFRAME%26viewport%3D785%252C444%252C0.14%26t%3DpLEFZerOZuxJtY99-1&scaling=scale-down-width&hide-ui=1"
+      allowfullscreen
+    />
+  </div>
+</div>
+<Caption>
+  Note: The above is a figma prototype. Not everything is interactive.
+</Caption>
+
+## Overview
+
+Through a four-day product concept sprint, I designed an early prototype of the ReciMe homepage suitable for users of desktop web interfaces.
+
+This helped establish the start of the overall navigational elements, a design system, and component library for their web application.
+
+## Process
+
+Over the course of four days, I focused on:
+
+1. Getting aquanted with the product, IOS UI, potential user groups and core customer jobs.
+2. Using my understanding to produce an desktop concept of what the web application experience could be.
+
+The intention would be to use this concept to align with ReciMe's view of their product strategy, and to take it to testing with different users groups.
+
+```md
+## Tasks involved:
+
+- App audit, screens, flows, tasks.
+- Understanding compeditors.
+- Battle testing core user tasks, including:
+  1. Finding a recipe
+  2. Organising groceries
+  3. Creating a recipe from either importing or from scratch
+  4. Searching ingredients and recipes
+  5. Leaving reviews on recipes.
+```
+
+## Insights from discovery
+
+### 1. Core task for users accessing the app for the first time
+
+The medaphor for `Homepage` is unclear on the mobile app, currently it seems to be the `my recipes` section, but this is unusual for most social media platforms or content platforms. Users visiting the mobile app for the first time are greeted by an empty `my recipes` page.
+
+Without having done anything beyond <Comment text="observation of people in the supermarket, testing with friends and collegues over the course of the few days">guerrilla user research</Comment>, it was my assumption that many users accessing a recipe app for the first time would like to browse what recipes are available.
+
+Exploring and discovering recipes to cook was hidden within the side menu. So it was my immediate goal to make finding recipes intuitive, easy, and one that follows traditional patterns from apps they might be familiar with.
+
+<Img
+  className="aspect-[16/9] max-w-7xl border-none bg-zinc-300 p-8  dark:bg-zinc-300"
+  src="/projects/recime/findexplore.png"
+/>
+<Caption>
+  Finability of the explore section is hidden within the more menu on the IOS
+  app.
+</Caption>
+
+### 2. The experience of grocery shopping and cooking
+
+Selecting a meal and adding it to my grocery list was relatively straight forward. However through timing myself at the supermarket, it took me 30 minutes to shop for even a basic meal. This was likely due to me trying to tick off every item one by one, holding my phone in one hand, shopping basket under the arm, and picking up items as I go. — While out of scope for this project, I figured it would be great to create a focused WatchOS app, specifically for grocery checklists. This will enable a more ergonomic experience while checking off groceries.
+
+For many users, a key motivation for cooking at home is for financial reasons, after completing my shop, I actually spent around $80. While not everything I shopped for was just for the recipe, I still felt compelled to see how much I spent on the meal. With LLMs and OCR text readers, this isn't out of the realm of possibility. I wanted to hint towards a feature in the app for this.
+
+### 3. Importing a meal
+
+Importing a recipe is a prominently advertised feature of ReciMe, and with the advent of LLMs and multi-modal language models, I was curious to see how the import feature would go.
+
+I tested Instagram recipes, TikToks, restaurant menus, and meal photos, home cookbooks, and recipe websites. Many of these import options weren't working as I expected. So while promising, I figured it was more of an experimental feature at this stage. I'd love to be able to reverse-engineer some of my favorite restaurant meals.
+
+## Design decisions:
+
+- For first time users, my hypothesis is that they are likely wanting to plan their shopping or cook a meal with leftover groceries, so my aim was to bring that to the forefront.
+- Many recipes within the app didn't have clear ratings, and it was hard to distinguish whether something had been saved as inspo, or the recipe was actually reliable.
+
+## Outcomes and deliverables
+
+The new web home screen for ReciMe helps ground new users of the core tasks within the app. It also easily enables users to scan potential recipes that are trending, search by mealtype, ingredients, cuisines.
+
+<iframe
+  className="relative z-10 mx-auto my-8
+  aspect-[1440/1024] w-full max-w-7xl  rounded-lg"
+  src="https://www.figma.com/embed?embed_host=share&url=https%3A%2F%2Fwww.figma.com%2Ffile%2Fq9CGPhULq8nuBvbLTtFwSr%2FReciMe-Product-Design%252C-Design-Challenge%3Fnode-id=140%253A43862&scaling=scale-down-width&hide-ui=1"
+/>
+
+## Acknowledgements
+
+Thanks [Christine](https://www.linkedin.com/in/christine-nguyen-196127141) and the ReciMe team for creating an awesome product and for the opportunity to take part in defining the products future.

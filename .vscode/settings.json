@@ -6,7 +6,8 @@
   "[json]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
-  "editor.formatOnSave": true,
+  "editor.formatOnSave": false,
   "eslint.format.enable": true,
-  "json.format.enable": true
+  "json.format.enable": true,
+  "accessibility.signalOptions.volume": 0
 }

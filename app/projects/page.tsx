@@ -28,7 +28,7 @@ export default function Projects() {
                 (item) => new Date(item.date).getFullYear() === year,
               );
               const element = (
-                <li basic-list-item="" className="">
+                <li basic-list-item="" className="" key={post.title}>
                   <Link className="flex " href={post.slug} key={post.title}>
                     {/* {isFirstOfYear ? (
                       <span
