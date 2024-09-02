@@ -138,7 +138,6 @@ const components = {
           loading="eager"
           width={1}
           height={1}
-          layout="responsive"
         />
       </div>
       {alt && (

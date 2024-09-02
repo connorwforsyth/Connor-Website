@@ -8,6 +8,5 @@
   },
   "editor.formatOnSave": false,
   "eslint.format.enable": true,
-  "json.format.enable": true,
-  "accessibility.signalOptions.volume": 0
+  "json.format.enable": true
 }
