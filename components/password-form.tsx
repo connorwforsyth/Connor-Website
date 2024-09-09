@@ -35,7 +35,7 @@ export default function PasswordForm() {
     <>
       <style jsx>{`
         .error {
-          animation: shake 0.82s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+          animation: shake 0.5s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
         }
         @keyframes shake {
           10%,
@@ -63,7 +63,7 @@ export default function PasswordForm() {
       <div className="mx-auto mt-4 max-w-2xl">
         <form onSubmit={handleSubmit} className="flex max-w-sm flex-col gap-5">
           <label className="flex flex-col gap-2">
-            Name
+            Your Name
             <input
               className="rounded-lg border border-zinc-500 bg-transparent p-2 px-3"
               type="text"
@@ -72,7 +72,7 @@ export default function PasswordForm() {
             />
           </label>
           <label className="flex flex-col gap-2">
-            Email
+            Your Email
             <input
               className="rounded-lg border border-zinc-500 bg-transparent p-2 px-3"
               type="email"
