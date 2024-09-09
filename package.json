@@ -34,6 +34,7 @@
     "eslint": "8.39.0",
     "eslint-config-next": "13.3.1",
     "form": "^0.2.4",
+    "framer-motion": "^11.5.3",
     "iron-session": "^8.0.1",
     "next": "14.1.0",
     "next-contentlayer": "^0.3.4",

@@ -1,3 +1,4 @@
+'use client';
 import * as React from "react";
 import Image from "next/image";
 import { useMDXComponent } from "next-contentlayer/hooks";
@@ -9,6 +10,8 @@ import Comment from "./inlineComment";
 import CompPlayer from "./VideoPlayer";
 import { Tweet } from "react-tweet";
 import FigmaProtoFrame from "./FigmaProtoFrame";
+import { Spinner } from "./Spinner/Spinner";
+import SmoothButton from "./Spinner/SmoothSpinner";
 
 ("use-client");
 import {
@@ -21,13 +24,15 @@ import {
 
 export function UIWrapper({ children }: { children: React.ReactNode }) {
   return (
-    <div className="mx-auto mb-6 mt-2 flex w-full max-w-2xl items-center justify-center rounded-lg border border-zinc-400 bg-zinc-200 p-12">
+    <div className="mx-auto mb-6 mt-2 flex w-full max-w-2xl items-center justify-center rounded-lg border border-zinc-400 bg-zinc-300 dark:bg-zinc-900 p-12">
       {children}
     </div>
   );
 }
 
 const components = {
+  SmoothButton,
+  Spinner,
   FigmaProtoFrame,
   Tweet,
   CompPlayer,
