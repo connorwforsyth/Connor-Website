@@ -13,6 +13,7 @@ import FigmaProtoFrame from "./FigmaProtoFrame";
 import { Spinner } from "./Spinner/Spinner";
 import SmoothButton from "./Spinner/SmoothSpinner";
 import FigmaEmbed from "./FigmaEmbedPage";
+import Caption from "./Caption";
 
 ("use-client");
 import {
@@ -32,6 +33,7 @@ export function UIWrapper({ children }: { children: React.ReactNode }) {
 }
 
 const components = {
+  Caption,
   FigmaEmbed,
   SmoothButton,
   Spinner,
@@ -49,11 +51,6 @@ const components = {
   CarouselPrevious,
   Collaborators,
   UIWrapper,
-  Caption: ({ children }) => (
-    <em className="mx-auto mb-4 mt-2 block w-full max-w-2xl text-center text-sm text-zinc-700 dark:text-zinc-200">
-      {children}
-    </em>
-  ),
   MiroMapLink: ({
     title,
     href,
