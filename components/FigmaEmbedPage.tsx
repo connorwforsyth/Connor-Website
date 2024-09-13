@@ -1,25 +1,28 @@
+"use client";
+import Caption from './Caption';
 import { useEffect, useState } from 'react';
 
 export default function FigmaEmbed() {
-  const [shouldRender, setShouldRender] = useState(false);
+    const [showFrame, setShowFrame] = useState(false);
 
-  useEffect(() => {
-    const handleResize = () => {
-      setShouldRender(window.innerWidth > 768);
+ useEffect(() => {
+    const checkScreenSize = () => {
+      setShowFrame(window.innerWidth > 768);
     };
 
-    handleResize();
-    window.addEventListener('resize', handleResize);
+    // Check on initial load
+    checkScreenSize();
 
-    return () => {
-      window.removeEventListener('resize', handleResize);
-    };
-  }, []);
+    // Add event listener
+    window.addEventListener('resize', checkScreenSize);
 
-  if (!shouldRender) {
-    return <></>;
+    // Cleanup function to remove event listener
+    return () => window.removeEventListener('resize', checkScreenSize);
+  }, []); // Empty dependency array means this effect runs once on mount
+
+  if (!showFrame) {
+    return <Caption>This component is only visible on desktop.</Caption>;
   }
-
   return (
     <div>
       <div className="w-full max-w-5xl mx-auto rounded-[8px] border border-zinc-300 bg-zinc-300 p-[4px] shadow-md *:rounded-[4px] dark:bg-white dark:bg-opacity-50 md:rounded-[12px] md:border-white md:bg-white md:bg-opacity-50 md:p-[8px] md:*:rounded-[6px]">
@@ -32,6 +35,7 @@ export default function FigmaEmbed() {
           allowFullScreen
         />
       </div>
+      <Caption>We conducted a workshop with stakeholders to share and prioritise the aspirational concepts.</Caption>
     </div>
   );
 }
