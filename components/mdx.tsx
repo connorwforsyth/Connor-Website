@@ -12,6 +12,7 @@ import { Tweet } from "react-tweet";
 import FigmaProtoFrame from "./FigmaProtoFrame";
 import { Spinner } from "./Spinner/Spinner";
 import SmoothButton from "./Spinner/SmoothSpinner";
+import FigmaEmbed from "./FigmaEmbedPage";
 
 ("use-client");
 import {
@@ -31,6 +32,7 @@ export function UIWrapper({ children }: { children: React.ReactNode }) {
 }
 
 const components = {
+  FigmaEmbed,
   SmoothButton,
   Spinner,
   FigmaProtoFrame,
