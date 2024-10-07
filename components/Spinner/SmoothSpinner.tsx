@@ -3,6 +3,7 @@ import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { Spinner } from "./Spinner";
 import styles from "./spinner.module.css";
+
 const buttonCopy = {
   idle: "Send me a login link",
   loading: <Spinner size={16} color="rgba(255, 255, 255, 0.65)" />,

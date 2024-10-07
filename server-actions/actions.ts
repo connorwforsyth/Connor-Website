@@ -2,40 +2,42 @@
 import { getIronSession } from "iron-session";
 import { sessionOptions, SessionData, defaultSession } from "@/lib/lib";
 import { cookies } from "next/headers";
-import { revalidatePath } from "next/cache";
-import { posthog } from "posthog-js";
 
 let password = process.env.ACCESS_CODE!;
+
+const ACCESS_CODE = process.env.ACCESS_CODE!;
 
 export const getSession = async () => {
   const session = await getIronSession<SessionData>(cookies(), sessionOptions);
 
-  if (!session.isLoggiedIn) {
-    session.isLoggiedIn = defaultSession.isLoggiedIn;
+  if (!session.isLoggedIn) {
+    session.isLoggedIn = defaultSession.isLoggedIn;
   }
   return session;
 };
 
-export const login = async (
-  prevState: { error: undefined | string },
-  formData: FormData,
-) => {
-  const session = await getSession();
-
-  const formName = formData.get("name") as string;
-  const formEmail = formData.get("email") as string;
+export const verifyAccessCode = async (formData: FormData): Promise<{ success: boolean; error?: string }> => {
   const formPassword = formData.get("password") as string;
-  posthog.identify(formName, { name: formName, email: formEmail });
-
-  if (formPassword !== password) {
-    return { error: "Wrong access code." };
+  if (formPassword !== process.env.ACCESS_CODE) {
+    return { success: false, error: "Wrong access code." };
   }
-
-  session.name = formName;
-  session.isLoggiedIn = true;
-
-  await session.save();
-  revalidatePath;
+  return { success: true };
 };
 
-export const logout = async () => {};
+export const completeSignUp = async (formData: FormData): Promise<{ success: boolean; error?: string }> => {
+  const session = await getSession();
+  const password = formData.get("password") as string;
+  const name = formData.get("name") as string;
+  const email = formData.get("email") as string;
+
+  if (password !== process.env.ACCESS_CODE) {
+    return { success: false, error: "Invalid access code." };
+  }
+
+  session.isLoggedIn = true;
+  session.name = name;
+  session.email = email;
+  await session.save();
+
+  return { success: true };
+};
