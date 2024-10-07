@@ -2,12 +2,13 @@
 
 import { posthog } from "posthog-js";
 import useMeasure from "react-use-measure";
-import { FormEvent, useReducer, useMemo } from "react";
+import { FormEvent, useReducer, useMemo, useEffect } from "react";
 import { LockClosedIcon, ExclamationTriangleIcon, CheckIcon, InfoCircledIcon } from "@radix-ui/react-icons";
 import { AnimatePresence, MotionConfig, motion } from "framer-motion";
 import { Spinner } from "./Spinner/Spinner";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { cn } from "@/lib/utils";
 
 // Import the server actions
 import { verifyAccessCode, completeSignUp } from "@/server-actions/actions";
@@ -23,6 +24,7 @@ type FormState = {
   error: string | null;
   loading: boolean;
   isLoggedIn: boolean;
+  showError: boolean;
 };
 
 type FormAction =
@@ -31,7 +33,8 @@ type FormAction =
   | { type: 'SET_SUCCESS'; success: boolean }
   | { type: 'SET_ERROR'; error: string | null }
   | { type: 'SET_LOADING'; loading: boolean }
-  | { type: 'SET_LOGGED_IN'; isLoggedIn: boolean };
+  | { type: 'SET_LOGGED_IN'; isLoggedIn: boolean }
+  | { type: 'SET_SHOW_ERROR'; showError: boolean };
 
 const initialState: FormState = {
   step: "password",
@@ -42,6 +45,7 @@ const initialState: FormState = {
   error: null,
   loading: false,
   isLoggedIn: false,
+  showError: false,
 };
 
 const formReducer = (state: FormState, action: FormAction): FormState => {
@@ -51,15 +55,17 @@ const formReducer = (state: FormState, action: FormAction): FormState => {
     case 'NEXT_STEP':
       const steps: FormStep[] = ["password", "name", "email"];
       const currentIndex = steps.indexOf(state.step);
-      return { ...state, step: steps[currentIndex + 1], error: null };
+      return { ...state, step: steps[currentIndex + 1], error: null, showError: false, success: false };
     case 'SET_ERROR':
-      return { ...state, error: action.error };
+      return { ...state, error: action.error, showError: true, success: false };
     case 'SET_SUCCESS':
-      return { ...state, success: action.success };
+      return { ...state, success: action.success, showError: false };
     case 'SET_LOADING':
       return { ...state, loading: action.loading };
     case 'SET_LOGGED_IN':
       return { ...state, isLoggedIn: action.isLoggedIn };
+    case 'SET_SHOW_ERROR':
+      return { ...state, showError: action.showError };
     default:
       return state;
   }
@@ -70,9 +76,21 @@ export default function AccessForm() {
   const [ref, bounds] = useMeasure();
   const router = useRouter();
 
+  useEffect(() => {
+    if (state.showError) {
+      const timer = setTimeout(() => {
+        dispatch({ type: 'SET_SHOW_ERROR', showError: false });
+      }, 1500);
+      return () => clearTimeout(timer);
+    }
+  }, [state.showError]);
+
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     dispatch({ type: 'SET_LOADING', loading: true });
+    dispatch({ type: 'SET_ERROR', error: null });
+    dispatch({ type: 'SET_SHOW_ERROR', showError: false });
+    dispatch({ type: 'SET_SUCCESS', success: false });
 
     try {
       if (state.step === "password") {
@@ -83,8 +101,11 @@ export default function AccessForm() {
 
         if (result.success) {
           // Simulate loading
-          dispatch({ type: 'SET_ERROR', error: null });
           await new Promise(resolve => setTimeout(resolve, 1000));
+          dispatch({ type: 'SET_SHOW_ERROR', showError: false });
+          dispatch({ type: 'SET_ERROR', error: null });
+          dispatch({ type: 'SET_LOADING', loading: false });
+
           dispatch({ type: 'SET_SUCCESS', success: true });
           // Show success for 1 second
           await new Promise(resolve => setTimeout(resolve, 1000));
@@ -175,20 +196,6 @@ export default function AccessForm() {
                 />
               </motion.div>
             </label>
-            {state.success && (
-              <motion.div 
-              initial={{ y: -30, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              exit={{ y: 0, opacity: 0 }}
-              transition={{
-                duration: 0.3,
-                ease: [0.25, 0.1, 0.25, 1], // cubic-bezier easing
-                opacity: { duration: 0.2 }
-              }} className="success flex h-5 items-center gap-1 text-green-500 dark:text-green-400">
-                <CheckIcon className="h-auto w-4" />
-                <p>Access code verified</p>
-              </motion.div>
-            )}
           </div>
           </>
         );
@@ -247,14 +254,21 @@ export default function AccessForm() {
             </motion.div>
           {state.step && (
             <motion.button
-            layout
-              className="rounded-lg flex h-10 items-center justify-center bg-zinc-900 text-zinc-50 dark:bg-zinc-50 dark:text-black sm:w-32"
+              layout
+              className={cn(
+                `rounded-lg overflow-hidden flex h-10 items-center justify-center transition-all bg-zinc-900 text-zinc-50 dark:bg-zinc-50 dark:text-black
+                ${state.step === "password" && state.success && "bg-green-500 text-green-900 dark:bg-green-400 dark:text-green-900"}
+                ${state.showError && "bg-red-500 dark:bg-red-500 dark:text-white"}`
+              )}  
               type="submit"
               disabled={state.loading}
             >
-              {state.loading ? <Spinner color="gray" /> : state.step === "email" ? "Complete" : "Next"}
+            <AnimatePresence mode="wait" initial={false}>
+              {renderButtonContent(state)}
+          </AnimatePresence>
             </motion.button>
           )}
+
           </AnimatePresence>
          
         </form>
@@ -263,3 +277,35 @@ export default function AccessForm() {
     </div>
   );
 }
+
+const renderButtonContent = (state: FormState) => {
+  const commonMotionProps = {
+    initial: { y: "-110%", opacity: 0 },
+    animate: { y: 0, opacity: 1 },
+    exit: { y: "110%", opacity: 0 },
+    transition: {
+      duration: 0.3,
+      ease: [0.25, 0.1, 0.25, 1],
+      opacity: { duration: 0.2 }
+    }
+  };
+
+  if (state.loading) {
+    return <Spinner color="gray" />;
+  }
+
+  if (state.step === "password") {
+    if (state.success) {
+      return <motion.div key={`success-${state.success}`} {...commonMotionProps} className="flex items-center gap-2"><CheckIcon className="h-auto w-4" />Access code verified</motion.div>
+    }
+    if (state.showError) {
+      return <motion.div key={`error-${state.showError}`} {...commonMotionProps} className="flex items-center gap-2"><ExclamationTriangleIcon className="h-auto w-4" />Incorrect access code</motion.div>
+    }
+  }
+
+  return (
+    <motion.div key={state.step} {...commonMotionProps}>
+      {state.step === "email" ? "Complete" : "Next"}
+    </motion.div>
+  );
+};
