@@ -3,7 +3,6 @@ import { notFound } from "next/navigation";
 import { Mdx } from "@/components/mdx";
 import BackButton from "@/components/BackButton";
 import { format } from "date-fns";
-import PasswordForm from "@/components/password-form";
 import { getSession } from "@/server-actions/actions";
 import { Metadata, ResolvingMetadata } from "next";
 import siteMetadata from "@/config/site-metadata";
