@@ -7,6 +7,7 @@ import PasswordForm from "@/components/password-form";
 import { getSession } from "@/server-actions/actions";
 import { Metadata, ResolvingMetadata } from "next";
 import siteMetadata from "@/config/site-metadata";
+import AccessForm from "@/components/access-form";
 
 interface PageProps {
   params: {
@@ -80,14 +81,10 @@ export default async function Page({ params }: PageProps) {
     );
   };
   if (doc.protected === true)
-    return !session.isLoggiedIn ? (
+    return !session.isLoggedIn ? (
       <article>
         <Header />
-        <p className="mx-auto w-full max-w-2xl">
-          Due to the confidentiality of some of my projects, this page has to be
-          protected. To access, please fill in the following:
-        </p>
-        <PasswordForm />
+        <AccessForm />
       </article>
     ) : (
       <article>

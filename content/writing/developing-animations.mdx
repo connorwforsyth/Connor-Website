@@ -12,10 +12,10 @@ import { useState } from "react";
 
 
 <UIWrapper>
-  <Example />
+  <Box />
 </UIWrapper>
 
-export function Example() {
+export function Box() {
     const [isVisible, setIsVisible] = useState(true);
     const toggleVisibility = () => setIsVisible(prev => !prev);
 
