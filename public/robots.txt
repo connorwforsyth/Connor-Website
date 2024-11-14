@@ -1,6 +1,8 @@
 # this may stop indexing for not only image files, but also page routes.
 
 User-agent: *
+Disallow: /homepage
+Disallow: /fonts
 Disallow: /images
 Disallow: /projects
 Disallow: /writing
