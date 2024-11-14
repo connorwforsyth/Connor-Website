@@ -39,7 +39,7 @@ export default function BackButton({ type, label }: BackType) {
     );
   if (type === "404") {
     return (
-      <div className="font-rodney mx-auto mb-8 w-full max-w-2xl lg:mb-[2px] lg:max-w-5xl">
+      <div className="mx-auto mb-8 w-full max-w-2xl font-rodney italic lg:mb-[2px] lg:max-w-5xl">
         <div className="flex">
           <Link
             href="/"
@@ -53,7 +53,7 @@ export default function BackButton({ type, label }: BackType) {
     );
   } else {
     return (
-      <div className="font-rodney mx-auto mb-8 w-full max-w-2xl lg:mb-[2px] lg:max-w-5xl">
+      <div className="mx-auto mb-8 w-full max-w-2xl font-rodney italic lg:mb-[2px] lg:max-w-5xl">
         <div className="flex">
           <Link
             href="./"
