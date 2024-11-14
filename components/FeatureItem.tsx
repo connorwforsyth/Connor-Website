@@ -28,10 +28,10 @@ export default function FeatureItem({
   return (
     <div className="grid grid-cols-12">
       <div
-        className={cn("col-span-12 sm:col-span-9", {
+        className={cn("col-span-12 sm:col-span-7", {
           "sm:col-start-1": position === "left",
           "sm:col-start-2": position === "center",
-          "sm:col-start-4": position === "right",
+          "sm:col-end-13": position === "right",
         })}
       >
         <div
