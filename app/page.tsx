@@ -36,88 +36,99 @@ export default function Home() {
         className="sr-only mx-auto w-full max-w-2xl rounded-lg"
         src="/connorforsyth-headshot.jpg"
       />
-      <div className="mx-auto flex w-full max-w-2xl flex-col gap-3 dark:text-zinc-300">
-        <h1 className="pb-4 font-rodney text-3xl font-medium text-zinc-800 dark:text-zinc-50">
-          <span className="text-zinc-700 dark:text-zinc-300">
-            Connor Forsyth
-          </span>
-          . Product and service designer focussed on building experiences with
-          code, craft, and humans.
-        </h1>
-
-        <div className="flex flex-col gap-3" data-animate="" basic-stagger="1">
-          <p>
-            I currently work at{" "}
-            <Link
-              href="https://designit.com"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Designit
-            </Link>{" "}
-            where I help organisations build better experiences through creative
-            technology, prototyping, research, design sprints and proof of
-            concepts. I also work as an academic tutor in the design school at{" "}
-            <Link
-              target="_blank"
-              rel="noopener noreferrer"
-              href="https://sydney.edu.au"
-            >
-              The University of Sydney
-            </Link>
-            .
-          </p>
-          <p>
-            Outside of work, I'm building communities, taking{" "}
-            <Link
-              href="https://photos.connorforsyth.co/"
-              rel="noopener noreferrer"
-            >
-              photos
-            </Link>
-            , and brewing filter coffee.
-          </p>
+      <div className="flex flex-col gap-4 sm:h-auto">
+        <div className="mx-auto flex w-full max-w-2xl flex-col gap-4 ">
+          <h1 className="pb-4 font-rodney text-2xl font-medium text-zinc-800 dark:text-zinc-50 sm:text-3xl">
+            <span className="block pr-1 text-zinc-700 dark:text-zinc-300 sm:inline">
+              Connor Forsyth.
+            </span>
+            Product and service designer
+            <span className="hidden sm:inline">
+              {" "}
+              focussed on building experiences with code, craft, and humans.
+            </span>
+          </h1>
+          <div
+            className="flex flex-col gap-3"
+            data-animate=""
+            basic-stagger="1"
+          >
+            <p>
+              I currently work at{" "}
+              <Link
+                href="https://designit.com"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Designit
+              </Link>{" "}
+              where I help organisations build better experiences through
+              creative technology, prototyping, research, design sprints and
+              proof of concepts.{" "}
+            </p>
+            <p className="hidden sm:inline">
+              I also work as an academic tutor in the design school at{" "}
+              <Link
+                target="_blank"
+                rel="noopener noreferrer"
+                href="https://sydney.edu.au"
+              >
+                The University of Sydney
+              </Link>
+              .
+            </p>
+            <p>
+              Outside of work, I'm building communities, taking{" "}
+              <Link
+                href="https://photos.connorforsyth.co/"
+                rel="noopener noreferrer"
+              >
+                photos
+              </Link>
+              , and brewing filter coffee.
+            </p>
+          </div>
         </div>
-      </div>
-      <div
-        data-animate=""
-        basic-stagger="2"
-        className="mx-auto flex w-full max-w-2xl flex-col gap-4 py-4"
-      >
-        <div className="flex flex-row gap-4">
-          <ProjectLink href="/projects">All Projects</ProjectLink>
-          <ProjectLink href="/writing">Writing</ProjectLink>
-          <ProjectLink href="https://github.com/connorwforsyth">
-            GitHub
-          </ProjectLink>
+        <div
+          data-animate=""
+          basic-stagger="2"
+          className="mx-auto flex w-full max-w-2xl flex-col gap-4"
+        >
+          <div className="flex flex-row gap-4">
+            <ProjectLink href="/projects">All Projects</ProjectLink>
+            <ProjectLink href="/writing">Writing</ProjectLink>
+            <ProjectLink href="https://github.com/connorwforsyth">
+              GitHub
+            </ProjectLink>
+          </div>
         </div>
-      </div>
-
-      <div
-        data-animate=""
-        basic-stagger="3"
-        className="mx-auto flex w-full max-w-2xl flex-col gap-4"
-      >
-        <Collaborators />
-      </div>
-
-      <div
-        data-animate=""
-        basic-stagger="4"
-        className="mx-auto w-full max-w-2xl"
-      >
-        <h2 className="mb-3 text-zinc-700 dark:text-zinc-100">
-          <em>Contact</em>
-        </h2>
-        <p>
-          You can reach me on{" "}
-          <Link href="https://www.linkedin.com/in/connorwforsyth">
-            LinkedIn
-          </Link>{" "}
-          or <Link href="https://x.com/connorwforsyth">𝕏 (Twitter)</Link> or
-          email me:{" "}
-          <Link href="mailto:c@connorforsyth.co">c@connorforsyth.co</Link>
-        </p>
+        <div className="flex flex-col-reverse gap-4 sm:flex-col">
+          <div
+            data-animate=""
+            basic-stagger="3"
+            className="mx-auto flex w-full max-w-2xl  gap-4"
+          >
+            <Collaborators />
+          </div>
+          <div
+            data-animate=""
+            basic-stagger="4"
+            className="mx-auto w-full max-w-2xl"
+          >
+            <h2 className="mb-3 hidden text-zinc-700 dark:text-zinc-100 sm:block">
+              <em>Contact</em>
+            </h2>
+            <p>
+              You can reach me on{" "}
+              <Link href="https://www.linkedin.com/in/connorwforsyth">
+                LinkedIn
+              </Link>{" "}
+              or <Link href="https://x.com/connorwforsyth">𝕏 (Twitter)</Link> or
+              email me:{" "}
+              <Link href="mailto:c@connorforsyth.co">c@connorforsyth.co</Link>
+            </p>
+          </div>
+        </div>
       </div>
 
       <div
