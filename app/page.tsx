@@ -123,8 +123,8 @@ export default function Home() {
               <Link href="https://www.linkedin.com/in/connorwforsyth">
                 LinkedIn
               </Link>{" "}
-              or <Link href="https://x.com/connorwforsyth">𝕏 (Twitter)</Link> or
-              email me:{" "}
+              , <Link href="https://x.com/connorwforsyth">𝕏 (Twitter)</Link> or
+              email:{" "}
               <Link href="mailto:c@connorforsyth.co">c@connorforsyth.co</Link>
             </p>
           </div>
