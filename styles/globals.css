@@ -84,7 +84,6 @@
   font-display: swap;
 }
 
-
 @font-face {
   font-family: "rodney";
   src: url(/fonts/Rodney/Rodney-Light.woff2) format("woff2");
@@ -95,7 +94,7 @@
 
 @font-face {
   font-family: "rodney";
-  src: url(/fonts/Rodney/Rodney-Regular.woff2) format("woff2"); 
+  src: url(/fonts/Rodney/Rodney-Regular.woff2) format("woff2");
   font-weight: 400;
   font-style: normal;
   font-display: swap;
@@ -170,7 +169,6 @@ body {
 
 @layer base {
   :root {
-  
     --accent: #000dff;
     --background: 0 0% 95.9%%;
     --foreground: 240 10% 3.9%;
@@ -201,13 +199,13 @@ body {
     --ring: 240 10% 3.9%;
     --radius: 0.5rem;
 
-    --selection-background: #ffd700;
+    --selection-background: #a5a5a5;
     --selection-text: #000000;
   }
 
   .dark {
-    --selection-background: #ffd700;
-    --selection-text: #000000;
+    --selection-background: #474747;
+    --selection-text: white;
 
     --tw-bg-opacity: 1;
     --background: rgb(28 25 23 / var(--tw-bg-opacity));
@@ -312,7 +310,7 @@ body {
     transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
     transition-duration: 200ms;
   }
-/* eventually change this to the new underline link */
+  /* eventually change this to the new underline link */
   .underline-grow {
     background-image: linear-gradient(
       to right,
@@ -353,9 +351,8 @@ body {
   }
 
   p a {
-    @apply box-shadow-small hover:box-shadow-full transition-all text-zinc-900  underline-offset-4 active:text-zinc-200 dark:text-zinc-200;
+    @apply box-shadow-small hover:box-shadow-full text-zinc-900 underline-offset-4  transition-all active:text-zinc-200 dark:text-zinc-200;
   }
-
 
   p code {
     @apply mx-[1px] rounded-sm border px-[2px] text-sm dark:border-zinc-500;
