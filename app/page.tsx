@@ -64,7 +64,7 @@ export default function Home() {
               </Link>{" "}
               where I help organisations build better experiences through
               creative technology, prototyping, research, design sprints and
-              proof of concepts.{" "}
+              proof of concepts.
             </p>
             <p className="hidden sm:inline">
               I also work as an academic tutor in the design school at{" "}
