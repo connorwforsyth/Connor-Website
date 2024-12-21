@@ -13,7 +13,7 @@ export async function GET(request: Request) {
     ),
   ).then((res) => res.arrayBuffer());
 
-  const fontData = await fetch(
+  const fontDataKag = await fetch(
     new URL(
       "../../../public/fonts/KAG/KynetonArtGrotesque-Regular.woff",
       import.meta.url,
@@ -24,7 +24,7 @@ export async function GET(request: Request) {
     const { searchParams } = new URL(request.url);
 
     const hasTitle = searchParams.has("title");
-    const title = hasTitle ? searchParams.get("title") : "My website";
+    const title = hasTitle ? searchParams.get("title") : "Connor Forsyth";
 
     const hasType = searchParams.has("type");
     const type = hasTitle ? searchParams.get("type") : "type";
@@ -39,7 +39,6 @@ export async function GET(request: Request) {
             height: "630px",
             width: "1200px",
             display: "flex",
-            fontFamily: "kag",
           }}
         >
           <div tw="flex w-full h-full px-4 bg-zinc-100 flex-col">
@@ -48,10 +47,8 @@ export async function GET(request: Request) {
               <h1 tw="text-4xl">👋 c@connorforsyth.co</h1>
             </div>
             <div tw="flex justify-end">
-              <h2 tw="text-6xl flex items-start -m-0.5 flex-col flex-grow pr-3">
-                <span tw="opacity-50">Service</span>
-                <span tw="opacity-50">Product</span>
-                <span tw="">Design Technologist</span>
+              <h2 tw="text-5xl flex items-start -m-0.5 flex-col flex-grow pr-3">
+                <span>Design Technologist</span>
               </h2>
               <img
                 width="500"
@@ -70,7 +67,7 @@ export async function GET(request: Request) {
         fonts: [
           {
             name: "kag",
-            data: fontData,
+            data: fontDataKag,
             style: "normal",
           },
         ],
