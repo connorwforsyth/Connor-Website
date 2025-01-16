@@ -13,7 +13,7 @@ const REDIRECTS = {
     eventName: "x_redirect",
   },
   "/linkedin": {
-    destination: "https://linkedin.com/in/connorforsyth",
+    destination: "https://linkedin.com/in/connorwforsyth",
     eventName: "linkedin_redirect",
   },
   "/cv": {
