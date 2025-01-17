@@ -183,18 +183,16 @@ export default function AccessForm() {
       case "password":
         return (
           <>
-            <div className="flex flex-col gap-2">
-              <div>
-                <p>This project is protected due to confidentiality.</p>
-                <p>
-                  If you do not have an access code,{" "}
-                  <Link className="underline" href="mailto:c@connorforsyth.co">
-                    reach out.
-                  </Link>
-                </p>
-              </div>
+            <div className="flex flex-col gap-1">
+              <p>This project is protected.</p>
+              <p>
+                If you do not have an access code,{" "}
+                <Link className="underline" href="mailto:c@connorforsyth.co">
+                  reach out.
+                </Link>
+              </p>
 
-              <label className="flex flex-col gap-2">
+              <label className="mt-4 flex flex-col gap-2">
                 Access Code
                 <motion.div
                   key={state.error} // Add a key prop to force re-render when error changes
@@ -266,7 +264,7 @@ export default function AccessForm() {
   }, [state]);
 
   return (
-    <div className="mx-auto mt-8 flex max-w-sm flex-col justify-center gap-4">
+    <div className="mx-auto flex max-w-sm flex-col justify-center gap-4">
       <MotionConfig transition={{ duration: 0.8, type: "spring", bounce: 0 }}>
         <motion.div>
           <form

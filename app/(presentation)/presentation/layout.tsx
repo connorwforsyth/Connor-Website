@@ -33,15 +33,16 @@ export default async function Layout({ children }: RootLayoutProps) {
   const session = await getSession();
 
   return (
-    <html className="scroll-p-32 scroll-smooth" lang="en">
+    <html className="scroll-smooth" lang="en">
       <body className={`relative bg-zinc-100 antialiased dark:bg-zinc-900`}>
-        <div className="blur"></div>
         <Texture />
         <ThemeProvider>
           <CSPostHogProvider>
             {!session.isLoggedIn ? (
-              <div className="flex h-lvh *:w-full *:max-w-sm">
-                <AccessForm />
+              <div className="flex h-screen items-center justify-center">
+                <div className="w-full max-w-md p-4">
+                  <AccessForm />
+                </div>
               </div>
             ) : (
               children

@@ -83,6 +83,7 @@ export default async function Page({ params }: PageProps) {
     return !session.isLoggedIn ? (
       <article>
         <Header />
+        <div className="my-8" />
         <AccessForm />
       </article>
     ) : (

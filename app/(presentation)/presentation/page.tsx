@@ -10,25 +10,26 @@ const uniquePage =
 const presentation = `IRxjN1QkNUk8ynq6gOvql3/CF-Portfolio-PDF?page-id=13%3A18132&node-id=13-18154&p=f&viewport=4803%2C-22702%2C1`;
 const FigmaEmbed = () => {
   const iframeRef = useRef<HTMLIFrameElement>(null);
-  const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
+  const [dimensions, setDimensions] = useState({ width: 1920, height: 1080 });
 
   const calculateDimensions = () => {
-    const SCALE_FACTOR = 1;
+    const PADDING = 8;
+    const SCALE_FACTOR = 0.9;
     const ASPECT_RATIO = 1920 / 1080;
     const MAX_WIDTH = 1920;
     const MAX_HEIGHT = 1080;
     const VIEWPORT_HEIGHT_PERCENT = window.innerHeight * 0.9; // 90vh
 
     const width = Math.min(
-      window.innerWidth,
-      VIEWPORT_HEIGHT_PERCENT * ASPECT_RATIO,
-      MAX_WIDTH * SCALE_FACTOR,
+      window.innerWidth - PADDING,
+      VIEWPORT_HEIGHT_PERCENT * ASPECT_RATIO - PADDING,
+      MAX_WIDTH * SCALE_FACTOR - PADDING,
     );
 
     const height = Math.min(
-      window.innerWidth / ASPECT_RATIO,
-      VIEWPORT_HEIGHT_PERCENT,
-      MAX_HEIGHT * SCALE_FACTOR,
+      window.innerWidth / ASPECT_RATIO - PADDING,
+      VIEWPORT_HEIGHT_PERCENT - PADDING,
+      MAX_HEIGHT * SCALE_FACTOR - PADDING,
     );
 
     setDimensions({ width, height });
@@ -44,16 +45,7 @@ const FigmaEmbed = () => {
   }, []);
 
   return (
-    <div
-      style={{
-        minHeight: "100vh",
-        margin: 0,
-        display: "grid",
-        placeContent: "center",
-        padding: "1rem",
-        overflow: "hidden",
-      }}
-    >
+    <div className="grid h-screen place-items-center overflow-clip">
       <iframe
         ref={iframeRef}
         style={{
