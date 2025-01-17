@@ -10,7 +10,7 @@ const uniquePage =
 const presentation = `IRxjN1QkNUk8ynq6gOvql3/CF-Portfolio-PDF?page-id=13%3A18132&node-id=13-18154&p=f&viewport=4803%2C-22702%2C1`;
 const FigmaEmbed = () => {
   const iframeRef = useRef<HTMLIFrameElement>(null);
-  const [dimensions, setDimensions] = useState({ width: 1920, height: 1080 });
+  const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
 
   const calculateDimensions = () => {
     const PADDING = 8;
