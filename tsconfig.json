@@ -33,7 +33,7 @@
     ".next/types/**/*.ts",
     ".contentlayer/generated",
     "components/mdx.jsx",
-    "app/providers.js"
+    "lib/providers.js"
   ],
   "exclude": ["node_modules"]
 }

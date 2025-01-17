@@ -1,10 +1,9 @@
-import "../styles/globals.css";
-import { Providers } from "@/components/theme-provider";
-import { Analytics } from "@/components/analytics";
+import "@/styles/globals.css";
+import { ThemeProvider } from "@/components/theme-provider";
 import Texture from "@/components/BackgroundTexture";
 import Footer from "@/components/Footer";
 import Offline from "@/components/Offline";
-import { CSPostHogProvider } from "./providers";
+import { CSPostHogProvider } from "@/lib/providers";
 import { Metadata } from "next";
 import siteMetadata from "@/config/site-metadata";
 
@@ -74,7 +73,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
         <Offline />
         <div className="blur"></div>
         <Texture />
-        <Providers>
+        <ThemeProvider>
           <CSPostHogProvider>
             <div className="flex min-h-screen flex-col">
               <main className="flex-grow px-4 pb-24 pt-24 md:pt-36">
@@ -82,9 +81,8 @@ export default function RootLayout({ children }: RootLayoutProps) {
               </main>
               <Footer />
             </div>
-            <Analytics />
           </CSPostHogProvider>
-        </Providers>
+        </ThemeProvider>
       </body>
     </html>
   );

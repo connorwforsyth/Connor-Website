@@ -8,5 +8,6 @@ Disallow: /projects
 Disallow: /writing
 Disallow: /collaborators
 Disallow: /cv
+Disallow: /presentation
 Disallow: /chat
 Allow: /api/og/*
