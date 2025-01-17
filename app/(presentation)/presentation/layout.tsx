@@ -39,7 +39,7 @@ export default async function Layout({ children }: RootLayoutProps) {
         <ThemeProvider>
           <CSPostHogProvider>
             {!session.isLoggedIn ? (
-              <div className="flex h-lvh items-center justify-center">
+              <div className="flex h-dvh items-center justify-center">
                 <div className="w-full max-w-md p-4">
                   <AccessForm />
                 </div>
