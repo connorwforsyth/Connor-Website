@@ -13,12 +13,12 @@ const FigmaEmbed = () => {
   const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
 
   const calculateDimensions = () => {
-    const PADDING = 8;
-    const SCALE_FACTOR = 0.9;
+    const PADDING = 32;
+    const SCALE_FACTOR = 0.66;
     const ASPECT_RATIO = 1920 / 1080;
     const MAX_WIDTH = 1920;
     const MAX_HEIGHT = 1080;
-    const VIEWPORT_HEIGHT_PERCENT = window.innerHeight * 0.9; // 90vh
+    const VIEWPORT_HEIGHT_PERCENT = window.innerHeight; // 90vh
 
     const width = Math.min(
       window.innerWidth - PADDING,
@@ -44,6 +44,39 @@ const FigmaEmbed = () => {
     };
   }, []);
 
+  useEffect(() => {
+    // Auto-focus the iframe on mount
+    iframeRef.current?.focus();
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.metaKey || e.ctrlKey) {
+        document.body.focus();
+      }
+    };
+
+    const handleKeyUp = (e: KeyboardEvent) => {
+      if (!e.metaKey && !e.ctrlKey) {
+        iframeRef.current?.focus();
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    window.addEventListener("keyup", handleKeyUp);
+
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+      window.removeEventListener("keyup", handleKeyUp);
+    };
+  }, []);
+
+  const toggleFullscreen = () => {
+    if (!document.fullscreenElement) {
+      iframeRef.current?.requestFullscreen();
+    } else {
+      document.exitFullscreen();
+    }
+  };
+
   return (
     <div className="grid h-svh place-items-center overflow-clip">
       <iframe
@@ -55,7 +88,14 @@ const FigmaEmbed = () => {
         }}
         src={`${figmaEmbedCode}${presentation}${figmaProps}`}
         allowFullScreen
+        tabIndex={0}
       />
+      <button
+        onClick={toggleFullscreen}
+        className="absolute bottom-4 right-4 rounded-md bg-slate-800 p-2 text-xs text-white transition-all hover:bg-slate-900"
+      >
+        Toggle Fullscreen
+      </button>
     </div>
   );
 };
