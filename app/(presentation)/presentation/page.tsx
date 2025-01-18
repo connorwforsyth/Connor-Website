@@ -45,7 +45,7 @@ const FigmaEmbed = () => {
   }, []);
 
   return (
-    <div className="grid h-lvh place-items-center overflow-clip">
+    <div className="grid h-svh place-items-center overflow-clip">
       <iframe
         ref={iframeRef}
         style={{
