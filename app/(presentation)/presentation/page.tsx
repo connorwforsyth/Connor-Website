@@ -41,24 +41,24 @@ const FigmaEmbed = () => {
 
   const calculateDimensions = () => {
     const PADDING = 32;
-    const SCALE_FACTOR = 0.5;
+    let SCALE_FACTOR = window.innerWidth > 2000 ? 1 : 0.66;
+
+    const ASPECT_RATIO = 1920 / 1080;
     const MAX_WIDTH = 1920;
     const MAX_HEIGHT = 1080;
-    const VIEWPORT_HEIGHT = window.innerHeight;
-    const VIEWPORT_WIDTH = window.innerWidth;
+    const VIEWPORT_HEIGHT_PERCENT = window.innerHeight; // 90vh
 
-    // First calculate maximum possible width
-    let width = Math.min(
-      VIEWPORT_WIDTH - PADDING,
-      VIEWPORT_HEIGHT * (16 / 9) - PADDING,
-      MAX_WIDTH * SCALE_FACTOR,
+    const width = Math.min(
+      window.innerWidth - PADDING,
+      VIEWPORT_HEIGHT_PERCENT * ASPECT_RATIO - PADDING,
+      MAX_WIDTH * SCALE_FACTOR - PADDING,
     );
 
-    // Force width to be divisible by 16
-    width = Math.floor(width / 16) * 16;
-
-    // Calculate exact height for 16:9
-    let height = (width / 16) * 9;
+    const height = Math.min(
+      window.innerWidth / ASPECT_RATIO - PADDING,
+      VIEWPORT_HEIGHT_PERCENT - PADDING,
+      MAX_HEIGHT * SCALE_FACTOR - PADDING,
+    );
 
     setDimensions({ width, height });
   };
