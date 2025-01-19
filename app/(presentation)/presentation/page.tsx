@@ -12,9 +12,36 @@ const FigmaEmbed = () => {
   const iframeRef = useRef<HTMLIFrameElement>(null);
   const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
 
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (document.activeElement !== iframeRef.current) {
+        if (e.code === "ArrowLeft" || e.code === "ArrowRight") {
+          iframeRef.current?.focus();
+        }
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown, true);
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown, true);
+    };
+  }, []);
+
+  // Fullscreen toggle.
+
+  const toggleFullscreen = () => {
+    if (!document.fullscreenElement) {
+      iframeRef.current?.requestFullscreen();
+    } else {
+      document.exitFullscreen();
+    }
+  };
+
+  // iframe size control.
+
   const calculateDimensions = () => {
     const PADDING = 32;
-    const SCALE_FACTOR = 0.66;
+    const SCALE_FACTOR = 0.5;
     const ASPECT_RATIO = 1920 / 1080;
     const MAX_WIDTH = 1920;
     const MAX_HEIGHT = 1080;
@@ -44,39 +71,6 @@ const FigmaEmbed = () => {
     };
   }, []);
 
-  useEffect(() => {
-    // Auto-focus the iframe on mount
-    iframeRef.current?.focus();
-
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.metaKey || e.ctrlKey) {
-        document.body.focus();
-      }
-    };
-
-    const handleKeyUp = (e: KeyboardEvent) => {
-      if (!e.metaKey && !e.ctrlKey) {
-        iframeRef.current?.focus();
-      }
-    };
-
-    window.addEventListener("keydown", handleKeyDown);
-    window.addEventListener("keyup", handleKeyUp);
-
-    return () => {
-      window.removeEventListener("keydown", handleKeyDown);
-      window.removeEventListener("keyup", handleKeyUp);
-    };
-  }, []);
-
-  const toggleFullscreen = () => {
-    if (!document.fullscreenElement) {
-      iframeRef.current?.requestFullscreen();
-    } else {
-      document.exitFullscreen();
-    }
-  };
-
   return (
     <div className="grid h-svh place-items-center overflow-clip">
       <iframe
@@ -92,7 +86,7 @@ const FigmaEmbed = () => {
       />
       <button
         onClick={toggleFullscreen}
-        className="absolute bottom-4 right-4 rounded-md bg-slate-800 p-2 text-xs text-white transition-all hover:bg-slate-900"
+        className="absolute bottom-4 right-4 rounded-md bg-zinc-800 p-2 text-xs text-white transition-all hover:bg-zinc-900"
       >
         Toggle Fullscreen
       </button>
