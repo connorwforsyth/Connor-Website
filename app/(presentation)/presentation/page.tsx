@@ -30,35 +30,39 @@ const FigmaEmbed = () => {
   // Fullscreen toggle.
 
   const toggleFullscreen = () => {
-    if (!document.fullscreenElement) {
-      iframeRef.current?.requestFullscreen();
-    } else {
-      document.exitFullscreen();
+    try {
+      if (!document.fullscreenElement) {
+        if (iframeRef.current) {
+          iframeRef.current.requestFullscreen();
+        }
+      }
+    } catch (error) {
+      console.error("Fullscreen error:", error);
     }
   };
 
   // iframe size control.
 
   const calculateDimensions = () => {
-    const PADDING = 32;
+    const PADDING = window.innerWidth > 600 ? 32 : 16;
     let SCALE_FACTOR = window.innerWidth > 2000 ? 1 : 0.66;
-
-    const ASPECT_RATIO = 1920 / 1080;
     const MAX_WIDTH = 1920;
-    const MAX_HEIGHT = 1080;
-    const VIEWPORT_HEIGHT_PERCENT = window.innerHeight; // 90vh
 
-    const width = Math.min(
-      window.innerWidth - PADDING,
-      VIEWPORT_HEIGHT_PERCENT * ASPECT_RATIO - PADDING,
-      MAX_WIDTH * SCALE_FACTOR - PADDING,
+    const VIEWPORT_HEIGHT = window.innerHeight;
+    const VIEWPORT_WIDTH = window.innerWidth;
+
+    // First calculate maximum possible width
+    let width = Math.min(
+      VIEWPORT_WIDTH - PADDING,
+      VIEWPORT_HEIGHT * (16 / 9) - PADDING,
+      MAX_WIDTH * SCALE_FACTOR,
     );
 
-    const height = Math.min(
-      window.innerWidth / ASPECT_RATIO - PADDING,
-      VIEWPORT_HEIGHT_PERCENT - PADDING,
-      MAX_HEIGHT * SCALE_FACTOR - PADDING,
-    );
+    // Force width to be divisible by 16
+    width = Math.floor(width / 16) * 16;
+
+    // Calculate exact height for 16:9
+    let height = (width / 16) * 9;
 
     setDimensions({ width, height });
   };
@@ -82,12 +86,12 @@ const FigmaEmbed = () => {
           border: "none",
         }}
         src={`${figmaEmbedCode}${presentation}${figmaProps}`}
-        allowFullScreen
+        allow="fullscreen"
         tabIndex={0}
       />
       <button
         onClick={toggleFullscreen}
-        className="absolute bottom-4 right-4 rounded-md bg-zinc-800 p-2 text-xs text-white transition-all hover:bg-zinc-900"
+        className="absolute bottom-4 right-4 hidden rounded-md bg-zinc-800 p-2 text-xs text-white transition-all hover:bg-zinc-900 md:block"
       >
         Toggle Fullscreen
       </button>
