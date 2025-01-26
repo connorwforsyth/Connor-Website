@@ -12,6 +12,7 @@ const FigmaEmbed = () => {
   const iframeRef = useRef<HTMLIFrameElement>(null);
   const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
 
+  // Keyboard navigation
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (document.activeElement !== iframeRef.current) {
@@ -93,7 +94,7 @@ const FigmaEmbed = () => {
         onClick={toggleFullscreen}
         className="absolute bottom-4 right-4 hidden rounded-md bg-zinc-800 p-2 text-xs text-white transition-all hover:bg-zinc-900 md:block"
       >
-        Toggle Fullscreen
+        Fullscreen
       </button>
     </div>
   );
