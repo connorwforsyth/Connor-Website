@@ -1,16 +1,69 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { getSession } from "@/server-actions/actions";
+import { formatDistanceToNow } from "date-fns";
 
 const figmaEmbedCode = "https://embed.figma.com/proto/";
 const figmaProps =
-  "&scaling=scale-down&content-scaling=fixed&show-proto-sidebar=1&share=1&embed-host=share&scaling=scale-down-width&hide-ui=1&hotspot-hints=0";
-const uniquePage =
-  "Br79Ro2yss1Mt03EqGcgAk/TfNSW-Prototype-%5BR1-Final-%E2%80%93-shared%5D?page-id=2046%3A40056&node-id=2057-56550&p=f&viewport=1555%2C887%2C0.07&starting-point-node-id=2057%3A56550";
+  "&scaling=scale-down-width&share=1&embed-host=share&hide-ui=1&hotspot-hints=0&theme=system&device-frame=false";
 const presentation = `IRxjN1QkNUk8ynq6gOvql3/CF-Portfolio-PDF?page-id=13%3A18132&node-id=13-18154&p=f&viewport=4803%2C-22702%2C1`;
+const fileKey = "IRxjN1QkNUk8ynq6gOvql3";
+
 const FigmaEmbed = () => {
   const iframeRef = useRef<HTMLIFrameElement>(null);
+  const wrapperRef = useRef<HTMLDivElement>(null);
   const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
+  const [scale, setScale] = useState(1);
+  const [isFullscreen, setIsFullscreen] = useState(false);
+  const [name, setName] = useState<string>("");
+  const [lastUpdated, setLastUpdated] = useState<string>("");
+
+  // Extract file key from the presentation URL
+
+  useEffect(() => {
+    // Fetch session data on component mount
+    const fetchSession = async () => {
+      const session = await getSession();
+      const plainSession = {
+        name: session.name,
+      };
+      setName(plainSession.name || "");
+    };
+    fetchSession();
+  }, []);
+
+  useEffect(() => {
+    let isMounted = true;
+
+    const fetchLastUpdated = async () => {
+      try {
+        const response = await fetch(
+          `/api/figma-last-updated?fileKey=${fileKey}`,
+        );
+
+        if (!response.ok) {
+          console.error("Failed to fetch:", response.statusText);
+          return;
+        }
+
+        const data = await response.json();
+        if (data.lastModified && isMounted) {
+          const date = new Date(data.lastModified);
+          const timeAgo = formatDistanceToNow(date, { addSuffix: true });
+          setLastUpdated(timeAgo);
+        }
+      } catch (error) {
+        console.error("Error fetching last updated time:", error);
+      }
+    };
+
+    fetchLastUpdated();
+
+    return () => {
+      isMounted = false;
+    };
+  }, [fileKey]);
 
   // Keyboard navigation
   useEffect(() => {
@@ -81,21 +134,32 @@ const FigmaEmbed = () => {
     <div className="grid h-svh place-items-center overflow-clip">
       <iframe
         ref={iframeRef}
+        width={dimensions.width}
+        height={dimensions.height}
         style={{
-          width: `${dimensions.width}px`,
-          height: `${dimensions.height}px`,
           border: "none",
         }}
         src={`${figmaEmbedCode}${presentation}${figmaProps}`}
         allow="fullscreen"
         tabIndex={0}
       />
-      <button
-        onClick={toggleFullscreen}
-        className="absolute bottom-4 right-4 hidden rounded-md bg-zinc-800 p-2 text-xs text-white transition-all hover:bg-zinc-900 md:block"
-      >
-        Fullscreen
-      </button>
+      <div className="absolute bottom-4 right-4 z-[100] flex items-center gap-4">
+        {lastUpdated && (
+          <p className="text-xs opacity-50">Last updated: {lastUpdated}</p>
+        )}
+        {name && (
+          <p className="text-xs">
+            Welcome {name.charAt(0).toUpperCase() + name.slice(1).toLowerCase()}
+          </p>
+        )}
+        <button
+          tabIndex={1}
+          onClick={toggleFullscreen}
+          className="hidden rounded-md bg-zinc-800 p-2 text-xs text-white transition-all hover:bg-zinc-900 md:block"
+        >
+          {isFullscreen ? "Exit Fullscreen" : "Fullscreen"}
+        </button>
+      </div>
     </div>
   );
 };

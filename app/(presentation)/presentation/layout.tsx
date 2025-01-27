@@ -45,7 +45,7 @@ export default async function Layout({ children }: RootLayoutProps) {
                 </div>
               </div>
             ) : (
-              children
+              <div>{children}</div>
             )}
           </CSPostHogProvider>
         </ThemeProvider>
