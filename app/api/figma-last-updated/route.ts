@@ -7,6 +7,7 @@ const REDIS_CONFIG = {
   CONNECT_TIMEOUT_MS: 5000,
   BASE_RETRY_DELAY_MS: 50,
   MAX_RETRY_DELAY_MS: 1000,
+  COMMAND_TIMEOUT_MS: 3000,
 } as const;
 
 if (!process.env.STORAGE_REDIS_URL) {
@@ -22,11 +23,13 @@ console.log(
 const redis = new Redis(process.env.STORAGE_REDIS_URL, {
   maxRetriesPerRequest: REDIS_CONFIG.MAX_RETRIES,
   connectTimeout: REDIS_CONFIG.CONNECT_TIMEOUT_MS,
+  commandTimeout: REDIS_CONFIG.COMMAND_TIMEOUT_MS,
   tls: {
     rejectUnauthorized: false,
   },
-  enableReadyCheck: false,
-  enableOfflineQueue: false,
+  enableReadyCheck: true,
+  enableOfflineQueue: true,
+  lazyConnect: true,
   retryStrategy: (times) => {
     if (times > REDIS_CONFIG.MAX_RETRIES) {
       console.log("Max retries reached, giving up");
@@ -41,9 +44,9 @@ const redis = new Redis(process.env.STORAGE_REDIS_URL, {
   },
 });
 
-redis.on("error", (error) => {
-  console.error("Redis connection error:", error);
-});
+redis.on("connect", () => console.log("Redis connected"));
+redis.on("error", (error) => console.error("Redis error:", error));
+redis.on("close", () => console.log("Redis connection closed"));
 
 type FigmaData = {
   lastModified: string;
