@@ -9,13 +9,11 @@ const figmaProps =
   "&scaling=scale-down-width&share=1&embed-host=share&hide-ui=1&hotspot-hints=0&theme=system&device-frame=false";
 const presentation = `IRxjN1QkNUk8ynq6gOvql3/CF-Portfolio-PDF?page-id=13%3A18132&node-id=13-18154&p=f&viewport=4803%2C-22702%2C1`;
 const fileKey = "IRxjN1QkNUk8ynq6gOvql3";
+const CACHE_DURATION = 3600; // 1 hour in seconds
 
 const FigmaEmbed = () => {
   const iframeRef = useRef<HTMLIFrameElement>(null);
-  const wrapperRef = useRef<HTMLDivElement>(null);
   const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
-  const [scale, setScale] = useState(1);
-  const [isFullscreen, setIsFullscreen] = useState(false);
   const [name, setName] = useState<string>("");
   const [lastUpdated, setLastUpdated] = useState<string>("");
 
@@ -37,38 +35,44 @@ const FigmaEmbed = () => {
     let isMounted = true;
 
     const fetchLastUpdated = async () => {
-      console.log("Fetching last updated time..."); // Client-side log
       try {
         const response = await fetch(
           `/api/figma-last-updated?fileKey=${fileKey}`,
         );
 
-        console.log("Response status:", response.status); // Check response status
-        if (!response.ok) {
-          console.error("Failed to fetch:", response.statusText);
-          return;
-        }
-
         const data = await response.json();
-        console.log("Received data:", data); // Check received data
+
+        if (!response.ok) {
+          throw new Error(
+            data.error || `Failed to fetch: ${response.statusText}`,
+          );
+        }
 
         if (data.lastModified && isMounted) {
           const date = new Date(data.lastModified);
           const timeAgo = formatDistanceToNow(date, { addSuffix: true });
           setLastUpdated(timeAgo);
-          console.log("Updated timestamp:", timeAgo); // Check final formatted time
         }
       } catch (error) {
         console.error("Error fetching last updated time:", error);
+        // Don't show error UI for last updated time failures
+        setLastUpdated("");
       }
     };
 
     fetchLastUpdated();
 
+    // Refresh the last updated time every hour
+    const refreshInterval = setInterval(
+      fetchLastUpdated,
+      CACHE_DURATION * 1000,
+    );
+
     return () => {
       isMounted = false;
+      clearInterval(refreshInterval);
     };
-  }, [fileKey]);
+  }, []);
 
   // Keyboard navigation
   useEffect(() => {
@@ -148,21 +152,24 @@ const FigmaEmbed = () => {
         allow="fullscreen"
         tabIndex={0}
       />
-      <div className="absolute bottom-4 right-4 z-[100] flex items-center gap-4">
-        {lastUpdated && (
-          <p className="text-xs opacity-50">Last updated: {lastUpdated}</p>
-        )}
-        {name && (
-          <p className="text-xs">
-            Welcome {name.charAt(0).toUpperCase() + name.slice(1).toLowerCase()}
-          </p>
-        )}
+      <div className="absolute bottom-0 flex w-full items-center p-4 md:justify-between">
+        <div className="flex w-full gap-4">
+          {name && (
+            <p className="text-xs">
+              Welcome{" "}
+              {name.charAt(0).toUpperCase() + name.slice(1).toLowerCase()}
+            </p>
+          )}
+          {lastUpdated && (
+            <p className="text-xs opacity-50">Updated: {lastUpdated}</p>
+          )}
+        </div>
         <button
           tabIndex={1}
           onClick={toggleFullscreen}
           className="hidden rounded-md bg-zinc-800 p-2 text-xs text-white transition-all hover:bg-zinc-900 md:block"
         >
-          {isFullscreen ? "Exit Fullscreen" : "Fullscreen"}
+          Fullscreen
         </button>
       </div>
     </div>

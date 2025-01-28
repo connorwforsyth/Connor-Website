@@ -1,31 +1,21 @@
 {
-    "headers": [
-      {
-        "source": "/api/(.*)",
-        "headers": [
-          {
-            "key": "Access-Control-Allow-Origin",
-            "value": "https://www.connorforsyth.co"
-          },
-          {
-            "key": "Access-Control-Allow-Origin",
-            "value": "https://localhost:3000"
-          },
-          {
-            "key": "Access-Control-Allow-Origin",
-            "value": "https://www.figma.com"
-          },
-          
-          {
-            "key": "Access-Control-Allow-Methods",
-            "value": "GET,POST,OPTIONS"
-          },
-          {
-            "key": "Access-Control-Allow-Headers",
-            "value": "Content-Type"
-          }
-        ]
-      }
-    ]
-  }
-  
+  "headers": [
+    {
+      "source": "/api/(.*)",
+      "headers": [
+        {
+          "key": "Access-Control-Allow-Origin",
+          "value": "https://www.connorforsyth.co"
+        },
+        {
+          "key": "Access-Control-Allow-Methods",
+          "value": "GET,POST,OPTIONS"
+        },
+        {
+          "key": "Access-Control-Allow-Headers",
+          "value": "Content-Type"
+        }
+      ]
+    }
+  ]
+}

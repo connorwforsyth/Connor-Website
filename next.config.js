@@ -1,4 +1,3 @@
-const { withNextVideo } = require("next-video/process");
 const { withContentlayer } = require("next-contentlayer");
 
 /** @type {import('next').NextConfig} */
@@ -15,12 +14,8 @@ const nextConfig = {
         source: "/ingest/:path*",
         destination: "https://us.i.posthog.com/:path*",
       },
-      {
-        source: "/api/figma-last-updated",
-        destination: "https://api.figma.com/v1/files/:path*",
-      },
     ];
   },
 };
 
-module.exports = withNextVideo(withContentlayer(nextConfig));
+module.exports = withContentlayer(nextConfig);

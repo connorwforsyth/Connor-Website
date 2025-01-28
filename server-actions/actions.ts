@@ -10,13 +10,17 @@ const ACCESS_CODE = process.env.ACCESS_CODE!;
 export const getSession = async () => {
   const session = await getIronSession<SessionData>(cookies(), sessionOptions);
 
-  if (!session.isLoggedIn) {
-    session.isLoggedIn = defaultSession.isLoggedIn;
-  }
-  return session;
+  // Return only the serializable data
+  return {
+    isLoggedIn: session.isLoggedIn || defaultSession.isLoggedIn,
+    name: session.name || "",
+    email: session.email || "",
+  };
 };
 
-export const verifyAccessCode = async (formData: FormData): Promise<{ success: boolean; error?: string }> => {
+export const verifyAccessCode = async (
+  formData: FormData,
+): Promise<{ success: boolean; error?: string }> => {
   const formPassword = formData.get("password") as string;
   if (formPassword !== process.env.ACCESS_CODE) {
     return { success: false, error: "Wrong access code." };
@@ -24,8 +28,9 @@ export const verifyAccessCode = async (formData: FormData): Promise<{ success: b
   return { success: true };
 };
 
-export const completeSignUp = async (formData: FormData): Promise<{ success: boolean; error?: string }> => {
-  const session = await getSession();
+export const completeSignUp = async (
+  formData: FormData,
+): Promise<{ success: boolean; error?: string }> => {
   const password = formData.get("password") as string;
   const name = formData.get("name") as string;
   const email = formData.get("email") as string;
@@ -34,6 +39,8 @@ export const completeSignUp = async (formData: FormData): Promise<{ success: boo
     return { success: false, error: "Invalid access code." };
   }
 
+  // Get the actual session object for saving
+  const session = await getIronSession<SessionData>(cookies(), sessionOptions);
   session.isLoggedIn = true;
   session.name = name;
   session.email = email;
