@@ -14,16 +14,19 @@
     color-mix(in srgb, var(--color), transparent 30%)
   );
 }
-@page {
-  size: A4;
-}
 
+/* Component-specific styles only */
 .page {
   @media (min-width: 640px) {
     font-size: 14px;
   }
-  box-shadow: none;
 }
+
+@page {
+  size: A4 portrait;
+  margin: 0;
+}
+
 @media (min-width: 210mm) {
   .body {
     --tw-bg-opacity: 1;
@@ -64,14 +67,31 @@
   .body {
     padding: 0 !important;
     background-color: transparent !important;
+    margin: 0 !important;
   }
 
   .page {
-    max-width: auto;
-    height: auto;
-    size: 210mm 297mm;
+    width: 210mm;
+    min-height: 297mm;
+    max-height: 297mm;
+    margin: 0 !important;
     background-color: transparent !important;
     box-shadow: none !important;
     padding: 10mm !important;
+    overflow: hidden;
+    page-break-after: always;
+    break-after: always;
+  }
+
+  /* Force page breaks where needed */
+  .pageBreak {
+    page-break-before: always;
+    break-before: always;
+  }
+
+  /* Prevent unwanted breaks */
+  .noBreak {
+    page-break-inside: avoid;
+    break-inside: avoid;
   }
 }

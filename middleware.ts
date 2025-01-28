@@ -23,10 +23,6 @@ const REDIRECTS: Record<
     destination: "https://linkedin.com/in/connorwforsyth",
     eventName: "linkedin_redirect",
   },
-  "/cv": {
-    destination: "https://cv.connorforsyth.co",
-    eventName: "cv_redirect",
-  },
   "/github": {
     destination: "https://github.com/connorwforsyth",
     eventName: "github_redirect",

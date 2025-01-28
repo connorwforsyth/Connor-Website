@@ -1,6 +1,7 @@
 "use client";
-import styles from "./cv.module.css";
-// Types
+import { useEffect, useState } from "react";
+
+const accessCode: string = "freeyourself";
 
 type YearGroup<T> = {
   year: string;
@@ -12,8 +13,8 @@ type WorkItem = {
   company: string;
   companyUrl: string;
   location: string;
-  description?: string;
-  bullets?: React.ReactNode[];
+  description?: JSX.Element;
+  bullets?: JSX.Element[];
 };
 
 type SideProjectItem = {
@@ -84,7 +85,7 @@ const data = {
           companyUrl: "https://www.sydney.edu.au",
           location: "Sydney AUS",
           description:
-            "Teaching 200+ masters of design students at one of the top Australian Universities. Subjects: <a href='https://www.sydney.edu.au/units/IDEA9106'>IDEA9106: Design Thinking</a> ‧ <a href='https://www.sydney.edu.au/units/DESN9003'>DESN9003: Strategic Design & Leadership.</a>",
+            "Teaching 200+ masters of design students at one of the top Australian Universities.<br> Subjects: <a href='https://www.sydney.edu.au/units/IDEA9106'>IDEA9106: Design Thinking</a> ‧ <a href='https://www.sydney.edu.au/units/DESN9003'>DESN9003: Strategic Design & Leadership.</a>",
         },
       ],
     },
@@ -313,11 +314,14 @@ const TimelineYearGroup = <T extends { title: string; url?: string }>({
   year,
   items,
 }: YearGroup<T>) => (
-  <li>
-    <time>{year}</time>
-    <ul>
+  <li className="grid grid-cols-[3.5rem_1fr] items-baseline">
+    <time className="text-xs">{year}</time>
+    <ul className="inline">
       {items.map((item, index) => (
-        <li key={index}>
+        <li
+          className="inline text-xs after:text-neutral-400 after:content-['_/_'] last:after:content-none"
+          key={index}
+        >
           {item.url ? (
             item.title.includes(", ") ? (
               <>
@@ -336,10 +340,16 @@ const TimelineYearGroup = <T extends { title: string; url?: string }>({
   </li>
 );
 
-const WorkSection = ({ experience }: { experience: YearGroup<WorkItem>[] }) => (
-  <section className="col-span-3">
+const WorkSection = ({
+  experience,
+  className,
+}: {
+  experience: YearGroup<WorkItem>[];
+  className?: string;
+}) => (
+  <section className={`col-span-3 ${className}`}>
     <h2>💻 Work Experience</h2>
-    <ul className="grid grid-cols-1 gap-8">
+    <ul className="grid grid-cols-1 gap-6">
       {experience.map((yearGroup, index) => (
         <li key={index}>
           {yearGroup.items.map((item, itemIndex) => (
@@ -351,30 +361,12 @@ const WorkSection = ({ experience }: { experience: YearGroup<WorkItem>[] }) => (
   </section>
 );
 
-const BulletContent = ({ content }: { content: string }) => {
-  // Split content by <a> tags
-  const parts = content.split(/(<a[^>]*>.*?<\/a>)/);
-
-  return (
-    <>
-      {parts.map((part, i) => {
-        if (part.startsWith("<a")) {
-          // Extract href and text from anchor tag
-          const hrefMatch = part.match(/href=['"]([^'"]*)['"]/);
-          const textMatch = part.match(/>([^<]*)</);
-          const href = hrefMatch?.[1] || "";
-          const text = textMatch?.[1] || "";
-
-          return (
-            <a key={i} href={href}>
-              {text}
-            </a>
-          );
-        }
-        return part;
-      })}
-    </>
-  );
+const BulletContent = ({ content }: { content: React.ReactNode }) => {
+  // Parse string content to handle HTML tags
+  if (typeof content === "string") {
+    return <span dangerouslySetInnerHTML={{ __html: content }} />;
+  }
+  return <>{content}</>;
 };
 
 const WorkItem = ({
@@ -386,8 +378,8 @@ const WorkItem = ({
   bullets,
   year,
 }: WorkItem & { year: string }) => (
-  <div className="flex flex-col gap-2">
-    <h3 className="w-full items-baseline justify-between">
+  <div className="flex flex-col gap-1">
+    <h3 className="flex w-full flex-col items-baseline justify-between gap-1 text-base">
       <div>
         <span className="after:content-[':_']">{title}</span>
         <a href={companyUrl}>{company}</a>
@@ -403,13 +395,13 @@ const WorkItem = ({
       </p>
     )}
     {bullets && (
-      <ul>
+      <ul className="grid grid-cols-2 gap-4">
         {bullets.map((bullet, index) => (
           <li
-            className="relative pl-4 before:absolute before:left-0 before:top-0 before:h-[0px] before:w-4 before:text-neutral-700 before:content-['-']"
+            className="relative pl-5 text-neutral-700 before:absolute before:left-0 before:text-neutral-700 before:content-['—']"
             key={index}
           >
-            <BulletContent content={bullet as string} />
+            <BulletContent content={bullet} />
           </li>
         ))}
       </ul>
@@ -417,20 +409,23 @@ const WorkItem = ({
   </div>
 );
 
-interface ListSectionProps {
+type ListSectionProps = {
   title: string;
   emoji: string;
   items: (string | { text: string; url?: string })[];
-}
+};
 
 const ListSection = ({ title, emoji, items }: ListSectionProps) => (
   <section>
     <h2 className="font-medium">
       {emoji} {title}
     </h2>
-    <ul className="*:inline *:text-xs *:after:text-neutral-700 *:after:content-['_/_'] [&_li:last-child]:after:content-['.']">
+    <ul className="">
       {items.map((item, index) => (
-        <li key={index}>
+        <li
+          className="inline text-xs after:text-neutral-400 after:content-['_/_'] last:after:content-['.']"
+          key={index}
+        >
           {typeof item === "string" ? (
             item
           ) : item.url ? (
@@ -444,7 +439,7 @@ const ListSection = ({ title, emoji, items }: ListSectionProps) => (
   </section>
 );
 
-interface TimelineSectionProps<
+interface SecondarySectionProps<
   T extends { title?: string; name?: string; url?: string },
 > {
   title: string;
@@ -453,19 +448,19 @@ interface TimelineSectionProps<
   className?: string;
 }
 
-const TimelineSection = <
+const SecondarySection = <
   T extends { title?: string; name?: string; url?: string },
 >({
   title,
   emoji,
   yearGroups,
-  className = "",
-}: TimelineSectionProps<T>) => (
-  <section>
+  className,
+}: SecondarySectionProps<T>) => (
+  <section className={className}>
     <h2 className="font-medium">
       {emoji} {title}
     </h2>
-    <ul className="flex flex-col gap-4 *:*:*:inline *:*:inline *:flex *:flex-col *:*:*:after:text-neutral-700 *:*:*:after:content-['_/_'] [&_li:last-child]:after:content-none [&_ul_>_li:last-child]:after:content-['.'] [&_ul_>_li]:text-xs">
+    <ul className="flex flex-col">
       {yearGroups.map((group, index) => (
         <TimelineYearGroup
           key={index}
@@ -482,24 +477,67 @@ const TimelineSection = <
 
 // Main Page Component
 export default function CVPage() {
+  const [showGuides, setShowGuides] = useState(false);
+
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "x") {
+        setShowGuides(true);
+      }
+    };
+
+    const handleKeyUp = (event: KeyboardEvent) => {
+      if (event.key === "x") {
+        setShowGuides(false);
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    window.addEventListener("keyup", handleKeyUp);
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+      window.removeEventListener("keyup", handleKeyUp);
+    };
+  }, []);
+
   return (
-    <div
-      className={`o flex w-full flex-col gap-8 text-pretty p-4 py-24 *:flex *:flex-col *:gap-8 lg:p-24 [&_a]:underline [&_h2]:font-mono [&_h2]:text-xs [&_h2]:font-medium [&_h2]:uppercase [&_h2]:text-neutral-700 [&_i]:not-italic [&_i]:text-neutral-700 [&_i]:before:content-[''] [&_section]:flex [&_section]:flex-col [&_section]:gap-2`}
-    >
+    <>
       <button
         aria-label="print"
         id="print"
-        className={styles.printButton}
+        className="print-button"
         onClick={() => window.print()}
         onTouchStart={() => window.print()}
       >
         💾
       </button>
-      <div className={styles.page}>
+      <div className="page">
         <header className="flex flex-col gap-4 [&_a]:text-blue-800">
           <h1 className="py-2 text-base font-medium">Connor Forsyth</h1>
+          <article className="flex flex-col gap-2">
+            <p>
+              I am a designer with 6+ years experience. I have an interest in
+              web technology, design systems, user experience, events,
+              education, facilitation, and open source. Outside of work you'll
+              find me coding, hiking, learning, taking{" "}
+              <a href="https://photos.connorforsyth.co">photos</a>, and brewing
+              coffee. I currently work at{" "}
+              <a href="https://www.designit.com">Designit</a> as a Service
+              Designer.
+            </p>
+          </article>
           <nav className="text-sm">
-            <ul className="*:inline-flex *:*:pr-2 [&_a]:after:content-['_↗']">
+            <p>
+              <span className="pr-1">Portfolio:</span>
+              <a href="https://connorforsyth.co/portfolio">
+                connorforsyth.co/portfolio
+              </a>
+              <span className="px-1">access code:</span>
+              <code className="highlight px-1 py-0.5 font-mono text-sm text-red-600">
+                {accessCode}
+              </code>
+            </p>
+            <ul className="*:inline-flex *:*:pr-2">
               <li>
                 <span className="pr-1">Email:</span>
                 <a href="mailto:c@connorforsyth.co">c@connorforsyth.co</a>
@@ -515,62 +553,36 @@ export default function CVPage() {
               <li>
                 <a href="http://connorforsyth.co/chat">Chat</a>
               </li>
-              <li>
-                <a href="https://x.com/connorwforsyth">@connorwforsyth</a>
-              </li>
             </ul>
-            <p>
-              <span className="pr-1">Portfolio:</span>
-              <a href="https://connorforsyth.co">connorforsyth.co</a>
-              <span className="px-1">access code:</span>
-              <code
-                className={`${styles.highlight} px-1 py-0.5 font-mono text-sm text-red-600`}
-              >
-                freeyourself
-              </code>
-            </p>
           </nav>
-          <article className="flex flex-col gap-2">
-            <p>
-              I am a designer with 6+ years experience. I have an interest in
-              web technology, design systems, user experience, events,
-              education, facilitation, and open source. Outside of work you'll
-              find me coding, hiking, learning, taking{" "}
-              <a href="https://photos.connorforsyth.co">photos</a>, and brewing
-              coffee. I currently work at{" "}
-              <a href="https://www.designit.com">Designit</a> as a Service
-              Designer.
-            </p>
-          </article>
         </header>
-        <WorkSection experience={data.work} />
-        <TimelineSection
+        <WorkSection className="col-span-8" experience={data.work} />
+      </div>
+
+      <div className="page">
+        <SecondarySection
+          className="col-span-2"
           title="Education"
           emoji="🎓"
           yearGroups={data.education}
-          className="sm:col-span-2"
         />
-
-        <div className="">
-          <TimelineSection
-            title="Side Projects"
-            emoji="🧢"
-            yearGroups={data.sideprojects}
-          />
-          <TimelineSection
-            title="Speaking"
-            emoji="🎤"
-            yearGroups={data.speaking}
-          />
-          <TimelineSection
-            title="Education"
-            emoji="🎓"
-            yearGroups={data.education}
-          />
-        </div>
-      </div>
-      <div className={styles.page}>
         <div className="grid gap-8 sm:grid-cols-2">
+          <ListSection
+            title="Skills"
+            emoji="🦸‍♂️"
+            items={[
+              "Service design",
+              "Product design",
+              "Creative technology",
+              "Front-end development",
+              "User research",
+              "Agile coaching",
+              "Facilitation",
+              "Design sprints",
+              "Prototyping",
+              "Design systems",
+            ]}
+          />
           <ListSection
             title="Stack"
             emoji="🛠"
@@ -597,21 +609,17 @@ export default function CVPage() {
               "Arc",
             ]}
           />
-          <ListSection
-            title="Skills"
-            emoji="🦸‍♂️"
-            items={[
-              "Service design",
-              "Product design",
-              "Creative technology",
-              "Front-end development",
-              "User research",
-              "Agile coaching",
-              "Facilitation",
-              "Design sprints",
-              "Prototyping",
-              "Design systems",
-            ]}
+        </div>
+        <div className="grid gap-8 sm:grid-cols-2">
+          <SecondarySection
+            title="Side Projects"
+            emoji="🧢"
+            yearGroups={data.sideprojects}
+          />
+          <SecondarySection
+            title="Speaking"
+            emoji="🎤"
+            yearGroups={data.speaking}
           />
           <ListSection
             title="Ask me about..."
@@ -644,6 +652,6 @@ export default function CVPage() {
           />
         </div>
       </div>
-    </div>
+    </>
   );
 }

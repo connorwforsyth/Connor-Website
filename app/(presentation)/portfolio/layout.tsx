@@ -1,4 +1,5 @@
 import "@/styles/globals.css";
+
 import { ThemeProvider } from "@/components/theme-provider";
 import Texture from "@/components/BackgroundTexture";
 import { CSPostHogProvider } from "@/lib/providers";
