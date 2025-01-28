@@ -20,7 +20,7 @@ const config = {
     },
     extend: {
       fontFamily: {
-        kag: ["kag", "sans-serif"],
+        kag: ["kag-fallback", "kag", "sans-serif"],
         rodney: ["rodney", "serif"],
       },
       colors: {

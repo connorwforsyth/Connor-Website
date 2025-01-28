@@ -2,6 +2,15 @@
 @tailwind components;
 @tailwind utilities;
 
+@supports (font-variation-settings: normal) {
+  @font-face {
+    font-family: "kag-fallback";
+    src: url("/fonts/geist/GeistVF.woff2") format("woff2");
+    font-weight: 500;
+    unicode-range: U+2197, U+21B3, U+0026; /* Covers ↗, ↳, & characters */
+  }
+}
+
 @font-face {
   font-family: "kag";
   src: url("/fonts/KAG/KynetonArtGrotesque-Light.woff2") format("woff2");
@@ -151,6 +160,7 @@
 body {
   font-weight: 300;
   font-family:
+    kag-fallback,
     kag,
     system-ui,
     -apple-system,

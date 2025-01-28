@@ -1,0 +1,77 @@
+.highlight {
+  --color: rgb(0, 162, 255);
+  border-radius: 0.5em 0.3em;
+  background: transparent;
+
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+
+  background-image: linear-gradient(
+    80deg,
+    color-mix(in srgb, var(--color), transparent 30%),
+    color-mix(in srgb, var(--color), transparent 90%) 4%,
+    color-mix(in srgb, var(--color), transparent 70%) 94%,
+    color-mix(in srgb, var(--color), transparent 30%)
+  );
+}
+@page {
+  size: A4;
+}
+
+.page {
+  @media (min-width: 640px) {
+    font-size: 14px;
+  }
+  box-shadow: none;
+}
+@media (min-width: 210mm) {
+  .body {
+    --tw-bg-opacity: 1;
+    background-color: rgb(245 245 245 / var(--tw-bg-opacity)) !important;
+  }
+  .page {
+    max-width: 210mm;
+    height: 297mm;
+    background-color: white;
+    padding: 1rem;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 10mm;
+    --tw-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1),
+      0 2px 4px -2px rgb(0 0 0 / 0.1);
+    --tw-shadow-colored: 0 4px 6px -1px var(--tw-shadow-color),
+      0 2px 4px -2px var(--tw-shadow-color);
+    box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000),
+      var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+  }
+}
+
+.printButton {
+  display: none !important;
+  @media print {
+    display: none;
+  }
+
+  @media (min-width: 900px) {
+    display: block !important;
+    position: fixed;
+    top: 1rem;
+    right: 1rem;
+  }
+}
+
+@media print {
+  .body {
+    padding: 0 !important;
+    background-color: transparent !important;
+  }
+
+  .page {
+    max-width: auto;
+    height: auto;
+    size: 210mm 297mm;
+    background-color: transparent !important;
+    box-shadow: none !important;
+    padding: 10mm !important;
+  }
+}

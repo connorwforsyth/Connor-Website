@@ -37,21 +37,26 @@ const FigmaEmbed = () => {
     let isMounted = true;
 
     const fetchLastUpdated = async () => {
+      console.log("Fetching last updated time..."); // Client-side log
       try {
         const response = await fetch(
           `/api/figma-last-updated?fileKey=${fileKey}`,
         );
 
+        console.log("Response status:", response.status); // Check response status
         if (!response.ok) {
           console.error("Failed to fetch:", response.statusText);
           return;
         }
 
         const data = await response.json();
+        console.log("Received data:", data); // Check received data
+
         if (data.lastModified && isMounted) {
           const date = new Date(data.lastModified);
           const timeAgo = formatDistanceToNow(date, { addSuffix: true });
           setLastUpdated(timeAgo);
+          console.log("Updated timestamp:", timeAgo); // Check final formatted time
         }
       } catch (error) {
         console.error("Error fetching last updated time:", error);

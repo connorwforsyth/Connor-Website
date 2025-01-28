@@ -2,7 +2,14 @@ import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
 // Define your redirects in a map for easy maintenance
-const REDIRECTS = {
+const REDIRECTS: Record<
+  string,
+  {
+    destination: string;
+    eventName: string;
+    permanent?: boolean;
+  }
+> = {
   "/chat": {
     destination:
       "https://calendar.google.com/calendar/appointments/schedules/AcZssZ3biRg4mJVZ-7Su6oo1WwGuBbpPbhluqJ5COwrICua5MuisV61_yWilOEcRWCkZcnFNSo1JzWA6?gv=true",
@@ -23,6 +30,11 @@ const REDIRECTS = {
   "/github": {
     destination: "https://github.com/connorwforsyth",
     eventName: "github_redirect",
+  },
+  "/presentation": {
+    destination: "https://connorforsyth.co/portfolio",
+    eventName: "portfolio_redirect",
+    permanent: true,
   },
   // Add more redirects as needed
 };
@@ -54,7 +66,10 @@ export async function middleware(request: NextRequest) {
       }),
     }).catch(console.error); // Handle any errors silently to ensure redirect still works
 
-    return NextResponse.redirect(redirect.destination);
+    // Use permanent redirect if specified, otherwise default to temporary
+    return redirect.permanent
+      ? NextResponse.redirect(redirect.destination, { status: 301 })
+      : NextResponse.redirect(redirect.destination);
   }
 }
 
