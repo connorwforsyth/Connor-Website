@@ -137,7 +137,7 @@ const FigmaEmbed = () => {
   }, []);
 
   return (
-    <div className="relative grid h-svh place-items-center overflow-clip">
+    <div className="relative flex h-dvh place-items-center overflow-clip">
       <iframe
         ref={iframeRef}
         width={dimensions.width}
@@ -160,8 +160,7 @@ const FigmaEmbed = () => {
             <p className="text-xs opacity-50">Updated: {lastUpdated}</p>
           )}
         </div>
-
-        <div className="flex w-full gap-2 *:w-full *:justify-center *:p-4 *:text-base sm:w-auto *:sm:w-auto *:sm:p-2 sm:*:text-sm">
+        <div className="flex w-full gap-2 *:w-full *:select-none *:justify-center *:p-4 *:text-base sm:w-auto *:sm:w-auto *:sm:p-2 sm:*:text-sm">
           <NavigationButton
             direction="BACKWARD"
             onClick={() => navigate("BACKWARD")}
