@@ -173,6 +173,7 @@ const FigmaEmbed = () => {
           <button
             onClick={toggleFullscreen}
             className="hidden rounded-md bg-zinc-800 text-xs text-white hover:bg-zinc-900 md:block"
+            tabIndex={0}
           >
             Fullscreen
           </button>
