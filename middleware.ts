@@ -27,9 +27,9 @@ const REDIRECTS: Record<
     destination: "https://github.com/connorwforsyth",
     eventName: "github_redirect",
   },
-  "/presentation": {
-    destination: "https://connorforsyth.co/portfolio",
-    eventName: "portfolio_redirect",
+  "/portfolio": {
+    destination: "https://connorforsyth.co/presentation",
+    eventName: "presentation_redirect",
     permanent: true,
   },
   // Add more redirects as needed

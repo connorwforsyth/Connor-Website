@@ -1,23 +1,38 @@
 "use client";
 
+import { cn } from "@/lib/utils";
+import { NavigationButton } from "./NavigationButton";
+
 import { useEffect, useRef, useState } from "react";
 import { getSession } from "@/server-actions/actions";
 import { formatDistanceToNow } from "date-fns";
 
-const figmaEmbedCode = "https://embed.figma.com/proto/";
+const figmaDomain = "https://embed.figma.com/proto/";
 const figmaProps =
   "&scaling=scale-down-width&share=1&embed-host=share&hide-ui=1&hotspot-hints=0&theme=system&device-frame=false";
 const presentation = `IRxjN1QkNUk8ynq6gOvql3/CF-Portfolio-PDF?page-id=13%3A18132&node-id=13-18154&p=f&viewport=4803%2C-22702%2C1`;
+const clientId = "&client-id=FdThHDFIsJFvWm4uNuG74k";
+const figmaOrigin = "https://www.figma.com/";
+const embedCode = `${figmaDomain}${presentation}${figmaProps}${clientId}`;
+
 const fileKey = "IRxjN1QkNUk8ynq6gOvql3";
 const CACHE_DURATION = 3600; // 1 hour in seconds
 
 const FigmaEmbed = () => {
   const iframeRef = useRef<HTMLIFrameElement>(null);
+
   const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
   const [name, setName] = useState<string>("");
   const [lastUpdated, setLastUpdated] = useState<string>("");
 
-  // Extract file key from the presentation URL
+  const navigate = (direction: string) => {
+    iframeRef.current?.contentWindow?.postMessage(
+      {
+        type: `NAVIGATE_${direction}`,
+      },
+      figmaOrigin,
+    );
+  };
 
   useEffect(() => {
     // Fetch session data on component mount
@@ -73,24 +88,6 @@ const FigmaEmbed = () => {
       clearInterval(refreshInterval);
     };
   }, []);
-
-  // Keyboard navigation
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (document.activeElement !== iframeRef.current) {
-        if (e.code === "ArrowLeft" || e.code === "ArrowRight") {
-          iframeRef.current?.focus();
-        }
-      }
-    };
-
-    window.addEventListener("keydown", handleKeyDown, true);
-    return () => {
-      window.removeEventListener("keydown", handleKeyDown, true);
-    };
-  }, []);
-
-  // Fullscreen toggle.
 
   const toggleFullscreen = () => {
     try {
@@ -148,12 +145,11 @@ const FigmaEmbed = () => {
         style={{
           border: "none",
         }}
-        src={`${figmaEmbedCode}${presentation}${figmaProps}`}
+        src={embedCode}
         allow="fullscreen"
-        tabIndex={0}
       />
       <div className="absolute bottom-0 flex w-full items-center p-4 md:justify-between">
-        <div className="flex w-full gap-4">
+        <div className="hidden w-full gap-4 sm:flex">
           {name && (
             <p className="text-xs">
               Welcome{" "}
@@ -164,13 +160,23 @@ const FigmaEmbed = () => {
             <p className="text-xs opacity-50">Updated: {lastUpdated}</p>
           )}
         </div>
-        <button
-          tabIndex={1}
-          onClick={toggleFullscreen}
-          className="hidden rounded-md bg-zinc-800 p-2 text-xs text-white transition-all hover:bg-zinc-900 md:block"
-        >
-          Fullscreen
-        </button>
+
+        <div className="flex w-full gap-2 *:w-full *:justify-center *:p-4 *:text-base sm:w-auto *:sm:w-auto *:sm:p-2 sm:*:text-sm">
+          <NavigationButton
+            direction="BACKWARD"
+            onClick={() => navigate("BACKWARD")}
+          />
+          <NavigationButton
+            direction="FORWARD"
+            onClick={() => navigate("FORWARD")}
+          />
+          <button
+            onClick={toggleFullscreen}
+            className="hidden rounded-md bg-zinc-800 text-xs text-white hover:bg-zinc-900 md:block"
+          >
+            Fullscreen
+          </button>
+        </div>
       </div>
     </div>
   );

@@ -7,7 +7,7 @@
     font-family: "kag-fallback";
     src: url("/fonts/geist/GeistVF.woff2") format("woff2");
     font-weight: 500;
-    unicode-range: U+2197, U+21B3, U+0026; /* Covers ↗, ↳, & characters */
+    unicode-range: U+2197, U+21B3, U+0026, U+2190, U+2192; /* Covers ↗, ↳, &, ←, → characters */
   }
 }
 
