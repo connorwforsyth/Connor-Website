@@ -137,7 +137,7 @@ const FigmaEmbed = () => {
   }, []);
 
   return (
-    <div className="relative flex h-dvh place-items-center overflow-clip">
+    <div className="relative grid h-dvh place-items-center overflow-clip">
       <iframe
         ref={iframeRef}
         width={dimensions.width}
