@@ -89,6 +89,17 @@ const FigmaEmbed = () => {
     };
   }, []);
 
+  useEffect(() => {
+    const handleKeyPress = (e: KeyboardEvent) => {
+      if (e.key.toLowerCase() === "f") {
+        toggleFullscreen();
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyPress);
+    return () => window.removeEventListener("keydown", handleKeyPress);
+  }, []);
+
   const toggleFullscreen = () => {
     try {
       if (!document.fullscreenElement) {
@@ -147,6 +158,7 @@ const FigmaEmbed = () => {
         }}
         src={embedCode}
         allow="fullscreen"
+        className=""
       />
       <div className="absolute bottom-0 flex w-full items-center p-4 md:justify-between">
         <div className="hidden w-full gap-4 sm:flex">
@@ -160,7 +172,7 @@ const FigmaEmbed = () => {
             <p className="text-xs opacity-50">Updated: {lastUpdated}</p>
           )}
         </div>
-        <div className="flex w-full gap-2 *:w-full *:select-none *:justify-center *:p-4 *:text-base sm:w-auto *:sm:w-auto *:sm:p-2 sm:*:text-sm">
+        <div className="flex w-full gap-2 *:w-full *:select-none *:justify-center *:rounded-md *:bg-zinc-800 *:p-4 *:text-white *:transition-all sm:w-auto *:sm:w-auto *:sm:p-2">
           <NavigationButton
             direction="BACKWARD"
             onClick={() => navigate("BACKWARD")}
@@ -171,8 +183,9 @@ const FigmaEmbed = () => {
           />
           <button
             onClick={toggleFullscreen}
-            className="hidden rounded-md bg-zinc-800 text-xs text-white hover:bg-zinc-900 md:block"
+            className="hidden text-xs hover:bg-zinc-700 md:block"
             tabIndex={0}
+            onKeyDown={(e) => e.key === "f" && toggleFullscreen}
           >
             Fullscreen
           </button>

@@ -46,7 +46,7 @@ export function NavigationButton({
     <button
       ref={buttonRef}
       className={cn(
-        "active flex items-center gap-2 rounded-md bg-zinc-800 p-2 text-xs text-white hover:bg-zinc-900 focus:outline-none focus:ring-1 focus:ring-zinc-400 active:bg-zinc-700 active:ring-zinc-400",
+        "flex items-center gap-2 rounded-md bg-zinc-800 p-2 text-xs text-white hover:bg-zinc-700 focus:outline-none focus:ring-1 focus:ring-zinc-400 active:bg-zinc-700 active:ring-zinc-400",
         isActive && "ring-2 ",
         className,
       )}
