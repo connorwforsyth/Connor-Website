@@ -1,9 +1,28 @@
 import "@/styles/cv-globals.css";
-
+import { Metadata } from "next";
 import { CSPostHogProvider } from "@/lib/providers";
+import siteMetadata from "@/config/site-metadata";
 
-type RootLayoutProps = {
+interface RootLayoutProps {
   children: React.ReactNode;
+}
+
+export const metadata: Metadata = {
+  metadataBase: new URL(siteMetadata.siteUrl),
+  title: siteMetadata.title,
+  description: siteMetadata.description,
+  openGraph: {
+    type: "website",
+    url: siteMetadata.siteUrl,
+    title: siteMetadata.title,
+    description: siteMetadata.description,
+    siteName: siteMetadata.title,
+    images: [
+      {
+        url: `${siteMetadata.siteUrl}/api/og/?title=${siteMetadata.title}`,
+      },
+    ],
+  },
 };
 
 export default async function Layout({ children }: RootLayoutProps) {

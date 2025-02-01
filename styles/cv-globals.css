@@ -17,7 +17,7 @@
     font-family: "kag-fallback";
     src: url("/fonts/geist/GeistVF.woff2") format("woff2");
     font-weight: 500;
-    unicode-range: U+2197, U+21B3, U+0026; /* Covers ↗, ↳, & characters */
+    unicode-range: U+2197, U+21B3, U+0026, U+2190, U+2192;
   }
 }
 
@@ -27,7 +27,6 @@
   font-weight: 200;
   font-style: normal;
   font-display: swap;
-  
 }
 
 @font-face {
@@ -189,7 +188,6 @@ body {
     "Noto Color Emoji";
 }
 
-
 @font-face {
   font-family: "Geist Mono";
   src: url("/files/GeistMonoVF.woff2") format("woff2-variations");
@@ -212,10 +210,6 @@ body {
   );
 }
 
-script {
-  display: none !important;
-}
-
 /* Print styles */
 @page {
   size: A4;
@@ -228,23 +222,28 @@ script {
 @media (min-width: 210mm) {
   body {
     @apply bg-neutral-100;
+    zoom: 1.15;
   }
-  
+
   .page {
     max-width: 210mm;
     height: 297mm;
     padding: 10mm;
-    @apply bg-white mx-auto shadow-sm;
+    @apply mx-auto bg-white shadow-sm;
   }
+}
+
+script {
+  display: none !important;
 }
 
 .print-button {
   display: none !important;
-  
+
   @media (min-width: 900px) {
-    @apply fixed top-4 right-4 block !important;
+    @apply fixed right-4 top-4 block !important;
   }
-  
+
   @media print {
     display: none;
   }
@@ -252,14 +251,15 @@ script {
 
 @media print {
   body {
-    @apply p-0 bg-transparent !important;
+    @apply bg-transparent p-0 !important;
+    zoom: 1 !important;
   }
 
   .page {
     max-width: auto;
     height: auto;
     size: 210mm 297mm;
-    @apply bg-transparent shadow-none p-10 !important;
+    @apply bg-transparent p-10 shadow-none !important;
   }
 }
 

@@ -13,8 +13,8 @@ type WorkItem = {
   company: string;
   companyUrl: string;
   location: string;
-  description?: JSX.Element;
-  bullets?: JSX.Element[];
+  description?: string | JSX.Element;
+  bullets?: (string | JSX.Element)[];
 };
 
 type SideProjectItem = {
@@ -39,28 +39,31 @@ type EducationItem = {
 const data = {
   work: [
     {
-      year: "2022-Now",
+      year: "2022 → Now",
       items: [
         {
-          title: "Service Designer",
+          title: "Service Designer (Consultant)",
           company: "Designit",
           companyUrl: "http://designit.com",
           location: "Sydney AUS & New York USA",
           description:
             "Working at the intersection of innovation, strategy, product design, and technology.",
           bullets: [
+            "Defining and communcating the digital transformation future vision for statewide road asset maintenance with Transport NSW (Gov).",
+            "Product design for two <a href='https://connorforsyth.co/projects/net-zero-energy-concepts/'>B2B Net-Zero energy portals</a> for Origin Zero and advanced features for their for future roadmap.",
             "Improving 8+ customer jobs through a <a href='https://connorforsyth.co/projects/chatbot-heuristic'>chatbot heuristic</a> review and redesign for Woolworths Group.",
-            "Major intranet redesign for Ausgrid including the rework of 20+ pages and heuristic evaluation.",
-            "Delivering an AI discovery program for 30+ students and partnership with <a href='https://sva.edu/events/ai-sins-panel-discussion-with-designit'>SVA NYC</a>.",
-            "Landing 3 new business opportunities for Designit through creating new products such as <a href='https://connorforsyth.co/projects/makeit'>Makeit</a>.",
-            "Helping The University of Sydney define their <a href='https://connorforsyth.co/projects/new-educational-product-offering'>product strategy</a> and market test 30+ new courses.",
-            "Product design for two <a href='https://connorforsyth.co/projects/net-zero-energy-concepts/'>B2B Net-Zero energy portals</a> for Origin Zero. As well as creating 10+ new features.",
+            "Reimagined procurement with Origin Energy, leveraging ServiceNow proposals projected to save $120M in maverick spend across source-to-pay.",
+            "Reimagining and market researching postgraduate study with The University of Sydney Business School's post covid, global learning environment.",
+
+            "Conducted a residency program to explore AI's influence in design and delivered an immersion partnership for 30+ students at <a href='https://sva.edu/events/ai-sins-panel-discussion-with-designit'>SVA NYC</a>.",
+            "Major sharepoint intranet redesign for Ausgrid 20+ pages of rework and a heuristic evaluation.",
+            "Established new business opportunities through programs like <a href='https://connorforsyth.co/projects/makeit'>Makeit</a>.",
           ],
         },
       ],
     },
     {
-      year: "2018-Now",
+      year: "2018 → Now",
       items: [
         {
           title: "Design Technologist",
@@ -68,11 +71,7 @@ const data = {
           companyUrl: "https://www.tedxmelbourne.com",
           location: "Melbourne AUS",
           description:
-            "Leading the experience design of events as well as internal operational systems and technology.",
-          bullets: [
-            "<a href='https://connorforsyth.co/projects/tedxmelbourne'>Redesigned and developed the TEDxMelbourne website</a> improving community experience and team velocity.",
-            "Delivered an AI event with 8+ virtual speakers. Tuned AI models with previous TEDx transcripts.",
-          ],
+            "Leading design and technology teams to deliver world-class events and organisational systems. Redesigned and developed digital infrastructure, leveraged AI for event experiences, rebuilt volunteer CRM and automation systems, creating innovative hybrid digital event solutions.",
         },
       ],
     },
@@ -85,7 +84,7 @@ const data = {
           companyUrl: "https://www.sydney.edu.au",
           location: "Sydney AUS",
           description:
-            "Teaching 200+ masters of design students at one of the top Australian Universities.<br> Subjects: <a href='https://www.sydney.edu.au/units/IDEA9106'>IDEA9106: Design Thinking</a> ‧ <a href='https://www.sydney.edu.au/units/DESN9003'>DESN9003: Strategic Design & Leadership.</a>",
+            "Teaching 200+ masters of design students at one of Australia's top Universities.<br> Subjects: <a href='https://www.sydney.edu.au/units/IDEA9106'>IDEA9106: Design Thinking</a> ‧ <a href='https://www.sydney.edu.au/units/DESN9003'>DESN9003: Strategic Design & Leadership.</a>",
         },
       ],
     },
@@ -110,6 +109,8 @@ const data = {
           company: "Freelance",
           companyUrl: "https://connorforsyth.co",
           location: "Sydney AUS",
+          description:
+            "Leading experience design with Stone Digital, Vipassana At Home, and Surf Coast Shire (Government).",
         },
       ],
     },
@@ -121,6 +122,8 @@ const data = {
           company: "Billard Leece Partnership",
           companyUrl: "https://www.blp.com.au",
           location: "Melbourne AUS",
+          description:
+            "Architectural design for government Victorian Building Schools. Prototyping for Peter MacCallum Palliative Care and Cancer Centre. User testing with doctors and nurses to design the bed head for cancer patients.",
         },
       ],
     },
@@ -188,8 +191,7 @@ const data = {
       year: "2018-19",
       items: [
         {
-          title:
-            "Creative Director, NAAUC: National Association of Australian University Colleges",
+          title: "Design Director, NAAUC",
           url: "https://www.naauc.edu.au/",
         },
       ],
@@ -224,11 +226,11 @@ const data = {
       items: [
         {
           title:
-            "Host: Tech Talks Sydney + Designit - Service Design Industry Event",
+            "SDN (Service Design Network) Youth Conference - Coach-like Service Design",
         },
         {
           title:
-            "Workshop: Service Design Network Conference - Coach-like Service Design",
+            "Host: Tech Talks Sydney + Designit - Sustainability by Design",
         },
       ],
     },
@@ -247,28 +249,29 @@ const data = {
     {
       year: "2024",
       items: [
-        { name: "Animations.dev", url: "https://animations.dev" },
-        { name: "Buildui.com", url: "https://buildui.com" },
         {
           name: "Design System University",
           url: "https://designsystem.university",
         },
+        { name: "Animations.dev", url: "https://animations.dev" },
+        { name: "Buildui.com", url: "https://buildui.com" },
         { name: "svg-animations.how", url: "https://svg-animations.how" },
       ],
     },
     {
       year: "2023",
       items: [
-        { name: "FrontEnd Masters: JavaScript, React" },
-        { name: "Fireship.io" },
+        {
+          name: "FrontEnd Masters: JavaScript, React, Full Stack for Frontend Developers",
+        },
         { name: "IDEO: Leading Complex Projects" },
       ],
     },
     {
       year: "2022",
       items: [
+        { name: "Design Sprint Masterclass & Workshopper Master, AJ&Smart" },
         { name: "CS50x: Introduction to Computer Science, HarvardX" },
-        { name: "Design Sprint Masterclass, AJ&Smart" },
       ],
     },
     {
@@ -299,12 +302,6 @@ const data = {
         {
           name: "Bachelor of Design (Architecture), The University of Melbourne",
         },
-      ],
-    },
-    {
-      year: "2014",
-      items: [
-        { name: "Victorian Certificate of Education, Geelong Grammar School" },
       ],
     },
   ] as YearGroup<EducationItem>[],
@@ -343,12 +340,14 @@ const TimelineYearGroup = <T extends { title: string; url?: string }>({
 const WorkSection = ({
   experience,
   className,
+  first,
 }: {
+  first?: boolean;
   experience: YearGroup<WorkItem>[];
   className?: string;
 }) => (
   <section className={`col-span-3 ${className}`}>
-    <h2>💻 Work Experience</h2>
+    {first && <h2>💻 Work Experience</h2>}
     <ul className="grid grid-cols-1 gap-6">
       {experience.map((yearGroup, index) => (
         <li key={index}>
@@ -384,9 +383,8 @@ const WorkItem = ({
         <span className="after:content-[':_']">{title}</span>
         <a href={companyUrl}>{company}</a>
       </div>
-      <div className="flex gap-2">
-        <time>{year}</time>
-        <i>{location}</i>
+      <div className="flex gap-2 text-neutral-500">
+        <time>{year}</time>•<i>{location}</i>
       </div>
     </h3>
     {description && (
@@ -398,7 +396,7 @@ const WorkItem = ({
       <ul className="grid grid-cols-2 gap-4">
         {bullets.map((bullet, index) => (
           <li
-            className="relative pl-5 text-neutral-700 before:absolute before:left-0 before:text-neutral-700 before:content-['—']"
+            className="relative pl-5  before:absolute before:left-0  before:content-['—']"
             key={index}
           >
             <BulletContent content={bullet} />
@@ -517,9 +515,9 @@ export default function CVPage() {
           <article className="flex flex-col gap-2">
             <p>
               I am a designer with 6+ years experience. I have an interest in
-              web technology, design systems, user experience, events,
+              technology, design systems, research, user experience, events,
               education, facilitation, and open source. Outside of work you'll
-              find me coding, hiking, learning, taking{" "}
+              find me coding, hiking, taking{" "}
               <a href="https://photos.connorforsyth.co">photos</a>, and brewing
               coffee. I currently work at{" "}
               <a href="https://www.designit.com">Designit</a> as a Service
@@ -556,10 +554,27 @@ export default function CVPage() {
             </ul>
           </nav>
         </header>
-        <WorkSection className="col-span-8" experience={data.work} />
+        <WorkSection
+          first
+          className="col-span-8"
+          experience={data.work.filter(
+            (group) =>
+              !group.items.some(
+                (item) => item.company === "Billard Leece Partnership",
+              ),
+          )}
+        />
       </div>
 
       <div className="page">
+        <WorkSection
+          className="col-span-8"
+          experience={data.work.filter((group) =>
+            group.items.some(
+              (item) => item.company === "Billard Leece Partnership",
+            ),
+          )}
+        />
         <SecondarySection
           className="col-span-2"
           title="Education"
@@ -575,7 +590,7 @@ export default function CVPage() {
               "Product design",
               "Creative technology",
               "Front-end development",
-              "User research",
+              "Design research",
               "Agile coaching",
               "Facilitation",
               "Design sprints",
@@ -589,24 +604,17 @@ export default function CVPage() {
             items={[
               "Figma",
               "Miro",
+              "Raycast",
+              "Arc",
               "GitHub",
+              "Cursor",
               "Vercel",
               "React",
               "Nextjs",
               "TypeScript",
-              "JavaScript",
               "TailwindCSS",
               "RadixUI",
-              "HTML",
-              "CSS",
-              "Raycast",
-              "Netlify",
               "Webflow",
-              "PostHog",
-              "Notion",
-              "Airtable",
-              "Dovetail",
-              "Arc",
             ]}
           />
         </div>
@@ -627,9 +635,8 @@ export default function CVPage() {
             items={[
               "Filter coffee",
               "Photography",
-              "Vulfpeck (Music)",
+              "Vulfpeck",
               "All 6 seasons of Lost (TV Show)",
-              "Watching Three Body Problem",
               "Moving from architecture to tech",
               "Vipassana meditation",
             ]}
@@ -637,18 +644,7 @@ export default function CVPage() {
           <ListSection
             title="This month I'm working on..."
             emoji="✨"
-            items={[
-              "Building a time picker tool",
-              "Web development libraries such as radix-ui, Stitches, next-intl, framer-motion.",
-              {
-                text: "Learning at: svg-animations.how",
-                url: "https://svg-animations.how",
-              },
-              {
-                text: "Working on photos.connorforsyth.co",
-                url: "https://photos.connorforsyth.co",
-              },
-            ]}
+            items={["Building a time picker tool", "Camping", "Fretless Bass"]}
           />
         </div>
       </div>
