@@ -268,6 +268,11 @@ script {
   margin: 10mm;
 }
 
+* {
+  scrollbar-width: thin;
+  scrollbar-color: hsla(0, 0%, 100%, 0.5) none;
+}
+
 *::-webkit-scrollbar {
   width: thin;
 }
