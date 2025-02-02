@@ -267,3 +267,15 @@ script {
   @apply absolute inset-0 bg-red-400 opacity-10;
   margin: 10mm;
 }
+
+*::-webkit-scrollbar {
+  width: thin;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: hsla(0, 0%, 100%, 0.5), none;
+}
+
+*::-webkit-scrollbar-track {
+  background: none;
+}

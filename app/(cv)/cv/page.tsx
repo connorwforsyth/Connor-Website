@@ -213,11 +213,11 @@ const data = {
       items: [
         {
           title:
-            "Panel: School of Visual Arts NYC: AI Sins - The future of the design industry with AI",
+            "Lecture: University of Sydney, What design leadership can learn from agile methodologies",
         },
         {
           title:
-            "Lecture: University of Sydney, Design Leadership - What design leadership can learn from agile methodologies",
+            "Panel: School of Visual Arts NYC: AI Sins - The future of the design industry with AI",
         },
       ],
     },
@@ -226,7 +226,7 @@ const data = {
       items: [
         {
           title:
-            "SDN (Service Design Network) Youth Conference - Coach-like Service Design",
+            "Workshop: SDN (Service Design Network) Youth Conference: Coach-like Service Design",
         },
         {
           title:
@@ -644,7 +644,11 @@ export default function CVPage() {
           <ListSection
             title="This month I'm working on..."
             emoji="✨"
-            items={["Building a time picker tool", "Camping", "Fretless Bass"]}
+            items={[
+              "Building a timezone picker tool",
+              "Ocean swimming",
+              "Fretless bass",
+            ]}
           />
         </div>
       </div>
