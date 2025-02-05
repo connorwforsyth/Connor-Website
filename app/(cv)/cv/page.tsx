@@ -63,7 +63,7 @@ const data = {
       ],
     },
     {
-      year: "2018 → Now",
+      year: "2018 → 2025",
       items: [
         {
           title: "Design Technologist",
@@ -71,12 +71,16 @@ const data = {
           companyUrl: "https://www.tedxmelbourne.com",
           location: "Melbourne AUS",
           description:
-            "Leading design and technology teams to deliver world-class events and organisational systems. Redesigned and developed digital infrastructure, leveraged AI for event experiences, rebuilt volunteer CRM and automation systems, creating innovative hybrid digital event solutions.",
+            "Leading design and technology to deliver world-class events.",
+          bullets: [
+            "I developed and managed the TEDxMelbourne website, implemented organisational systems for project management, CRMs for volunteers, partners, and speakers, and streamlined core operational processes.",
+            "Leveraged technology to enhance event experiences such as creating audience interaction tools, implementing live streaming, and using AI to create experimental event concepts.",
+          ],
         },
       ],
     },
     {
-      year: "2023-24",
+      year: "2022 → 2024",
       items: [
         {
           title: "Guest Lecturer & Academic Tutor",
@@ -89,7 +93,7 @@ const data = {
       ],
     },
     {
-      year: "2021-22",
+      year: "2021 → 2022",
       items: [
         {
           title: "Service Designer",
@@ -102,7 +106,7 @@ const data = {
       ],
     },
     {
-      year: "2019-22",
+      year: "2019 → 2022",
       items: [
         {
           title: "Service Design & Creative Technologist",
@@ -115,10 +119,10 @@ const data = {
       ],
     },
     {
-      year: "2018-19",
+      year: "2018 → 2019",
       items: [
         {
-          title: "Design Strategist",
+          title: "Design Strategist (Architecture)",
           company: "Billard Leece Partnership",
           companyUrl: "https://www.blp.com.au",
           location: "Melbourne AUS",
@@ -346,18 +350,20 @@ const WorkSection = ({
   experience: YearGroup<WorkItem>[];
   className?: string;
 }) => (
-  <section className={`col-span-3 ${className}`}>
-    {first && <h2>💻 Work Experience</h2>}
-    <ul className="grid grid-cols-1 gap-6">
-      {experience.map((yearGroup, index) => (
-        <li key={index}>
-          {yearGroup.items.map((item, itemIndex) => (
-            <WorkItem key={itemIndex} {...item} year={yearGroup.year} />
-          ))}
-        </li>
-      ))}
-    </ul>
-  </section>
+  <>
+    <section className={`${className}`}>
+      {first && <h2 className="col-span-2 ">Work Experience</h2>}
+      <ul className="grid grid-cols-1 gap-8">
+        {experience.map((yearGroup, index) => (
+          <li key={index}>
+            {yearGroup.items.map((item, itemIndex) => (
+              <WorkItem key={itemIndex} {...item} year={yearGroup.year} />
+            ))}
+          </li>
+        ))}
+      </ul>
+    </section>
+  </>
 );
 
 const BulletContent = ({ content }: { content: React.ReactNode }) => {
@@ -377,47 +383,43 @@ const WorkItem = ({
   bullets,
   year,
 }: WorkItem & { year: string }) => (
-  <div className="flex flex-col gap-1">
-    <h3 className="flex w-full flex-col items-baseline justify-between gap-1 text-base">
-      <div>
-        <span className="after:content-[':_']">{title}</span>
-        <a href={companyUrl}>{company}</a>
-      </div>
-      <div className="flex gap-2 text-neutral-500">
-        <time>{year}</time>•<i>{location}</i>
+  <div className="grid-cols-3 gap-4 text-sm md:grid">
+    <h3 className="col-span-1 flex flex-col">
+      <span>{title}</span>
+      <a href={companyUrl}>{company}</a>
+      <div className="mt-2 flex flex-col pb-4 text-neutral-500 *:text-xs md:pb-0">
+        <time>{year}</time>
+        <i>{location}</i>
       </div>
     </h3>
-    {description && (
-      <p>
-        <BulletContent content={description} />
-      </p>
-    )}
-    {bullets && (
-      <ul className="grid grid-cols-2 gap-4">
-        {bullets.map((bullet, index) => (
+    <ul className="col-span-2 flex flex-col gap-4 sm:grid">
+      {description && (
+        <p className="col-span-2 text-sm">
+          <BulletContent content={description} />
+        </p>
+      )}
+      {bullets &&
+        bullets.map((bullet, index) => (
           <li
-            className="relative pl-5  before:absolute before:left-0  before:content-['—']"
+            className="relative pl-5 text-sm before:absolute before:left-0 before:content-['—']  lg:text-xs"
             key={index}
           >
             <BulletContent content={bullet} />
           </li>
         ))}
-      </ul>
-    )}
+    </ul>
   </div>
 );
 
 type ListSectionProps = {
   title: string;
-  emoji: string;
+
   items: (string | { text: string; url?: string })[];
 };
 
-const ListSection = ({ title, emoji, items }: ListSectionProps) => (
+const ListSection = ({ title, items }: ListSectionProps) => (
   <section>
-    <h2 className="font-medium">
-      {emoji} {title}
-    </h2>
+    <h2 className="font-medium">{title}</h2>
     <ul className="">
       {items.map((item, index) => (
         <li
@@ -441,7 +443,7 @@ interface SecondarySectionProps<
   T extends { title?: string; name?: string; url?: string },
 > {
   title: string;
-  emoji: string;
+
   yearGroups: YearGroup<T>[];
   className?: string;
 }
@@ -450,14 +452,12 @@ const SecondarySection = <
   T extends { title?: string; name?: string; url?: string },
 >({
   title,
-  emoji,
+
   yearGroups,
   className,
 }: SecondarySectionProps<T>) => (
   <section className={className}>
-    <h2 className="font-medium">
-      {emoji} {title}
-    </h2>
+    <h2 className="font-medium">{title}</h2>
     <ul className="flex flex-col">
       {yearGroups.map((group, index) => (
         <TimelineYearGroup
@@ -510,81 +510,73 @@ export default function CVPage() {
         💾
       </button>
       <div className="page">
-        <header className="flex flex-col gap-4 [&_a]:text-blue-800">
-          <h1 className="py-2 text-base font-medium">Connor Forsyth</h1>
-          <article className="flex flex-col gap-2">
-            <p>
-              I am a designer with 6+ years experience. I have an interest in
-              technology, design systems, research, user experience, events,
-              education, facilitation, and open source. Outside of work you'll
-              find me coding, hiking, taking{" "}
-              <a href="https://photos.connorforsyth.co">photos</a>, and brewing
-              coffee. I currently work at{" "}
-              <a href="https://www.designit.com">Designit</a> as a Service
-              Designer.
-            </p>
-          </article>
-          <nav className="text-sm">
-            <p>
-              <span className="pr-1">Portfolio:</span>
-              <a href="https://connorforsyth.co/portfolio">
-                connorforsyth.co/portfolio
-              </a>
-              <span className="px-1">access code:</span>
-              <code className="highlight px-1 py-0.5 font-mono text-sm text-red-600">
-                {accessCode}
-              </code>
-            </p>
-            <ul className="*:inline-flex *:*:pr-2">
-              <li>
-                <span className="pr-1">Email:</span>
-                <a href="mailto:c@connorforsyth.co">c@connorforsyth.co</a>
-              </li>
-              <li>
-                <a href="https://www.linkedin.com/in/connorwforsyth">
-                  LinkedIn
-                </a>
-              </li>
-              <li>
-                <a href="https://github.com/connorwforsyth">GitHub</a>
-              </li>
-              <li>
-                <a href="http://connorforsyth.co/chat">Chat</a>
-              </li>
-            </ul>
-          </nav>
+        <header className="grid flex-col gap-4 md:grid-cols-3 md:gap-8 ">
+          <div>
+            <h1 className="flex flex-col text-base font-medium">
+              <span>Connor Forsyth</span>
+              <span className="font-light">
+                Multdisciplinary Service Designer
+              </span>
+            </h1>
+          </div>
+          <div className="col-span-2">
+            <article className="col-span-2 flex flex-col gap-4 text-sm md:gap-2">
+              <p>
+                I am a designer with 6+ years experience. I have an interest in
+                technology, design systems, research, user experience, events,
+                education, facilitation, and open source. Outside of work you'll
+                find me coding, hiking, taking{" "}
+                <a href="https://photos.connorforsyth.co">photos</a>, and
+                brewing coffee. I currently work at{" "}
+                <a href="https://www.designit.com">Designit</a> as a Service
+                Designer.
+              </p>
+            </article>
+            <nav className="col-span-1 mt-2 flex flex-col gap-4 text-xs">
+              <ul className="grid grid-cols-3 text-sm *:flex *:flex-col *:gap-1 *:*:pr-2">
+                <div className="col-span-1">
+                  <li>
+                    <a href="https://connorforsyth.co/linkedin">LinkedIn</a>
+                  </li>
+                  <li>
+                    <a href="https://connorforsyth.co/github">Github</a>
+                  </li>
+                  <li>
+                    <a href="https://connorforsyth.co/chat">Chat</a>
+                  </li>
+                </div>
+                <div className="col-span-2">
+                  <a className="" href="mailto:c@connorforsyth.co">
+                    c@connorforsyth.co
+                  </a>
+                  <span>
+                    <a className="" href="https://connorforsyth.co/portfolio">
+                      connorforsyth.co/portfolio
+                    </a>
+                  </span>
+                  <span className="">
+                    Access code:
+                    <code className="highlight ml-1 px-1 py-0.5 align-middle font-mono text-xs text-red-600">
+                      {accessCode}
+                    </code>
+                  </span>
+                </div>
+              </ul>
+            </nav>
+          </div>
         </header>
-        <WorkSection
-          first
-          className="col-span-8"
-          experience={data.work.filter(
-            (group) =>
-              !group.items.some(
-                (item) => item.company === "Billard Leece Partnership",
-              ),
-          )}
-        />
+        <WorkSection first className="" experience={data.work} />
       </div>
 
       <div className="page">
-        <WorkSection
-          className="col-span-8"
-          experience={data.work.filter((group) =>
-            group.items.some(
-              (item) => item.company === "Billard Leece Partnership",
-            ),
-          )}
-        />
         <SecondarySection
           className="col-span-2"
           title="Education"
-          emoji="🎓"
           yearGroups={data.education}
         />
         <div className="grid gap-8 sm:grid-cols-2">
           <ListSection
             title="Skills"
-            emoji="🦸‍♂️"
             items={[
               "Service design",
               "Product design",
@@ -599,8 +591,7 @@ export default function CVPage() {
             ]}
           />
           <ListSection
-            title="Stack"
-            emoji="🛠"
+            title="Tech stack"
             items={[
               "Figma",
               "Miro",
@@ -621,17 +612,11 @@ export default function CVPage() {
         <div className="grid gap-8 sm:grid-cols-2">
           <SecondarySection
             title="Side Projects"
-            emoji="🧢"
             yearGroups={data.sideprojects}
           />
-          <SecondarySection
-            title="Speaking"
-            emoji="🎤"
-            yearGroups={data.speaking}
-          />
+          <SecondarySection title="Speaking" yearGroups={data.speaking} />
           <ListSection
             title="Ask me about..."
-            emoji="👋"
             items={[
               "Filter coffee",
               "Photography",
@@ -643,7 +628,6 @@ export default function CVPage() {
           />
           <ListSection
             title="This month I'm working on..."
-            emoji="✨"
             items={[
               "Building a timezone picker tool",
               "Ocean swimming",
