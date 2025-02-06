@@ -401,7 +401,7 @@ const WorkItem = ({
       {bullets &&
         bullets.map((bullet, index) => (
           <li
-            className="relative pl-5 text-sm before:absolute before:left-0 before:content-['—']  lg:text-xs"
+            className="relative pl-5 text-sm before:absolute before:left-0  before:content-['—'] sm:text-xs print:text-xs"
             key={index}
           >
             <BulletContent content={bullet} />
@@ -514,7 +514,7 @@ export default function CVPage() {
           <div>
             <h1 className="flex flex-col text-base font-medium">
               <span>Connor Forsyth</span>
-              <span className="font-light">
+              <span className="font-light text-neutral-500">
                 Multdisciplinary Service Designer
               </span>
             </h1>
@@ -556,7 +556,7 @@ export default function CVPage() {
                   </span>
                   <span className="">
                     Access code:
-                    <code className="highlight ml-1 px-1 py-0.5 align-middle font-mono text-xs text-red-600">
+                    <code className="highlight ml-1 px-1 py-0.5 font-mono text-xs font-normal text-red-500 print:text-blue-800">
                       {accessCode}
                     </code>
                   </span>

@@ -12,6 +12,13 @@
 }
 
 @font-face {
+  font-family: "geist-mono";
+  src: url("/fonts/geist/GeistMonoVF.woff2") format("woff2-variations");
+  font-weight: 100 900;
+  font-style: swap;
+}
+
+@font-face {
   font-family: "kag";
   src: url("/fonts/KAG/KynetonArtGrotesque-Light.woff2") format("woff2");
   font-weight: 200;

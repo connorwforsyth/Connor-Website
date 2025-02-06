@@ -19,9 +19,13 @@ const config = {
       },
     },
     extend: {
+      screens: {
+        print: { raw: "print" },
+      },
       fontFamily: {
         kag: ["kag-fallback", "kag", "sans-serif"],
         rodney: ["rodney", "serif"],
+        mono: ["geist-mono"],
       },
       colors: {
         border: "hsl(var(--border))",
