@@ -510,7 +510,7 @@ export default function CVPage() {
         💾
       </button>
       <div className="page">
-        <header className="grid flex-col gap-4 md:grid-cols-3 md:gap-8 ">
+        <header className="grid grid-cols-1 flex-col gap-4 md:grid-cols-3 md:gap-8 ">
           <div>
             <h1 className="flex flex-col text-base font-medium">
               <span>Connor Forsyth</span>
