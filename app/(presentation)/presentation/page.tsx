@@ -24,6 +24,7 @@ const FigmaEmbed = () => {
   const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
   const [name, setName] = useState<string>("");
   const [lastUpdated, setLastUpdated] = useState<string>("");
+  const [isFullscreen, setIsFullscreen] = useState(false);
 
   const navigate = (direction: string) => {
     iframeRef.current?.contentWindow?.postMessage(
@@ -147,6 +148,16 @@ const FigmaEmbed = () => {
     };
   }, []);
 
+  useEffect(() => {
+    const handleFullscreenChange = () => {
+      setIsFullscreen(!!document.fullscreenElement);
+    };
+
+    document.addEventListener("fullscreenchange", handleFullscreenChange);
+    return () =>
+      document.removeEventListener("fullscreenchange", handleFullscreenChange);
+  }, []);
+
   return (
     <div className="relative grid h-dvh place-items-center overflow-clip">
       <iframe
@@ -155,10 +166,10 @@ const FigmaEmbed = () => {
         height={dimensions.height}
         style={{
           border: "none",
+          zoom: isFullscreen ? "150%" : "100%",
         }}
         src={embedCode}
         allow="fullscreen"
-        className=""
       />
       <div className="absolute bottom-0 flex w-full items-center p-4 md:justify-between">
         <div className="hidden w-full gap-4 sm:flex">
