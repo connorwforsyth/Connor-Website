@@ -20,6 +20,7 @@ const config = {
     },
     extend: {
       screens: {
+        lessA4: "210mm",
         print: { raw: "print" },
       },
       fontFamily: {

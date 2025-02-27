@@ -49,7 +49,7 @@ const data = {
           description:
             "Working at the intersection of innovation, strategy, product design, and technology.",
           bullets: [
-            "Defining and communcating the digital transformation future vision for statewide road asset maintenance with Transport NSW (Gov).",
+            "Defining and communicating the future vision for statewide road asset maintenance with Transport NSW (Gov) as part of a critical digital transformation program.",
             "Product design for two <a href='https://connorforsyth.co/projects/net-zero-energy-concepts/'>B2B Net-Zero energy portals</a> for Origin Zero and advanced features for their for future roadmap.",
             "Improving 8+ customer jobs through a <a href='https://connorforsyth.co/projects/chatbot-heuristic'>chatbot heuristic</a> review and redesign for Woolworths Group.",
             "Reimagined procurement with Origin Energy, leveraging ServiceNow proposals projected to save $120M in maverick spend across source-to-pay.",
