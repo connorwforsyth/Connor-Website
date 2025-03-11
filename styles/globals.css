@@ -390,25 +390,15 @@ body {
     -webkit-box-reflect: below 10px linear-gradient(transparent, #0005);
   }
 
-  .blur {
-    --page-top: 64px;
-    --h: min(96px, var(--page-top));
-    --direction: to bottom;
-    --mask-visible: #000;
-    --mask-hidden: transparent;
-    margin-bottom: calc(-1 * var(--h));
-    backdrop-filter: blur(4px);
+  .prog-blur {
+    height: 3rem;
+    width: 100%;
     position: fixed;
     pointer-events: none;
-    height: 64px;
-    opacity: 0.95;
+    opacity: 0.9;
     z-index: 1;
-    mask-image: linear-gradient(
-      var(--direction),
-      var(--mask-visible) 20%,
-      var(--mask-hidden)
-    );
-    width: 100%;
+    backdrop-filter: blur(8px);
+    mask-image: linear-gradient(to bottom, #000 20%, transparent);
   }
 }
 
