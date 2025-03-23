@@ -42,7 +42,7 @@ const data = {
       year: "2022 → Now",
       items: [
         {
-          title: "Service Designer (Consultant)",
+          title: "Service & Product Designer",
           company: "Designit",
           companyUrl: "http://designit.com",
           location: "Sydney AUS & New York USA",
