@@ -18,6 +18,7 @@ type SiteConfig = {
   youtube?: string;
   linkedin: string;
   locale: string;
+  keywords: string[];
 };
 
 export const siteMetadata: SiteConfig = {
@@ -25,7 +26,7 @@ export const siteMetadata: SiteConfig = {
   author: "Connor Forsyth",
   headerTitle: "Connor Forsyth",
   description:
-    "I’m a designer and technologist with a background in design sprints, lean ux, agile and web development. I currently work as a service designer at Designit and as an academic tutor at The University of Sydney.",
+    "I'm a designer and technologist with a background in design sprints, lean ux, agile and web development. I currently work as a service designer at Designit and as an academic tutor at The University of Sydney.",
   language: "en-us",
   theme: "system", // system, dark or light
   siteUrl: "https://connorforsyth.co",
@@ -37,6 +38,23 @@ export const siteMetadata: SiteConfig = {
   twitter: "https://twitter.com/connorwforsyth",
   linkedin: "https://www.linkedin.com/in/connorwforsyth",
   locale: "en-AU",
+  keywords: [
+    "design",
+    "service design",
+    "product design",
+    "development",
+    "design engineer",
+    "design thinking",
+    "design sprint",
+    "lean ux",
+    "agile",
+    "web development",
+    "designit",
+    "the university of sydney",
+    "the university of melbourne",
+    "tedxmelbourne",
+    "tedx",
+  ],
 };
 
 export default siteMetadata;

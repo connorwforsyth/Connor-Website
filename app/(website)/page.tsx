@@ -35,6 +35,8 @@ export default function Home() {
         alt="ConnorForsythHeadshot"
         className="sr-only mx-auto w-full max-w-2xl rounded-lg"
         src="/connorforsyth-headshot.jpg"
+        priority
+        loading="eager"
       />
       <div className="flex flex-col gap-4 sm:h-auto">
         <div className="mx-auto flex w-full max-w-2xl flex-col gap-4 ">
