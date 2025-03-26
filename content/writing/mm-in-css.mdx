@@ -1,0 +1,47 @@
+---
+title: "Milimeter Units in CSS"
+description: "Milimeter Units in CSS"
+date: "2025-03-25"
+---
+
+I've recently been experimenting with print media queries CSS and I learned that CSS actually supports milimeter units, to explore this I wrote an A4 page codepen to test it out and practice writing.
+
+While print queries isn't setup on the following codepen, [they are on here](../cv).
+
+
+<FigmaProtoFrame wrapper={false} className="my-4" src="https://codepen.io/connorforsyth/embed/GgRxBVe?" />
+<Caption>
+  Words are inspired by [Dark Matter and Trojan Horses](https://medium.com/dark-matter-and-trojan-horses/dark-matter-and-trojan-horses-a-strategic-design-vocabulary-strelka-press-18551fff3133) by Dan Hill. 
+</Caption>
+<br/>
+It's worth mentioning that if you take a ruler up to the screen, you're unlikely to see real world measurements, due to how screens and pixels handle measurements differently. But if you're printing to a PDF or printer, the units will be relative to the physical size of the paper.
+<br/>
+<UIWrapper>
+<div className="flex flex-col sm:flex-row gap-[6mm] *:shadow-sm">
+  <div className="flex h-[8mm] w-[8mm] items-center justify-center dark:bg-red-700 bg-red-500">
+    <p className="text-[3mm]">8mm</p>
+  </div>
+  <div className="flex h-[32mm] w-[32mm] items-center justify-center dark:bg-purple-700 bg-purple-500">
+    <p className="text-[2.5mm]">32mm</p>
+  </div>
+  <div className="flex h-[64mm] w-[64mm] items-center justify-center dark:bg-green-700 bg-green-500">
+    <p className="text-[3mm]">64mm</p>
+  </div>
+</div>
+</UIWrapper>
+
+
+
+```tsx
+ <div className="flex flex-col sm:flex-row gap-[6mm] *:shadow-sm">
+  <div className="flex h-[8mm] w-[8mm] items-center justify-center dark:bg-red-700 bg-red-500">
+    <p className="text-[3mm]">8mm</p>
+  </div>
+  <div className="flex h-[32mm] w-[32mm] items-center justify-center dark:bg-purple-700 bg-purple-500">
+    <p className="text-[2.5mm]">32mm</p>
+  </div>
+  <div className="flex h-[64mm] w-[64mm] items-center justify-center dark:bg-green-700 bg-green-500">
+    <p className="text-[3mm]">64mm</p>
+  </div>
+</div>
+```
