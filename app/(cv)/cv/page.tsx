@@ -383,7 +383,7 @@ const WorkItem = ({
   bullets,
   year,
 }: WorkItem & { year: string }) => (
-  <div className="grid-cols-3 gap-4 text-sm md:grid">
+  <div className="gap-4 text-sm md:grid md:grid-cols-3">
     <h3 className="col-span-1 flex flex-col">
       <span>{title}</span>
       <a href={companyUrl}>{company}</a>
