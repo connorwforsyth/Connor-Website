@@ -45,7 +45,7 @@ const data = {
           title: "Service & Product Designer",
           company: "Designit",
           companyUrl: "http://designit.com",
-          location: "Sydney AUS & New York USA",
+          location: "Sydney AUS",
           description:
             "Working at the intersection of innovation, strategy, product design, and technology.",
           bullets: [
@@ -510,12 +510,12 @@ export default function CVPage() {
         💾
       </button>
       <div className="page">
-        <header className="grid grid-cols-1 flex-col gap-4 md:grid-cols-3 md:gap-8 ">
+        <header className="grid grid-cols-1 flex-col gap-4 md:grid-cols-3 ">
           <div>
-            <h1 className="flex flex-col text-base font-medium">
+            <h1 className="text-base font-medium">
               <span>Connor Forsyth</span>
-              <span className="font-light text-neutral-500">
-                Multdisciplinary Service Designer
+              <span className="block font-light text-neutral-500 lg:text-nowrap">
+                Multidisciplinary Service Designer
               </span>
             </h1>
           </div>
@@ -528,8 +528,8 @@ export default function CVPage() {
                 find me coding, hiking, taking{" "}
                 <a href="https://photos.connorforsyth.co">photos</a>, and
                 brewing coffee. I currently work at{" "}
-                <a href="https://www.designit.com">Designit</a> as a Service
-                Designer.
+                <a href="https://www.designit.com">Designit</a> as a Product &
+                Service Designer.
               </p>
             </article>
             <nav className="col-span-1 mt-2 flex flex-col gap-4 text-xs">
@@ -622,7 +622,7 @@ export default function CVPage() {
               "Photography",
               "Vulfpeck",
               "All 6 seasons of Lost (TV Show)",
-              "Moving from architecture to tech",
+              "Moving from architecture to IXD",
               "Vipassana meditation",
             ]}
           />
