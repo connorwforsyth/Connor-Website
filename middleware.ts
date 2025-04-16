@@ -32,6 +32,11 @@ const REDIRECTS: Record<
     eventName: "presentation_redirect",
     permanent: true,
   },
+  "/raycast": {
+    destination: "https://raycast.com/?via=connor",
+    eventName: "raycast_redirect",
+    permanent: true,
+  },
   // Add more redirects as needed
 };
 
