@@ -47,7 +47,7 @@ const data = {
           companyUrl: "http://designit.com",
           location: "Sydney AUS",
           description:
-            "Working at the intersection of innovation, strategy, product design, and technology.",
+            "Working at the intersection of innovation, product design, strategy and technology.",
           bullets: [
             "Defining and communicating the future vision for statewide road asset maintenance with Transport NSW (Gov) as part of a critical digital transformation program.",
             "Product design for two <a href='https://connorforsyth.co/projects/net-zero-energy-concepts/'>B2B Net-Zero energy portals</a> for Origin Zero and advanced features for their for future roadmap.",
