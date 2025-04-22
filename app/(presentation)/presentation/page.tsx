@@ -166,7 +166,7 @@ const FigmaEmbed = () => {
         height={dimensions.height}
         style={{
           border: "none",
-          zoom: isFullscreen ? "150%" : "100%",
+          zoom: isFullscreen ? "100%" : "100%",
         }}
         src={embedCode}
         allow="fullscreen"
