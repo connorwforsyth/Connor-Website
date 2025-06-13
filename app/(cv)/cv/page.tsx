@@ -631,8 +631,9 @@ export default function CVPage() {
             title="This month I'm working on..."
             items={[
               "Building a timezone picker tool",
-              "Ocean swimming",
-              "Fretless bass",
+              "Hiking",
+              "Rumba, Son, Afro-Cuban",
+              "Running",
             ]}
           />
         </div>
