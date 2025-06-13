@@ -596,6 +596,7 @@ export default function CVPage() {
               "Figma",
               "Miro",
               "Raycast",
+              "Notion",
               "Arc",
               "GitHub",
               "Cursor",
