@@ -51,12 +51,13 @@ const data = {
           bullets: [
             "Defining and communicating the future vision for statewide road asset maintenance with Transport NSW (Gov) as part of a critical digital transformation program.",
             "Product design for two <a href='https://connorforsyth.co/projects/net-zero-energy-concepts/'>B2B Net-Zero energy portals</a> for Origin Zero and advanced features for their for future roadmap.",
-            "Improving 8+ customer jobs through a <a href='https://connorforsyth.co/projects/chatbot-heuristic'>chatbot heuristic</a> review and redesign for Woolworths Group.",
+            "Leading the digital strategy for <a href='https://www.ozharvest.org.au/'>OzHarvest</a>, partnering with the Founder, C-suite and extended team to identify key challenges to overcome and combat food waste.",
             "Reimagined procurement with Origin Energy, leveraging ServiceNow proposals projected to save $120M in maverick spend across source-to-pay.",
             "Reimagining and market researching postgraduate study with The University of Sydney Business School's post covid, global learning environment.",
 
             "Conducted a residency program to explore AI's influence in design and delivered an immersion partnership for 30+ students at <a href='https://sva.edu/events/ai-sins-panel-discussion-with-designit'>SVA NYC</a>.",
-            "Major sharepoint intranet redesign for Ausgrid 20+ pages of rework and a heuristic evaluation.",
+            // "Major sharepoint intranet redesign for Ausgrid 20+ pages of rework and a heuristic evaluation.",
+            "Improving 8+ customer jobs through a <a href='https://connorforsyth.co/projects/chatbot-heuristic'>chatbot heuristic</a> review and redesign for Woolworths Group.",
             "Established new business opportunities through programs like <a href='https://connorforsyth.co/projects/makeit'>Makeit</a>.",
           ],
         },
