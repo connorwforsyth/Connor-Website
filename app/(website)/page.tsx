@@ -44,10 +44,10 @@ export default function Home() {
             <span className="block pr-1 text-zinc-700 dark:text-zinc-300 sm:inline">
               Connor Forsyth.
             </span>
-            Product and service designer
+            Product Design Engineer
             <span className="hidden sm:inline">
               {" "}
-              focussed on building experiences with code, craft, and humans.
+              with a focus on design systems, AI products and developer tools.
             </span>
           </h1>
           <div
@@ -58,26 +58,16 @@ export default function Home() {
             <p>
               I currently work at{" "}
               <Link
-                href="https://designit.com"
+                href="https://deloitte.com.au"
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                Designit
+                Deloitte
               </Link>{" "}
-              where I help organisations build better experiences through
-              creative technology, prototyping, research, design sprints and
-              proof of concepts.
-            </p>
-            <p className="hidden sm:inline">
-              I also work as an academic tutor in the design school at{" "}
-              <Link
-                target="_blank"
-                rel="noopener noreferrer"
-                href="https://sydney.edu.au"
-              >
-                The University of Sydney
-              </Link>
-              .
+              in the strategy, transformation, and AI practice, where I lead the
+              development of the enterprise design system. This system is used
+              by product teams to shape the end-to-end development of emerging
+              applications.
             </p>
             <p>
               Outside of work, I'm building communities, taking{" "}

@@ -39,7 +39,20 @@ type EducationItem = {
 const data = {
   work: [
     {
-      year: "2022 → Now",
+      year: "2025 → Now",
+      items: [
+        {
+          title: "Design Engineer (Manager)",
+          company: "Deloitte Australia",
+          companyUrl: "https://www.deloitte.com.au",
+          location: "Sydney AUS",
+          description:
+            "Working on enterprise design systems, AI products and developer tools.",
+        },
+      ],
+    },
+    {
+      year: "2022 → 2025",
       items: [
         {
           title: "Service & Product Designer",
@@ -49,16 +62,16 @@ const data = {
           description:
             "Working at the intersection of innovation, product design, strategy and technology.",
           bullets: [
-            "Defining and communicating the future vision for statewide road asset maintenance with Transport NSW (Gov) as part of a critical digital transformation program.",
-            "Product design for two <a href='https://connorforsyth.co/projects/net-zero-energy-concepts/'>B2B Net-Zero energy portals</a> for Origin Zero and advanced features for their for future roadmap.",
+            "Defining and communicating the future vision for statewide road asset maintenance with Transport NSW (Gov).",
+            "Product design for two <a href='https://connorforsyth.co/projects/net-zero-energy-concepts/'>B2B Net-Zero energy portals</a> for Origin Zero and advanced features for their roadmap.",
             "Leading the digital strategy for <a href='https://www.ozharvest.org.au/'>OzHarvest</a>, partnering with the Founder, C-suite and extended team to identify key challenges to overcome and combat food waste.",
             "Reimagined procurement with Origin Energy, leveraging ServiceNow proposals projected to save $120M in maverick spend across source-to-pay.",
-            "Reimagining and market researching postgraduate study with The University of Sydney Business School's post covid, global learning environment.",
+            // "Reimagining and market researching postgraduate study with The University of Sydney Business School's post covid, global learning environment.",
 
-            "Conducted a residency program to explore AI's influence in design and delivered an immersion partnership for 30+ students at <a href='https://sva.edu/events/ai-sins-panel-discussion-with-designit'>SVA NYC</a>.",
+            "Conducted a residency program to explore AI's influence in design and delivered workshops for 30+ students at <a href='https://sva.edu/events/ai-sins-panel-discussion-with-designit'>SVA NYC</a>.",
             // "Major sharepoint intranet redesign for Ausgrid 20+ pages of rework and a heuristic evaluation.",
             "Improving 8+ customer jobs through a <a href='https://connorforsyth.co/projects/chatbot-heuristic'>chatbot heuristic</a> review and redesign for Woolworths Group.",
-            "Established new business opportunities through programs like <a href='https://connorforsyth.co/projects/makeit'>Makeit</a>.",
+            // "Established new business opportunities through programs like <a href='https://connorforsyth.co/projects/makeit'>Makeit</a>.",
           ],
         },
       ],
@@ -516,14 +529,14 @@ export default function CVPage() {
             <h1 className="text-base font-medium">
               <span>Connor Forsyth</span>
               <span className="block font-light text-neutral-500 lg:text-nowrap">
-                Multidisciplinary Service Designer
+                Design Engineer
               </span>
             </h1>
           </div>
           <div className="col-span-2">
             <article className="col-span-2 flex flex-col gap-4 text-sm md:gap-2">
               <p>
-                I am a designer with 6+ years experience. I have an interest in
+                I am a designer with 7+ years experience. I have an interest in
                 technology, design systems, research, user experience, events,
                 education, facilitation, and open source. Outside of work you'll
                 find me coding, hiking, taking{" "}
