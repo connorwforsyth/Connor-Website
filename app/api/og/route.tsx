@@ -48,7 +48,7 @@ export async function GET(request: Request) {
             </div>
             <div tw="flex justify-end">
               <h2 tw="text-5xl flex items-start -m-0.5 flex-col flex-grow pr-3">
-                <span>Design Technologist</span>
+                <span>Design Engineer</span>
               </h2>
               <img
                 width="500"
