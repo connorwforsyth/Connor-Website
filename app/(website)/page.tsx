@@ -65,19 +65,19 @@ export default function Home() {
                 Deloitte
               </Link>{" "}
               in the strategy, transformation, and AI practice, where I lead the
-              development of the enterprise design system. This system is used
-              by product teams to shape the end-to-end development of emerging
-              applications.
+              development of the enterprise design system from design to code.
+              This system is used by product teams to shape the end-to-end
+              development of software applications.
             </p>
             <p>
-              Outside of work, I'm building communities, taking{" "}
+              Outside of work I enjoy taking{" "}
               <Link
                 href="https://photos.connorforsyth.co/"
                 rel="noopener noreferrer"
               >
                 photos
-              </Link>
-              , and brewing filter coffee.
+              </Link>{" "}
+              and brewing filter coffee.
             </p>
           </div>
         </div>
