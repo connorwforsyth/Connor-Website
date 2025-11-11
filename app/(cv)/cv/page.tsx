@@ -47,7 +47,11 @@ const data = {
           companyUrl: "https://www.deloitte.com.au",
           location: "Sydney AUS",
           description:
-            "Working on enterprise design systems, AI products and developer tools.",
+            "Lead designer for enterprise design systems, AI products and developer tools.",
+          bullets: [
+            "Maintaining the GEL Design System across Figma and Storybook (React).",
+            "Leading design for MyAssist, Deloittes internal AI chat and workflow product.",
+          ],
         },
       ],
     },
@@ -62,8 +66,8 @@ const data = {
           description:
             "Working at the intersection of innovation, product design, strategy and technology.",
           bullets: [
-            "Defining and communicating the future vision for statewide road asset maintenance with Transport NSW (Gov).",
-            "Product design for two <a href='https://connorforsyth.co/projects/net-zero-energy-concepts/'>B2B Net-Zero energy portals</a> for Origin Zero and advanced features for their roadmap.",
+            "Leading design engineering for Ausgrid's BCM portal, using RadixUI, ReactRouter and SharePoint framework (SPFx).", // "Defining and communicating the future vision for statewide road asset maintenance with Transport NSW (Gov).",
+            "Product design for Origin Zero's <a href='https://connorforsyth.co/projects/net-zero-energy-concepts/'>B2B Net-Zero energy portal</a> and strategising advanced features for their roadmap.",
             "Leading the digital strategy for <a href='https://www.ozharvest.org.au/'>OzHarvest</a>, partnering with the Founder, C-suite and extended team to identify key challenges to overcome and combat food waste.",
             "Reimagined procurement with Origin Energy, leveraging ServiceNow proposals projected to save $120M in maverick spend across source-to-pay.",
             // "Reimagining and market researching postgraduate study with The University of Sydney Business School's post covid, global learning environment.",
@@ -536,14 +540,13 @@ export default function CVPage() {
           <div className="col-span-2">
             <article className="col-span-2 flex flex-col gap-4 text-sm md:gap-2">
               <p>
-                I am a designer with 7+ years experience. I have an interest in
-                technology, design systems, research, user experience, events,
-                education, facilitation, and open source. Outside of work you'll
-                find me coding, hiking, taking{" "}
-                <a href="https://photos.connorforsyth.co">photos</a>, and
-                brewing coffee. I currently work at{" "}
-                <a href="https://www.designit.com">Designit</a> as a Product &
-                Service Designer.
+                I am a designer with 7+ years of experience across interaction
+                design, design systems, web technology and user research.
+                Outside of work, you'll find me coding, taking{" "}
+                <a href="https://photos.connorforsyth.co">photos</a>, and making
+                coffee. I currently work at{" "}
+                <a href="https://www.deloitte.com.au">Deloitte</a> as a Design
+                Engineer.
               </p>
             </article>
             <nav className="col-span-1 mt-2 flex flex-col gap-4 text-xs">
