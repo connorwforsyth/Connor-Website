@@ -1,0 +1,29 @@
+.container {
+  min-height: 100vh;
+  margin: 0;
+  display: grid;
+  place-content: center;
+  padding: 1rem;
+  overflow: hidden;
+}
+
+.iframe {
+  --scale-factor: 1;
+  --aspect-ratio: calc(1920 / 1080);
+  --max-width: 1920px;
+  --max-height: 1080px;
+  --viewport-height-percent: 90vh;
+
+  width: min(
+    100%,
+    calc(var(--viewport-height-percent) * var(--aspect-ratio)),
+    calc(var(--max-width) * var(--scale-factor))
+  );
+  height: min(
+    calc(100vw / var(--aspect-ratio)),
+    var(--viewport-height-percent),
+    calc(var(--max-height) * var(--scale-factor))
+  );
+  aspect-ratio: 1920 / 1080;
+  border: none;
+}

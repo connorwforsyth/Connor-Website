@@ -4,25 +4,83 @@ description: Testing new features
 date: 2022-10-09
 ---
 
+import { useState, useEffect } from "react";
+
+export function ColorText() {
+  const [accentColor, setAccentColor] = useState("");
+  const [colorName, setColorName] = useState("");
+  
+  useEffect(() => {
+    function updateAccentColor() {
+      const tempEl = document.createElement('div');
+      tempEl.style.color = 'SelectedItem';
+      document.body.appendChild(tempEl);
+      
+      const color = getComputedStyle(tempEl).color;
+      document.body.removeChild(tempEl);
+      
+      setAccentColor(color);
+      setColorName(determineColorName(color));
+    }
+    
+    function determineColorName(rgbColor) {
+      const rgbMatch = rgbColor.match(/rgb\((\d+),\s*(\d+),\s*(\d+)\)/);
+      if (!rgbMatch) return "Accent";
+      
+      const r = parseInt(rgbMatch[1]);
+      const g = parseInt(rgbMatch[2]);
+      const b = parseInt(rgbMatch[3]);
+      
+      // Map RGB to closest named system color
+      // Pink detection needs to be first as it has higher priority
+      if (r > 200 && g > 150 && g < 220 && b > 200) return "Pink";
+      if (r > 180 && g < 100 && b < 100) return "Red";
+      if (r > 170 && g > 100 && b < 100) return "Orange";
+      if (r > 180 && g > 180 && b < 100) return "Yellow";
+      if (r < 100 && g > 150 && b < 100) return "Green";
+      if (r < 100 && g < 100 && b > 180) return "Blue";
+      if (r > 120 && g < 100 && b > 180) return "Purple";
+      if (r > 100 && r < 150 && g > 100 && g < 150 && b > 100 && b < 150) return "Graphite";
+      
+      return "Accent";
+    }
+
+    // Initial color check
+    updateAccentColor();
+    
+    // Check for changes periodically
+    const intervalId = setInterval(updateAccentColor, 1000);
+    
+    // Also check on window focus which often happens after system settings change
+    window.addEventListener('focus', updateAccentColor);
+    
+    // Clean up
+    return () => {
+      clearInterval(intervalId);
+      window.removeEventListener('focus', updateAccentColor);
+    };
+  }, []);
+
+  return (
+    <span className="bg-[SelectedItem] text-[AccentColorText] dark:bg-[SelectedItem] dark:text-[AccentColorText] ">
+      {colorName} button
+    </span>
+  );
+}
+
 At Google I/O 2022, there were a number of CSS announcements that got me excited.
 
-Particularly, a feature that enabled developers the ability to style applications according to the users operating system preferences. Within your system preferences, try changing your systems highlight color theme and watch the ui change.
+Particularly, a feature that enables developers the ability to style applications according to the users operating system preferences. Within your system preferences, try changing your systems accent / highlight color theme and watch the ui change.
 
 <UIWrapper>
 <button 
-className="py-1 px-3 rounded-full border font-medium  border-black bg-[Highlight]"
+className="py-1 px-3 rounded-full border font-medium text-[AccentColorText] border-black bg-[SelectedItem]"
 >
 <p>Button</p>
 </button>
 </UIWrapper>
 
-Most likely, above, you are seeing a <span style={{color: "Highlight", fontWeight: ""}}>blue button</span>.
+Most likely, above, you are seeing a <ColorText />.
 
 
-```tsx 
-<button 
-className="py-1 px-3 rounded-full border font-medium border-black bg-[Highlight]"
->
-Button
-</button>
 ```
