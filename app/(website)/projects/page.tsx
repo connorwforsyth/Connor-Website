@@ -1,15 +1,12 @@
-import { allProjects } from "@/.contentlayer/generated";
+import { getAllProjects } from "@/lib/content";
 import Link from "next/link";
 import { format } from "date-fns";
 import BackButton from "@/components/BackButton";
 
 type PostWithElement = { element: JSX.Element; date: string };
-// const metadata = {
-//   title: Projects,
-// };
 
 export default function Projects() {
-  const title = "Projects and Case Studies";
+  const allProjects = getAllProjects();
   return (
     <>
       <div></div>

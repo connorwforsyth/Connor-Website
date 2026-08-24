@@ -1,8 +1,8 @@
-import { allWritings } from "contentlayer/generated";
-import { notFound } from "next/navigation";
+import { getWritingBySlug } from "@/lib/content";
 import { Mdx } from "@/components/mdx";
 import BackButton from "@/components/BackButton";
 import { format } from "date-fns";
+import { notFound } from "next/navigation";
 
 interface PageProps {
   params: {
@@ -10,14 +10,11 @@ interface PageProps {
   };
 }
 
-async function getDocFromParams(slug: string) {
-  const doc = allWritings.find((doc) => doc.slugAsParams === slug);
-  if (!doc) notFound();
-  return doc;
-}
-
 const page = async ({ params }: PageProps) => {
-  const doc = await getDocFromParams(params.slug);
+  const doc = getWritingBySlug(params.slug);
+  const { default: Content } = await import(
+    `@/content/writing/${params.slug}.mdx`
+  ).catch(() => notFound());
 
   const Header = () => {
     return (
@@ -37,7 +34,9 @@ const page = async ({ params }: PageProps) => {
   return (
     <article>
       <Header />
-      <Mdx code={doc.body.code} />
+      <Mdx>
+        <Content />
+      </Mdx>
     </article>
   );
 };

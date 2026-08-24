@@ -1,7 +1,5 @@
-'use client';
 import * as React from "react";
 import Image from "next/image";
-import { useMDXComponent } from "next-contentlayer/hooks";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
 import { Collaborators, Person } from "./Collaborators";
@@ -14,8 +12,6 @@ import { Spinner } from "./Spinner/Spinner";
 import SmoothButton from "./Spinner/SmoothSpinner";
 import FigmaEmbed from "./FigmaEmbedPage";
 import Caption from "./Caption";
-
-("use-client");
 import {
   Carousel,
   CarouselContent,
@@ -32,7 +28,7 @@ export function UIWrapper({ children }: { children: React.ReactNode }) {
   );
 }
 
-const components = {
+export const mdxComponents = {
   Caption,
   FigmaEmbed,
   SmoothButton,
@@ -318,16 +314,6 @@ const components = {
   ),
 };
 
-interface MdxProps {
-  code: string;
-}
-
-export function Mdx({ code }: MdxProps) {
-  const Component = useMDXComponent(code);
-
-  return (
-    <div className="mdx">
-      <Component components={components} />
-    </div>
-  );
+export function Mdx({ children }: { children: React.ReactNode }) {
+  return <div className="mdx">{children}</div>;
 }
