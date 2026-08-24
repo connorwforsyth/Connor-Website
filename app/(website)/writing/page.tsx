@@ -1,4 +1,4 @@
-import { allWritings } from "@/.contentlayer/generated";
+import { getAllWritings } from "@/lib/content";
 import Link from "next/link";
 import { format } from "date-fns";
 import BackButton from "@/components/BackButton";
@@ -6,6 +6,7 @@ import BackButton from "@/components/BackButton";
 type PostWithElement = { element: JSX.Element; date: string };
 
 export default function Writing() {
+  const allWritings = getAllWritings();
   return (
     <>
       <div></div>

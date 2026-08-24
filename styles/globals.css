@@ -1,6 +1,89 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
+
+@custom-variant dark (&:where(.dark, .dark *));
+@custom-variant print (@media print);
+
+@theme {
+  --font-kag: kag-fallback, kag, sans-serif;
+  --font-rodney: rodney, serif;
+  --font-mono: geist-mono;
+
+  --breakpoint-lessA4: 210mm;
+
+  --color-border: hsl(var(--border));
+  --color-input: hsl(var(--input));
+  --color-ring: hsl(var(--ring));
+  --color-background: var(--background);
+  --color-foreground: hsl(var(--foreground));
+
+  --color-primary: hsl(var(--primary));
+  --color-primary-foreground: hsl(var(--primary-foreground));
+
+  --color-secondary: hsl(var(--secondary));
+  --color-secondary-foreground: hsl(var(--secondary-foreground));
+
+  --color-destructive: hsl(var(--destructive));
+  --color-destructive-foreground: hsl(var(--destructive-foreground));
+
+  --color-muted: hsl(var(--muted));
+  --color-muted-foreground: hsl(var(--muted-foreground));
+
+  --color-accent: hsl(var(--accent));
+  --color-accent-foreground: hsl(var(--accent-foreground));
+
+  --color-popover: hsl(var(--popover));
+  --color-popover-foreground: hsl(var(--popover-foreground));
+
+  --color-card: hsl(var(--card));
+  --color-card-foreground: hsl(var(--card-foreground));
+
+  --radius-lg: var(--radius);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-sm: calc(var(--radius) - 4px);
+}
+
+@utility container {
+  margin-inline: auto;
+  padding-inline: 2rem;
+
+  @media (width >= theme(--breakpoint-2xl)) {
+    max-width: 1400px;
+  }
+}
+
+@utility font-rodney-medium {
+  font-family: rodney, serif;
+  font-weight: 600;
+  font-style: italic;
+}
+
+@utility box-shadow-small {
+  box-shadow: inset 0px -1.5px 0px 0px var(--highlight);
+  @apply inline px-[1px] pb-[2px] font-[450] text-[var(--text-highlight)] transition-all hover:text-[var(--text-highlight)];
+  transition-property: all;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 200ms;
+}
+
+@utility box-shadow-full {
+  @apply font-[450];
+  box-shadow: inset 0px -24px 0px 0px var(--highlight);
+}
+
+@utility box-shadow-small-pill {
+  box-shadow: inset 0px 0px 3px -4px var(--highlight-light);
+  @apply inline px-[1px] text-[var(--text-highlight)] underline decoration-[var(--highlight-light)] transition-all hover:text-[var(--text-highlight)] hover:no-underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 1px;
+  transition-property: all;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 300ms;
+}
+
+@utility box-shadow-full-pill {
+  box-shadow: inset 0px -50px 0px 0px var(--highlight);
+}
 
 @supports (font-variation-settings: normal) {
   @font-face {
@@ -314,19 +397,7 @@ body {
   --kag {
     font-family: kag;
   }
-  .font-rodney-medium {
-    font-family: rodney, serif;
-    font-weight: 600;
-    font-style: italic;
-  }
 
-  .box-shadow-small {
-    box-shadow: inset 0px -1.5px 0px 0px var(--highlight);
-    @apply inline px-[1px] pb-[2px]  font-[450] text-[var(--text-highlight)] transition-all hover:text-[var(--text-highlight)];
-    transition-property: all;
-    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-    transition-duration: 200ms;
-  }
   /* eventually change this to the new underline link */
   .underline-grow {
     background-image: linear-gradient(
@@ -346,25 +417,6 @@ body {
     overflow: visible; /* Changed to visible to allow the background to extend outside the bounding box */
     background-position: left bottom;
     color: white;
-  }
-
-  .box-shadow-full {
-    @apply font-[450];
-    box-shadow: inset 0px -24px 0px 0px var(--highlight);
-  }
-
-  .box-shadow-small-pill {
-    box-shadow: inset 0px 0px 3px -4px var(--highlight-light);
-    @apply inline px-[1px]  text-[var(--text-highlight)] underline decoration-[var(--highlight-light)] transition-all hover:text-[var(--text-highlight)] hover:no-underline;
-    text-decoration-thickness: 1px;
-    text-underline-offset: 1px;
-    transition-property: all;
-    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-    transition-duration: 300ms;
-  }
-
-  .box-shadow-full-pill {
-    box-shadow: inset 0px -50px 0px 0px var(--highlight);
   }
 
   p a {

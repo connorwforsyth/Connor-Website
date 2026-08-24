@@ -1,5 +1,4 @@
-import { allProjects } from "contentlayer/generated";
-import { notFound } from "next/navigation";
+import { getProjectBySlug } from "@/lib/content";
 import { Mdx } from "@/components/mdx";
 import BackButton from "@/components/BackButton";
 import { format } from "date-fns";
@@ -12,12 +11,6 @@ interface PageProps {
   params: {
     slug: string;
   };
-}
-
-async function getDocFromParams(slug: string) {
-  const doc = allProjects.find((doc) => doc.slugAsParams === slug);
-  if (!doc) notFound();
-  return doc;
 }
 
 // export async function generateMetaData(
@@ -60,7 +53,7 @@ async function getDocFromParams(slug: string) {
 // }
 
 export default async function Page({ params }: PageProps) {
-  const doc = await getDocFromParams(params.slug);
+  const doc = getProjectBySlug(params.slug);
   const session = await getSession();
 
   const Header = () => {
@@ -94,13 +87,13 @@ export default async function Page({ params }: PageProps) {
           reminder to please keep this project confidential. If you have any
           questions, please reach out.
         </p>
-        <Mdx code={doc.body.code} />
+        <Mdx source={doc.content} />
       </article>
     );
   return (
     <article>
       <Header />
-      <Mdx code={doc.body.code} />
+      <Mdx source={doc.content} />
     </article>
   );
 }

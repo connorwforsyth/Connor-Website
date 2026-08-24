@@ -1,6 +1,4 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
 
 :root {
   font-family: Geist;
@@ -241,7 +239,7 @@ script {
   display: none !important;
 
   @media (width > 900px) {
-    @apply fixed right-4 top-4 block !important;
+    @apply fixed! right-4! top-4! block!;
   }
 
   @media print {
@@ -255,14 +253,14 @@ script {
   }
 
   body {
-    @apply bg-transparent p-0 !important;
+    @apply bg-transparent! p-0!;
   }
 
   .page {
     max-width: auto;
     height: auto;
     size: 210mm 297mm;
-    @apply bg-transparent p-10 shadow-none !important;
+    @apply bg-transparent! p-10! shadow-none!;
   }
 }
 

@@ -1,0 +1,19 @@
+"$schema" = "https://conductor.build/schemas/settings.repo.schema.json"
+
+[scripts]
+setup = "pnpm install"
+archive = "rm -rf .next"
+run_mode = "concurrent"
+
+[scripts.run.dev]
+command = "pnpm dev -p ${CONDUCTOR_PORT:-3000}"
+default = true
+icon = "play"
+
+[scripts.run.preview]
+command = "pnpm build && pnpm start -p ${CONDUCTOR_PORT:-3000}"
+icon = "rocket"
+
+[scripts.run.lint]
+command = "pnpm lint"
+icon = "check-check"
