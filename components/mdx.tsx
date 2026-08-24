@@ -1,9 +1,5 @@
 import * as React from "react";
 import Image from "next/image";
-import { MDXRemote } from "next-mdx-remote/rsc";
-import remarkGfm from "remark-gfm";
-import rehypeSlug from "rehype-slug";
-import rehypePrettyCode from "rehype-pretty-code";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
 import { Collaborators, Person } from "./Collaborators";
@@ -32,7 +28,7 @@ export function UIWrapper({ children }: { children: React.ReactNode }) {
   );
 }
 
-const components = {
+export const mdxComponents = {
   Caption,
   FigmaEmbed,
   SmoothButton,
@@ -318,27 +314,6 @@ const components = {
   ),
 };
 
-interface MdxProps {
-  source: string;
-}
-
-export function Mdx({ source }: MdxProps) {
-  return (
-    <div className="mdx">
-      {/* @ts-expect-error Async Server Component */}
-      <MDXRemote
-        source={source}
-        components={components}
-        options={{
-          mdxOptions: {
-            remarkPlugins: [remarkGfm],
-            rehypePlugins: [
-              rehypeSlug,
-              [rehypePrettyCode, { theme: "github-dark" }],
-            ],
-          },
-        }}
-      />
-    </div>
-  );
+export function Mdx({ children }: { children: React.ReactNode }) {
+  return <div className="mdx">{children}</div>;
 }
