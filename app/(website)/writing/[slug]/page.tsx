@@ -2,19 +2,16 @@ import { getWritingBySlug } from "@/lib/content";
 import { Mdx } from "@/components/mdx";
 import BackButton from "@/components/BackButton";
 import { format } from "date-fns";
-import { notFound } from "next/navigation";
 
 interface PageProps {
-  params: {
+  params: Promise<{
     slug: string;
-  };
+  }>;
 }
 
 const page = async ({ params }: PageProps) => {
-  const doc = getWritingBySlug(params.slug);
-  const { default: Content } = await import(
-    `@/content/writing/${params.slug}.mdx`
-  ).catch(() => notFound());
+  const { slug } = await params;
+  const doc = getWritingBySlug(slug);
 
   const Header = () => {
     return (
@@ -34,9 +31,7 @@ const page = async ({ params }: PageProps) => {
   return (
     <article>
       <Header />
-      <Mdx>
-        <Content />
-      </Mdx>
+      <Mdx source={doc.content} />
     </article>
   );
 };

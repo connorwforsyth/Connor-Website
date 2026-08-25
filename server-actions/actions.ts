@@ -8,7 +8,11 @@ let password = process.env.ACCESS_CODE!;
 const ACCESS_CODE = process.env.ACCESS_CODE!;
 
 export const getSession = async () => {
-  const session = await getIronSession<SessionData>(cookies(), sessionOptions);
+  const cookieStore = await cookies();
+  const session = await getIronSession<SessionData>(
+    cookieStore,
+    sessionOptions,
+  );
 
   // Return only the serializable data
   return {
@@ -40,7 +44,11 @@ export const completeSignUp = async (
   }
 
   // Get the actual session object for saving
-  const session = await getIronSession<SessionData>(cookies(), sessionOptions);
+  const cookieStore = await cookies();
+  const session = await getIronSession<SessionData>(
+    cookieStore,
+    sessionOptions,
+  );
   session.isLoggedIn = true;
   session.name = name;
   session.email = email;
