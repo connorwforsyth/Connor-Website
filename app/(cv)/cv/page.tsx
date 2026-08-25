@@ -1,4 +1,5 @@
 import { PrintButton } from "@/components/PrintButton";
+import type { JSX } from "react";
 
 const accessCode: string = "freeyourself";
 

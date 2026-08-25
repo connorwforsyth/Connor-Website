@@ -1,4 +1,5 @@
 import * as React from "react";
+import type { JSX } from "react";
 import Image from "next/image";
 import { MDXRemote } from "next-mdx-remote/rsc";
 import remarkGfm from "remark-gfm";

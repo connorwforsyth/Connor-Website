@@ -2,6 +2,7 @@ import { getAllProjects } from "@/lib/content";
 import Link from "next/link";
 import { format } from "date-fns";
 import BackButton from "@/components/BackButton";
+import type { JSX } from "react";
 
 type PostWithElement = { element: JSX.Element; date: string };
 
