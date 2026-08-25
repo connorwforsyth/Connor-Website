@@ -74,7 +74,10 @@ export async function middleware(request: NextRequest) {
   }
 }
 
-// Update the matcher to include all redirect paths
+// Turbopack/webpack require `matcher` to be statically analyzable, so this
+// can no longer be derived dynamically via `Object.keys(REDIRECTS)`. Keep
+// this array in sync with the keys of REDIRECTS above whenever a redirect
+// path is added or removed.
 export const config = {
-  matcher: Object.keys(REDIRECTS),
+  matcher: ["/chat", "/x", "/linkedin", "/github", "/portfolio", "/raycast"],
 };
