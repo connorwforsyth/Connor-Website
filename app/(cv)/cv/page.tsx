@@ -1,5 +1,4 @@
-"use client";
-import { useEffect, useState } from "react";
+import { PrintButton } from "@/components/PrintButton";
 
 const accessCode: string = "freeyourself";
 
@@ -493,40 +492,9 @@ const SecondarySection = <
 
 // Main Page Component
 export default function CVPage() {
-  const [showGuides, setShowGuides] = useState(false);
-
-  useEffect(() => {
-    const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "x") {
-        setShowGuides(true);
-      }
-    };
-
-    const handleKeyUp = (event: KeyboardEvent) => {
-      if (event.key === "x") {
-        setShowGuides(false);
-      }
-    };
-
-    window.addEventListener("keydown", handleKeyDown);
-    window.addEventListener("keyup", handleKeyUp);
-    return () => {
-      window.removeEventListener("keydown", handleKeyDown);
-      window.removeEventListener("keyup", handleKeyUp);
-    };
-  }, []);
-
   return (
     <>
-      <button
-        aria-label="print"
-        id="print"
-        className="print-button"
-        onClick={() => window.print()}
-        onTouchStart={() => window.print()}
-      >
-        💾
-      </button>
+      <PrintButton />
       <div className="page">
         <header className="grid grid-cols-1 flex-col gap-4 md:grid-cols-3 ">
           <div>
