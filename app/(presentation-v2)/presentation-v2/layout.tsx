@@ -34,7 +34,7 @@ export default async function Layout({ children }: RootLayoutProps) {
   const session = await getSession();
 
   return (
-    <html className="scroll-smooth" lang="en">
+    <html className="scroll-smooth" lang="en" suppressHydrationWarning>
       <body className={`relative bg-zinc-100 antialiased dark:bg-zinc-900`}>
         <Texture />
         <ThemeProvider>
