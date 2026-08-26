@@ -1,7 +1,8 @@
-import { getWritingBySlug } from "@/lib/content";
+import { getAllWritings, getWritingBySlug } from "@/lib/content";
 import { Mdx } from "@/components/mdx";
 import BackButton from "@/components/BackButton";
 import { format } from "date-fns";
+import { notFound } from "next/navigation";
 
 interface PageProps {
   params: Promise<{
@@ -9,9 +10,20 @@ interface PageProps {
   }>;
 }
 
+export function generateStaticParams() {
+  return getAllWritings().map((writing) => ({
+    slug: writing.slugAsParams,
+  }));
+}
+
+export const dynamicParams = false;
+
 const page = async ({ params }: PageProps) => {
   const { slug } = await params;
   const doc = getWritingBySlug(slug);
+  const { default: Content } = await import(
+    `@/content/writing/${slug}.mdx`
+  ).catch(() => notFound());
 
   const Header = () => {
     return (
@@ -31,7 +43,9 @@ const page = async ({ params }: PageProps) => {
   return (
     <article>
       <Header />
-      <Mdx source={doc.content} />
+      <Mdx>
+        <Content />
+      </Mdx>
     </article>
   );
 };
