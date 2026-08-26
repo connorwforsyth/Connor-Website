@@ -1,9 +1,10 @@
-import { getProjectBySlug } from "@/lib/content";
+import { getAllProjects, getProjectBySlug } from "@/lib/content";
 import { Mdx } from "@/components/mdx";
 import BackButton from "@/components/BackButton";
 import { format } from "date-fns";
 import { getSession } from "@/server-actions/actions";
 import { Metadata, ResolvingMetadata } from "next";
+import { notFound } from "next/navigation";
 import siteMetadata from "@/config/site-metadata";
 import AccessForm from "@/components/access-form";
 
@@ -12,6 +13,14 @@ interface PageProps {
     slug: string;
   }>;
 }
+
+export function generateStaticParams() {
+  return getAllProjects().map((project) => ({
+    slug: project.slugAsParams,
+  }));
+}
+
+export const dynamicParams = false;
 
 // export async function generateMetaData(
 //   { params }: PageProps,
@@ -55,6 +64,9 @@ interface PageProps {
 export default async function Page({ params }: PageProps) {
   const { slug } = await params;
   const doc = getProjectBySlug(slug);
+  const { default: Content } = await import(
+    `@/content/projects/${slug}.mdx`
+  ).catch(() => notFound());
   const session = await getSession();
 
   const Header = () => {
@@ -88,13 +100,17 @@ export default async function Page({ params }: PageProps) {
           reminder to please keep this project confidential. If you have any
           questions, please reach out.
         </p>
-        <Mdx source={doc.content} />
+        <Mdx>
+          <Content />
+        </Mdx>
       </article>
     );
   return (
     <article>
       <Header />
-      <Mdx source={doc.content} />
+      <Mdx>
+        <Content />
+      </Mdx>
     </article>
   );
 }

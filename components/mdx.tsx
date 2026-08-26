@@ -1,10 +1,6 @@
 import * as React from "react";
 import type { JSX } from "react";
 import Image from "next/image";
-import { MDXRemote } from "next-mdx-remote/rsc";
-import remarkGfm from "remark-gfm";
-import rehypeSlug from "rehype-slug";
-import rehypePrettyCode from "rehype-pretty-code";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
 import { Collaborators, Person } from "./Collaborators";
@@ -323,33 +319,6 @@ export const mdxComponents = {
   ),
 };
 
-interface MdxProps {
-  source: string;
-}
-
-export function Mdx({ source }: MdxProps) {
-  return (
-    <div className="mdx">
-      {/* @ts-expect-error Async Server Component */}
-      <MDXRemote
-        source={source}
-        components={mdxComponents}
-        options={{
-          // Content is authored by us, not user-submitted, so JS expressions
-          // (used for things like array .map() and onClick handlers in
-          // content/projects/makeit.mdx) need to stay enabled. blockDangerousJS
-          // stays at its default (true) as a best-effort guard against
-          // eval/Function/require-style patterns even in trusted content.
-          blockJS: false,
-          mdxOptions: {
-            remarkPlugins: [remarkGfm],
-            rehypePlugins: [
-              rehypeSlug,
-              [rehypePrettyCode, { theme: "github-dark" }],
-            ],
-          },
-        }}
-      />
-    </div>
-  );
+export function Mdx({ children }: { children: React.ReactNode }) {
+  return <div className="mdx">{children}</div>;
 }
