@@ -338,7 +338,7 @@ const TimelineYearGroup = <T extends { title: string; url?: string }>({
     <ul className="inline">
       {items.map((item, index) => (
         <li
-          className="inline text-xs after:text-neutral-400 after:content-['_/_'] last:after:content-none"
+          className="inline text-xs after:text-muted-foreground after:content-['_/_'] last:after:content-none"
           key={index}
         >
           {item.url ? (
@@ -405,7 +405,7 @@ const WorkItem = ({
     <h3 className="col-span-1 flex flex-col">
       <span>{title}</span>
       <a href={companyUrl}>{company}</a>
-      <div className="mt-2 flex flex-col pb-4 text-neutral-500 *:text-xs md:pb-0">
+      <div className="mt-2 flex flex-col pb-4 text-muted-foreground *:text-xs md:pb-0">
         <time>{year}</time>
         <i>{location}</i>
       </div>
@@ -441,7 +441,7 @@ const ListSection = ({ title, items }: ListSectionProps) => (
     <ul className="">
       {items.map((item, index) => (
         <li
-          className="inline text-xs after:text-neutral-400 after:content-['_/_'] last:after:content-['.']"
+          className="inline text-xs after:text-muted-foreground after:content-['_/_'] last:after:content-['.']"
           key={index}
         >
           {typeof item === "string" ? (
@@ -501,7 +501,7 @@ export default function CVPage() {
           <div>
             <h1 className="text-base font-medium">
               <span>Connor Forsyth</span>
-              <span className="block font-light text-neutral-500 lg:text-nowrap">
+              <span className="block font-light text-muted-foreground lg:text-nowrap">
                 Design Engineer
               </span>
             </h1>

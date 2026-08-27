@@ -45,7 +45,7 @@ export const ModeToggle: FC = () => {
 
   return (
     <Select value={theme} onValueChange={setTheme}>
-      <SelectTrigger className="gap-2 border hover:border-black focus:bg-accent dark:border-stone-700 dark:hover:border-white">
+      <SelectTrigger className="gap-2 border border-border hover:border-foreground focus:bg-accent">
         <SelectValue placeholder="Theme" />
       </SelectTrigger>
       <SelectContent>

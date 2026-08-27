@@ -62,7 +62,7 @@ export default function FeatureItem({
         </div>
         <div className="flex flex-col gap-4 pt-4">
           <div className="flex flex-row gap-2 align-middle">
-            <div className="h-6 w-6 rounded-md *:h-full *:w-full dark:bg-white">
+            <div className="h-6 w-6 rounded-md *:h-full *:w-full dark:bg-foreground">
               {icon}
             </div>
             <h3>{title}</h3>

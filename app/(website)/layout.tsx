@@ -74,7 +74,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <html className="scroll-p-32 scroll-smooth" lang="en" suppressHydrationWarning>
-      <body className={`relative bg-zinc-100 antialiased dark:bg-zinc-900`}>
+      <body className={`relative bg-background antialiased`}>
         <Offline />
         <div className="prog-blur"></div>
         <Texture />

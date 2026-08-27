@@ -23,7 +23,7 @@ import {
 
 export function UIWrapper({ children }: { children: React.ReactNode }) {
   return (
-    <div className="mx-auto mb-6 mt-2 flex w-full max-w-2xl items-center justify-center rounded-lg border border-zinc-400 bg-zinc-300 dark:bg-zinc-900 p-12">
+    <div className="mx-auto mb-6 mt-2 flex w-full max-w-2xl items-center justify-center rounded-lg border border-border bg-muted p-12">
       {children}
     </div>
   );
@@ -64,7 +64,7 @@ export const mdxComponents = {
   }) => (
     <div
       className={cn(
-        "z-1 relative mx-auto mb-4 flex w-full max-w-2xl flex-col rounded-md border bg-white p-3 text-center align-baseline font-medium transition-all dark:bg-zinc-950 sm:flex-row sm:justify-center sm:text-left",
+        "z-1 relative mx-auto mb-4 flex w-full max-w-2xl flex-col rounded-md border border-border bg-card p-3 text-center align-baseline font-medium transition-all sm:flex-row sm:justify-center sm:text-left",
         "shadow-none hover:shadow-[0px_0px_30px_-10px] hover:shadow-[var(--highlight)] ",
         className,
       )}
@@ -123,7 +123,7 @@ export const mdxComponents = {
       <div
         className={cn(
           !type ? (
-            "relative mx-auto flex aspect-[3/2] w-full items-center overflow-clip rounded-md border bg-zinc-100 dark:bg-zinc-900 lg:p-24"
+            "relative mx-auto flex aspect-[3/2] w-full items-center overflow-clip rounded-md border bg-background lg:p-24"
           ) : type === "slides" ? (
             "mx-auto flex aspect-auto w-full items-center overflow-clip rounded-md p-0 lg:p-0"
           ) : type === "hero" ? (
@@ -149,7 +149,7 @@ export const mdxComponents = {
         />
       </div>
       {alt && (
-        <em className="mx-auto mb-4 mt-2 block w-full max-w-2xl text-center text-sm text-zinc-700 dark:text-zinc-200">
+        <em className="mx-auto mb-4 mt-2 block w-full max-w-2xl text-center text-sm text-foreground/80">
           {alt}
         </em>
       )}
@@ -233,7 +233,7 @@ export const mdxComponents = {
   a: ({ className, ...props }) => (
     <a
       className={cn(
-        "box-shadow-small hover:box-shadow-full font-[450] text-zinc-900 underline-offset-4 dark:text-white",
+        "box-shadow-small hover:box-shadow-full font-[450] text-foreground underline-offset-4",
         className,
       )}
       {...props}
@@ -242,7 +242,7 @@ export const mdxComponents = {
   p: ({ className, ...props }) => (
     <p
       className={cn(
-        "relative mx-auto mt-4 max-w-2xl leading-7 dark:text-[#e4e4e4]",
+        "relative mx-auto mt-4 max-w-2xl leading-7 dark:text-foreground/90",
         className,
       )}
       {...props}

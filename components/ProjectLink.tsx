@@ -17,7 +17,7 @@ export default function ProjectLink({ children, href }: ProjectLinkProps) {
         viewBox="0 0 24 24"
         strokeWidth={1.8}
         stroke="currentColor"
-        className="ml-1 inline h-3 w-3 text-zinc-500"
+        className="ml-1 inline h-3 w-3 text-muted-foreground"
       >
         <path
           strokeLinecap="round"

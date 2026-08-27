@@ -40,8 +40,8 @@ export default function Home() {
       />
       <div className="flex flex-col gap-4 sm:h-auto">
         <div className="mx-auto flex w-full max-w-2xl flex-col gap-4 ">
-          <h1 className="pb-4 font-rodney text-2xl font-medium text-zinc-800 dark:text-zinc-50 sm:text-3xl">
-            <span className="block pr-1 text-zinc-700 dark:text-zinc-300 sm:inline">
+          <h1 className="pb-4 font-rodney text-2xl font-medium text-foreground sm:text-3xl">
+            <span className="block pr-1 text-foreground/80 sm:inline">
               Connor Forsyth.
             </span>
             Product Design Engineer
@@ -101,7 +101,7 @@ export default function Home() {
             basic-stagger="4"
             className="mx-auto w-full max-w-2xl"
           >
-            <h2 className="mb-3 hidden text-zinc-700 dark:text-zinc-100 sm:block">
+            <h2 className="mb-3 hidden text-foreground/80 sm:block">
               <em>Contact</em>
             </h2>
             <p>

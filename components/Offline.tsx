@@ -40,7 +40,7 @@ export default function Offline() {
         <Tooltip.Provider>
           <Tooltip.Root>
             <Tooltip.Trigger asChild>
-              <div className="br fixed right-3 top-3 z-10 rounded-lg border bg-white bg-opacity-50 px-1.5 text-sm text-stone-500 dark:bg-stone-900 dark:text-current">
+              <div className="br fixed right-3 top-3 z-10 rounded-lg border bg-card px-1.5 text-sm text-muted-foreground">
                 Offline
               </div>
             </Tooltip.Trigger>

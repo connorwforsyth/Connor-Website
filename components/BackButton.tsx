@@ -43,7 +43,7 @@ export default function BackButton({ type, label }: BackType) {
         <div className="flex">
           <Link
             href="/"
-            className="align-center flex items-center gap-0.5 rounded-full border border-zinc-300 px-2 py-1 text-sm transition-all hover:border-zinc-500 hover:shadow-md dark:border-zinc-500 dark:hover:border-zinc-50 lg:fixed"
+            className="align-center flex items-center gap-0.5 rounded-full border border-border px-2 py-1 text-sm transition-all hover:border-foreground hover:shadow-md lg:fixed"
           >
             {svgIcon}
             <span className="translate-y-[-1px] px-1">{label}</span>
@@ -57,7 +57,7 @@ export default function BackButton({ type, label }: BackType) {
         <div className="flex">
           <Link
             href="./"
-            className="align-center flex items-center gap-0.5 rounded-full border border-zinc-300 px-2 py-1 text-sm transition-all hover:border-zinc-500 hover:shadow-md dark:border-zinc-500 dark:hover:border-zinc-50 lg:fixed"
+            className="align-center flex items-center gap-0.5 rounded-full border border-border px-2 py-1 text-sm transition-all hover:border-foreground hover:shadow-md lg:fixed"
           >
             {svgIcon}
             <span className="translate-y-[-1px] px-1">{label}</span>

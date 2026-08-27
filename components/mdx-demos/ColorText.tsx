@@ -59,7 +59,7 @@ export function ColorText() {
   }, []);
 
   return (
-    <span className="bg-[SelectedItem] text-[AccentColorText] dark:bg-[SelectedItem] dark:text-[AccentColorText] ">
+    <span className="bg-[SelectedItem] text-[AccentColorText]">
       {colorName} button
     </span>
   );
