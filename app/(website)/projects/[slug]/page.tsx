@@ -3,9 +3,10 @@ import { Mdx } from "@/components/mdx";
 import BackButton from "@/components/BackButton";
 import { format } from "date-fns";
 import { getSession } from "@/server-actions/actions";
-import { Metadata, ResolvingMetadata } from "next";
+import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import siteMetadata from "@/config/site-metadata";
+import { getOgImageUrl } from "@/lib/og";
 import AccessForm from "@/components/access-form";
 
 interface PageProps {
@@ -22,44 +23,42 @@ export function generateStaticParams() {
 
 export const dynamicParams = false;
 
-// export async function generateMetaData(
-//   { params }: PageProps,
-//   parent: ResolvingMetadata,
-// ): Promise<Metadata> {
-//   const doc = await getDocFromParams(params.slug);
+export async function generateMetadata({
+  params,
+}: PageProps): Promise<Metadata> {
+  const { slug } = await params;
+  const doc = getProjectBySlug(slug);
+  const url = `${siteMetadata.siteUrl}${doc.slug}`;
 
-//   if (!doc || !doc.title) return {};
-
-//   const url = siteMetadata.siteUrl;
-//   const ogURL = new URL(`${url}/api/og`);
-//   ogURL.searchParams.set("title", doc.title);
-//   // ogURL.searchParams.set("type", "Project");
-//   // ogURL.searchParams.set("url", doc.slug);
-//   return {
-//     title: doc.title,
-//     description: doc.description,
-//     authors: {
-//       name: "Connor Forsyth",
-//     },
-//     alternates: {
-//       canonical: `${siteMetadata.siteUrl}/projects/${doc.slug}`,
-//     },
-//     openGraph: {
-//       title: doc.title,
-//       description: doc.description,
-//       type: "article",
-//       url: `${siteMetadata.siteUrl}/projects/${doc.slug}`,
-//       images: [
-//         {
-//           url: ogURL.toString(),
-//           width: 1200,
-//           height: 630,
-//           alt: doc.title,
-//         },
-//       ],
-//     },
-//   };
-// }
+  return {
+    title: doc.title,
+    description: doc.description,
+    authors: {
+      name: "Connor Forsyth",
+    },
+    alternates: {
+      canonical: url,
+    },
+    openGraph: {
+      title: doc.title,
+      description: doc.description,
+      type: "article",
+      url,
+      images: [
+        {
+          url: getOgImageUrl({
+            title: doc.title,
+            description: doc.description,
+            type: "Project",
+          }),
+          width: 1200,
+          height: 630,
+          alt: doc.title,
+        },
+      ],
+    },
+  };
+}
 
 export default async function Page({ params }: PageProps) {
   const { slug } = await params;

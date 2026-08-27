@@ -3,8 +3,36 @@ import Link from "next/link";
 import { format } from "date-fns";
 import BackButton from "@/components/BackButton";
 import type { JSX } from "react";
+import { Metadata } from "next";
+import siteMetadata from "@/config/site-metadata";
+import { getOgImageUrl } from "@/lib/og";
 
 type PostWithElement = { element: JSX.Element; date: string };
+
+const title = "Writing";
+const description = "Writing and articles by Connor Forsyth.";
+
+export const metadata: Metadata = {
+  title,
+  description,
+  alternates: {
+    canonical: `${siteMetadata.siteUrl}/writing`,
+  },
+  openGraph: {
+    title,
+    description,
+    type: "website",
+    url: `${siteMetadata.siteUrl}/writing`,
+    images: [
+      {
+        url: getOgImageUrl({ title, description, type: "Website" }),
+        width: 1200,
+        height: 630,
+        alt: title,
+      },
+    ],
+  },
+};
 
 export default function Writing() {
   const allWritings = getAllWritings();

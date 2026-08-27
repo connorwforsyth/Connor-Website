@@ -1,61 +1,94 @@
 /* eslint-disable @next/next/no-img-element */
-/* eslint-disable jsx-a11y/alt-text */
 // @ts-nocheck
 
 import { ImageResponse } from "next/og";
+import { readFile } from "fs/promises";
+import path from "path";
 
-export const runtime = "edge";
+const SITE_AUTHOR = "Connor Forsyth";
+const SITE_ROLE = "Design Engineer";
+const SITE_EMAIL = "👋 c@connorforsyth.co";
+
+const MAX_TITLE_LENGTH = 70;
+const MAX_DESCRIPTION_LENGTH = 120;
+
+function truncate(text: string, max: number) {
+  if (text.length <= max) return text;
+  return `${text.slice(0, max - 1).trimEnd()}…`;
+}
+
+async function readAsArrayBuffer(relativePath: string) {
+  const buffer = await readFile(path.join(process.cwd(), relativePath));
+  return buffer.buffer.slice(
+    buffer.byteOffset,
+    buffer.byteOffset + buffer.byteLength,
+  );
+}
+
+function parseParams(requestUrl: string) {
+  const { searchParams } = new URL(requestUrl);
+
+  const rawTitle = searchParams.get("title");
+  const rawDescription = searchParams.get("description");
+
+  return {
+    title: rawTitle ? truncate(rawTitle, MAX_TITLE_LENGTH) : null,
+    description: rawDescription
+      ? truncate(rawDescription, MAX_DESCRIPTION_LENGTH)
+      : null,
+    type: searchParams.get("type") ?? "",
+  };
+}
+
 export async function GET(request: Request) {
-  const connorHeadshot = await fetch(
-    new URL(
-      "../../../public/connorforsythheadshot-Medium.jpeg",
-      import.meta.url,
-    ),
-  ).then((res) => res.arrayBuffer());
-
-  const fontDataKag = await fetch(
-    new URL(
-      "../../../public/fonts/KAG/KynetonArtGrotesque-Regular.woff",
-      import.meta.url,
-    ),
-  ).then((res) => res.arrayBuffer());
+  const [connorHeadshot, fontDataKag] = await Promise.all([
+    readAsArrayBuffer("public/connorforsythheadshot-Medium.jpeg"),
+    readAsArrayBuffer("public/fonts/KAG/KynetonArtGrotesque-Regular.woff"),
+  ]);
 
   try {
-    const { searchParams } = new URL(request.url);
-
-    const hasTitle = searchParams.has("title");
-    const title = hasTitle ? searchParams.get("title") : "Connor Forsyth";
-
-    const hasType = searchParams.has("type");
-    const type = hasTitle ? searchParams.get("type") : "type";
-
-    const hasUrl = searchParams.has("url");
-    const url = hasTitle ? searchParams.get("url") : "url";
+    const { title, description, type } = parseParams(request.url);
 
     return new ImageResponse(
       (
         <div
+          tw="text-3xl"
           style={{
             height: "630px",
             width: "1200px",
             display: "flex",
+            fontFamily: "kag",
           }}
         >
-          <div tw="flex w-full h-full px-4 bg-zinc-100 flex-col">
-            <div tw="flex justify-between flex-grow">
-              <h1 tw="text-4xl">{title}</h1>
-              <h1 tw="text-4xl">👋 c@connorforsyth.co</h1>
+          <div tw="flex w-full h-full bg-zinc-100 text-zinc-950 flex-col p-8">
+            <div tw="flex justify-between items-start flex-grow">
+              <div tw="flex flex-col" style={{ maxWidth: 680 }}>
+                <div tw="mb-2">{SITE_AUTHOR}</div>
+                {(type || title) && (
+                  <div tw="flex mb-2">
+                    {type && (
+                      <div tw="text-zinc-700 mr-2">{`${type} /`}</div>
+                    )}
+                    {title && <div>{title}</div>}
+                  </div>
+                )}
+                {!type && <div>{SITE_ROLE}</div>}
+                {description && (
+                  <div tw="mt-4 leading-snug">{description}</div>
+                )}
+              </div>
+              <div tw="flex">
+                <div>{SITE_EMAIL}</div>
+              </div>
             </div>
-            <div tw="flex justify-end">
-              <h2 tw="text-5xl flex items-start -m-0.5 flex-col flex-grow pr-3">
-                <span>Design Engineer</span>
-              </h2>
+            <div tw="flex justify-end items-end">
               <img
-                width="500"
-                height="600"
-                tw="rounded-xl border-2 shadow-lg border-white"
+                width={350}
+                height={500}
+                tw="rounded-xl border shadow-xl"
+                style={{ objectFit: "cover" }}
                 src={connorHeadshot}
-                alt="Connor's headshot"
+                alt=""
               />
             </div>
           </div>
@@ -74,7 +107,7 @@ export async function GET(request: Request) {
         emoji: "noto",
       },
     );
-  } catch (e: any) {
+  } catch (e) {
     return new Response("Failed to generate OG image", { status: 500 });
   }
 }

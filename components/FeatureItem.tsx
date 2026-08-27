@@ -48,7 +48,7 @@ export default function FeatureItem({
             />
           ) : (
             <Image
-              className=""
+              className="object-cover"
               src={image}
               alt={title}
               width={1000}
@@ -64,7 +64,7 @@ export default function FeatureItem({
             <h3>{title}</h3>
           </div>
           <div className="grid w-full gap-6 sm:grid-cols-3">
-            <p className="dark:text-neutral-300 sm:col-span-1">{description}</p>
+            <p className="sm:col-span-1">{description}</p>
             <div className="flex flex-col gap-2 sm:col-span-2">{content}</div>
           </div>
         </div>

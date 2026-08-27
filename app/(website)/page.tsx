@@ -70,13 +70,7 @@ export default function Home() {
               development of software applications.
             </p>
             <p>
-              Outside of work I enjoy taking{" "}
-              <Link
-                href="https://photos.connorforsyth.co/"
-                rel="noopener noreferrer"
-              >
-                photos
-              </Link>{" "}
+              Outside of work, I enjoy taking photos,              
               and brewing filter coffee.
             </p>
           </div>
@@ -276,7 +270,7 @@ const featuredItems: FeatureItemProps[] = [
       "Leading operations, experience design and technology for Melbourne's very own TEDx community.",
     position: "left",
     imageWrapperClassName:
-      "flex w-full  border bg-gradient-to-tr p-4 sm:p-8 lg:p-24 to-red-500 from-red-600",
+      "flex w-full bg-gradient-to-tr p-4 sm:p-8 lg:p-24 to-red-500 from-red-600",
     icon: (
       <>
         <svg

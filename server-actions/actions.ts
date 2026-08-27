@@ -1,17 +1,13 @@
 "use server";
-import { getIronSession } from "iron-session";
-import { sessionOptions, SessionData, defaultSession } from "@/lib/lib";
+import { sessionCookie, defaultSession } from "@/lib/lib";
 import { cookies } from "next/headers";
-
-let password = process.env.ACCESS_CODE!;
 
 const ACCESS_CODE = process.env.ACCESS_CODE!;
 
 export const getSession = async () => {
   const cookieStore = await cookies();
-  const session = await getIronSession<SessionData>(
-    cookieStore,
-    sessionOptions,
+  const session = sessionCookie.read(
+    cookieStore.get(sessionCookie.name)?.value,
   );
 
   // Return only the serializable data
@@ -43,16 +39,12 @@ export const completeSignUp = async (
     return { success: false, error: "Invalid access code." };
   }
 
-  // Get the actual session object for saving
   const cookieStore = await cookies();
-  const session = await getIronSession<SessionData>(
-    cookieStore,
-    sessionOptions,
+  cookieStore.set(
+    sessionCookie.name,
+    sessionCookie.create({ isLoggedIn: true, name, email }),
+    sessionCookie.options,
   );
-  session.isLoggedIn = true;
-  session.name = name;
-  session.email = email;
-  await session.save();
 
   return { success: true };
 };
