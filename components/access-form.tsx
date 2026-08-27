@@ -2,7 +2,14 @@
 
 import { posthog } from "posthog-js";
 import useMeasure from "react-use-measure";
-import { FormEvent, useReducer, useMemo, useEffect } from "react";
+import {
+  FormEvent,
+  useReducer,
+  useMemo,
+  useEffect,
+  useRef,
+  Suspense,
+} from "react";
 import {
   LockClosedIcon,
   ExclamationTriangleIcon,
@@ -12,7 +19,7 @@ import {
 import { AnimatePresence, MotionConfig, motion } from "framer-motion";
 import { Spinner } from "./Spinner/Spinner";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { cn } from "@/lib/utils";
 
 // Import the server actions
@@ -82,6 +89,28 @@ const formReducer = (state: FormState, action: FormAction): FormState => {
   }
 };
 
+// useSearchParams requires a Suspense boundary, isolated here so it can't
+// force the rest of the form into a fallback state.
+const AutoSubmitFromUrl = ({
+  onCode,
+}: {
+  onCode: (code: string) => void;
+}) => {
+  const searchParams = useSearchParams();
+  const hasRun = useRef(false);
+
+  useEffect(() => {
+    if (hasRun.current) return;
+    const code = searchParams.get("code");
+    if (!code) return;
+
+    hasRun.current = true;
+    onCode(code);
+  }, [searchParams, onCode]);
+
+  return null;
+};
+
 export default function AccessForm() {
   const [state, dispatch] = useReducer(formReducer, initialState);
   const [ref, bounds] = useMeasure();
@@ -96,38 +125,55 @@ export default function AccessForm() {
     }
   }, [state.showError]);
 
-  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const submitPassword = async (password: string) => {
     dispatch({ type: "SET_LOADING", loading: true });
     dispatch({ type: "SET_ERROR", error: null });
     dispatch({ type: "SET_SHOW_ERROR", showError: false });
     dispatch({ type: "SET_SUCCESS", success: false });
 
     try {
+      const formData = new FormData();
+      formData.append("password", password);
+
+      const result = await verifyAccessCode(formData);
+
+      if (result.success) {
+        // Simulate loading
+        await new Promise((resolve) => setTimeout(resolve, 1000));
+        dispatch({ type: "SET_SHOW_ERROR", showError: false });
+        dispatch({ type: "SET_ERROR", error: null });
+        dispatch({ type: "SET_LOADING", loading: false });
+
+        dispatch({ type: "SET_SUCCESS", success: true });
+        // Show success for 1 second
+        await new Promise((resolve) => setTimeout(resolve, 1000));
+        dispatch({ type: "NEXT_STEP" });
+      } else {
+        dispatch({
+          type: "SET_ERROR",
+          error: result.error || "Incorrect access code",
+        });
+      }
+    } catch (error) {
+      dispatch({ type: "SET_ERROR", error: "An unexpected error occurred" });
+    } finally {
+      dispatch({ type: "SET_LOADING", loading: false });
+    }
+  };
+
+  const handleCodeFromUrl = (code: string) => {
+    dispatch({ type: "SET_FIELD", field: "password", value: code });
+    submitPassword(code);
+  };
+
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    try {
       if (state.step === "password") {
-        const formData = new FormData();
-        formData.append("password", state.password);
-
-        const result = await verifyAccessCode(formData);
-
-        if (result.success) {
-          // Simulate loading
-          await new Promise((resolve) => setTimeout(resolve, 1000));
-          dispatch({ type: "SET_SHOW_ERROR", showError: false });
-          dispatch({ type: "SET_ERROR", error: null });
-          dispatch({ type: "SET_LOADING", loading: false });
-
-          dispatch({ type: "SET_SUCCESS", success: true });
-          // Show success for 1 second
-          await new Promise((resolve) => setTimeout(resolve, 1000));
-          dispatch({ type: "NEXT_STEP" });
-        } else {
-          dispatch({
-            type: "SET_ERROR",
-            error: result.error || "Incorrect access code",
-          });
-        }
+        await submitPassword(state.password);
       } else if (state.step === "name") {
+        dispatch({ type: "SET_LOADING", loading: true });
         dispatch({ type: "NEXT_STEP" });
       } else if (state.step === "email") {
         await handleComplete();
@@ -265,6 +311,9 @@ export default function AccessForm() {
 
   return (
     <div className="mx-auto flex max-w-sm flex-col justify-center gap-4">
+      <Suspense fallback={null}>
+        <AutoSubmitFromUrl onCode={handleCodeFromUrl} />
+      </Suspense>
       <MotionConfig transition={{ duration: 0.8, type: "spring", bounce: 0 }}>
         <motion.div>
           <form

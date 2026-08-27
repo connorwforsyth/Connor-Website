@@ -1,7 +1,7 @@
 import { PrintButton } from "@/components/PrintButton";
 import type { JSX } from "react";
 
-const accessCode: string = "freeyourself";
+const accessCode: string = process.env.ACCESS_CODE!;
 
 type YearGroup<T> = {
   year: string;
@@ -511,8 +511,7 @@ export default function CVPage() {
               <p>
                 I am a designer with 7+ years of experience across interaction
                 design, design systems, web technology and user research.
-                Outside of work, you'll find me coding, taking{" "}
-                <a href="https://photos.connorforsyth.co">photos</a>, and making
+                Outside of work, you'll find me coding, taking photos, and making
                 coffee. I currently work at{" "}
                 <a href="https://www.deloitte.com.au">Deloitte</a> as a Design
                 Engineer.
@@ -525,26 +524,21 @@ export default function CVPage() {
                     <a href="https://connorforsyth.co/linkedin">LinkedIn</a>
                   </li>
                   <li>
-                    <a href="https://connorforsyth.co/github">Github</a>
+                    <a href="https://connorforsyth.co/github">GitHub</a>
                   </li>
-                  <li>
-                    <a href="https://connorforsyth.co/chat">Chat</a>
-                  </li>
+                 
                 </div>
                 <div className="col-span-2">
                   <a className="" href="mailto:c@connorforsyth.co">
                     c@connorforsyth.co
                   </a>
                   <span>
-                    <a className="" href="https://connorforsyth.co/portfolio">
+                    <a href={`/portfolio?code=${accessCode}`}>
                       connorforsyth.co/portfolio
+                      <span className="opacity-50">
+                        {`?code=${accessCode}`}
+                      </span>
                     </a>
-                  </span>
-                  <span className="">
-                    Access code:
-                    <code className="highlight ml-1 px-1 py-0.5 font-mono text-xs font-normal text-red-500 print:text-blue-800">
-                      {accessCode}
-                    </code>
                   </span>
                 </div>
               </ul>

@@ -28,7 +28,7 @@ const REDIRECTS: Record<
     eventName: "github_redirect",
   },
   "/portfolio": {
-    destination: "https://connorforsyth.co/presentation",
+    destination: "/presentation",
     eventName: "presentation_redirect",
     permanent: true,
   },
@@ -45,6 +45,9 @@ export async function proxy(request: NextRequest) {
   const redirect = REDIRECTS[path as keyof typeof REDIRECTS];
 
   if (redirect) {
+    const destinationUrl = new URL(redirect.destination, request.url);
+    destinationUrl.search = request.nextUrl.search;
+
     // Send the analytics event using a POST request
     fetch("https://app.posthog.com/capture/", {
       method: "POST",
@@ -60,7 +63,7 @@ export async function proxy(request: NextRequest) {
         properties: {
           $current_url: request.url,
           $pathname: path,
-          destination: redirect.destination,
+          destination: destinationUrl.toString(),
           referrer: request.headers.get("referer"),
           userAgent: request.headers.get("user-agent"),
         },
@@ -69,8 +72,8 @@ export async function proxy(request: NextRequest) {
 
     // Use permanent redirect if specified, otherwise default to temporary
     return redirect.permanent
-      ? NextResponse.redirect(redirect.destination, { status: 301 })
-      : NextResponse.redirect(redirect.destination);
+      ? NextResponse.redirect(destinationUrl, { status: 301 })
+      : NextResponse.redirect(destinationUrl);
   }
 }
 
