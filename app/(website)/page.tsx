@@ -133,7 +133,6 @@ export default function Home() {
 const featuredItems: FeatureItemProps[] = [
   {
     title: "Recime",
-    figmaproto: true,
     description:
       "Crafting a web based Recipe discovery, organiser and menu planner app for a New York based startup.",
     position: "left",
@@ -145,7 +144,7 @@ const featuredItems: FeatureItemProps[] = [
         height={24}
       />
     ),
-    image: "/homepage/recime-home.png",
+    media: { src: "/homepage/recime-home.png", variant: "framed" },
     content: (
       <>
         <p>
@@ -178,7 +177,7 @@ const featuredItems: FeatureItemProps[] = [
         height={24}
       />
     ),
-    image: "/writing/miro-ds/heroshot.png",
+    media: { src: "/writing/miro-ds/heroshot.png" },
     content: (
       <>
         <p>
@@ -203,8 +202,6 @@ const featuredItems: FeatureItemProps[] = [
     description:
       "Product strategy and design for Australia's leading net zero energy retailer.",
     position: "left",
-    figmaproto: true,
-    figmaProtoProps: { className: "from-orange-400 to-red-500" },
     icon: (
       <Image
         className="p-0.5"
@@ -214,7 +211,11 @@ const featuredItems: FeatureItemProps[] = [
         height={24}
       />
     ),
-    image: "/homepage/origin-zero-home.png",
+    media: {
+      src: "/homepage/origin-zero-home.png",
+      variant: "framed",
+      frameClassName: "from-orange-400 to-red-500",
+    },
     content: (
       <>
         <p>
@@ -236,7 +237,7 @@ const featuredItems: FeatureItemProps[] = [
     title: "Woolworths / WooliesX",
     description:
       "Heuristic evaluation and conversation design for key customer jobs for Australia's leading retail grocery chain.",
-    imageWrapperClassName: "bg-white items-end *:scale-110",
+    imageWrapperClassName: "bg-white items-end",
     position: "right",
     icon: (
       <Image
@@ -247,7 +248,7 @@ const featuredItems: FeatureItemProps[] = [
         height={24}
       />
     ),
-    image: "/homepage/woolies-hero.png",
+    media: { src: "/homepage/woolies-hero.png" },
     content: (
       <>
         <p>
@@ -270,7 +271,7 @@ const featuredItems: FeatureItemProps[] = [
       "Leading operations, experience design and technology for Melbourne's very own TEDx community.",
     position: "left",
     imageWrapperClassName:
-      "flex w-full bg-gradient-to-tr p-4 sm:p-8 lg:p-24 to-red-500 from-red-600",
+      "w-full bg-gradient-to-tr p-4 *:scale-75 sm:p-8 lg:p-24 to-red-500 from-red-600",
     icon: (
       <>
         <svg
@@ -288,7 +289,7 @@ const featuredItems: FeatureItemProps[] = [
         </svg>
       </>
     ),
-    image: "/images/TEDx-Hero.png",
+    media: { src: "/images/TEDx-Hero.png" },
     content: (
       <>
         I lead the design and technology team with TEDxMelbourne, in which I
@@ -307,6 +308,7 @@ const featuredItems: FeatureItemProps[] = [
     description:
       "Figma plugin development to improve design workflows leveraging open source libraries like React.",
     position: "right",
+    imageWrapperClassName:"*:object-contain bg-cover bg-[url(/projects/component-instance-looper/cover.png)]",
     icon: (
       <Image
         src="/homepage/figma-app-icon.png"
@@ -316,7 +318,7 @@ const featuredItems: FeatureItemProps[] = [
         height={64}
       />
     ),
-    image: "/projects/component-instance-looper/cover.png",
+    media: { src: "/projects/component-instance-looper/cover.png" },
     content: (
       <>
         <p>
@@ -351,7 +353,7 @@ const featuredItems: FeatureItemProps[] = [
         height={32}
       />
     ),
-    image: "/projects/raycast-extension/SVG spacing.png",
+    media: { src: "/projects/raycast-extension/SVG spacing.png" },
     content: (
       <>
         <p>
