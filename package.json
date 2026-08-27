@@ -24,7 +24,7 @@
     "@radix-ui/react-select": "^2.0.0",
     "@radix-ui/react-slot": "^1.0.2",
     "@radix-ui/react-tooltip": "^1.0.7",
-    "@types/node": "18.16.1",
+    "@types/node": "^24.13.3",
     "@types/react": "^19.2.18",
     "@types/react-dom": "^19.2.5",
     "@vercel/analytics": "^1.2.2",
@@ -36,7 +36,6 @@
     "eslint-config-next": "^16.3.3",
     "framer-motion": "^11.5.3",
     "gray-matter": "^4.0.3",
-    "iron-session": "^8.0.1",
     "next": "^16.3.3",
     "next-themes": "^0.2.1",
     "postcss": "8.4.23",
@@ -51,7 +50,7 @@
     "remark-frontmatter": "^5.0.0",
     "shadcn-ui": "^0.8.0",
     "tailwind-merge": "^2.2.1",
-    "typescript": "5.0.4",
+    "typescript": "^6.0.3",
     "zod": "^3.22.4"
   },
   "devDependencies": {

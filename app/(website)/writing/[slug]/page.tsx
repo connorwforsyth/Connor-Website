@@ -3,6 +3,9 @@ import { Mdx } from "@/components/mdx";
 import BackButton from "@/components/BackButton";
 import { format } from "date-fns";
 import { notFound } from "next/navigation";
+import { Metadata } from "next";
+import siteMetadata from "@/config/site-metadata";
+import { getOgImageUrl } from "@/lib/og";
 
 interface PageProps {
   params: Promise<{
@@ -17,6 +20,43 @@ export function generateStaticParams() {
 }
 
 export const dynamicParams = false;
+
+export async function generateMetadata({
+  params,
+}: PageProps): Promise<Metadata> {
+  const { slug } = await params;
+  const doc = getWritingBySlug(slug);
+  const url = `${siteMetadata.siteUrl}${doc.slug}`;
+
+  return {
+    title: doc.title,
+    description: doc.description,
+    authors: {
+      name: "Connor Forsyth",
+    },
+    alternates: {
+      canonical: url,
+    },
+    openGraph: {
+      title: doc.title,
+      description: doc.description,
+      type: "article",
+      url,
+      images: [
+        {
+          url: getOgImageUrl({
+            title: doc.title,
+            description: doc.description,
+            type: "Writing",
+          }),
+          width: 1200,
+          height: 630,
+          alt: doc.title,
+        },
+      ],
+    },
+  };
+}
 
 const page = async ({ params }: PageProps) => {
   const { slug } = await params;

@@ -40,7 +40,7 @@ const REDIRECTS: Record<
   // Add more redirects as needed
 };
 
-export async function middleware(request: NextRequest) {
+export async function proxy(request: NextRequest) {
   const path = request.nextUrl.pathname;
   const redirect = REDIRECTS[path as keyof typeof REDIRECTS];
 

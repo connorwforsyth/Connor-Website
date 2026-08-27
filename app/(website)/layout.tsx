@@ -6,6 +6,7 @@ import Offline from "@/components/Offline";
 import { CSPostHogProvider } from "@/lib/providers";
 import { Metadata } from "next";
 import siteMetadata from "@/config/site-metadata";
+import { getOgImageUrl } from "@/lib/og";
 
 interface RootLayoutProps {
   children: React.ReactNode;
@@ -61,7 +62,11 @@ export const metadata: Metadata = {
     description: siteMetadata.description,
     siteName: siteMetadata.title,
     images: {
-      url: `${siteMetadata.siteUrl}/api/og/?title=${siteMetadata.title}`,
+      url: getOgImageUrl({
+        title: siteMetadata.title,
+        description: siteMetadata.description,
+        type: "Website",
+      }),
     },
   },
 };
