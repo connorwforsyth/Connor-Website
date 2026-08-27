@@ -60,14 +60,22 @@ export async function GET(request: Request) {
             fontFamily: "kag",
           }}
         >
-          <div tw="flex w-full h-full bg-zinc-100 text-zinc-950 flex-col p-8">
+          {/*
+            satori (the renderer behind next/og) parses its own internal
+            Tailwind-class table and can't read this app's CSS custom
+            properties, so var(--background) etc. won't resolve here. These
+            literal hex values are the resolved light-mode values of
+            --background / --foreground / --muted-foreground in
+            styles/globals.css — keep them in sync if the palette changes.
+          */}
+          <div tw="flex w-full h-full bg-[#f5f5f5] text-[#09090b] flex-col p-8">
             <div tw="flex justify-between items-start flex-grow">
               <div tw="flex flex-col" style={{ maxWidth: 680 }}>
                 <div tw="mb-2">{SITE_AUTHOR}</div>
                 {(type || title) && (
                   <div tw="flex mb-2">
                     {type && (
-                      <div tw="text-zinc-700 mr-2">{`${type} /`}</div>
+                      <div tw="text-[#71717a] mr-2">{`${type} /`}</div>
                     )}
                     {title && <div>{title}</div>}
                   </div>

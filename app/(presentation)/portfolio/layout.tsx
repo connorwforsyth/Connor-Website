@@ -35,7 +35,7 @@ export default async function Layout({ children }: RootLayoutProps) {
 
   return (
     <html className="scroll-smooth" lang="en" suppressHydrationWarning>
-      <body className={`relative bg-zinc-100 antialiased dark:bg-zinc-900`}>
+      <body className={`relative bg-background antialiased`}>
         <Texture />
         <ThemeProvider>
           <CSPostHogProvider>

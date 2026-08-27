@@ -27,14 +27,14 @@ export function Collaborators({ people, className }: CollaboratorsProps) {
 
   return (
     <div className={cn("mx-auto my-8 w-full max-w-2xl", className)}>
-      <h2 className="mb-2 text-zinc-700 dark:text-zinc-100">
+      <h2 className="mb-2 text-foreground/80">
         <em>Collaborators</em>
       </h2>
       <div className="flex flex-wrap gap-2">
         {searchedPeople.map((i: Collaborator) => (
           <Link
             basics-link-pill=""
-            className="align-center flex items-center gap-1 rounded-full bg-zinc-300 bg-opacity-70  p-1 pr-2 text-sm no-underline dark:bg-zinc-700 dark:bg-opacity-90 dark:text-zinc-100 dark:hover:text-white"
+            className="align-center flex items-center gap-1 rounded-full bg-muted p-1 pr-2 text-sm text-foreground no-underline"
             key={i.name}
             href={i.link}
           >

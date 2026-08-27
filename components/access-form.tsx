@@ -169,7 +169,7 @@ export default function AccessForm() {
   const renderStep = useMemo(() => {
     const inputProps = {
       className:
-        "rounded-lg border border-zinc-500 bg-transparent p-2 px-3 dark:bg-zinc-800",
+        "rounded-lg border border-border bg-transparent p-2 px-3 dark:bg-muted",
       onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
         dispatch({
           type: "SET_FIELD",
@@ -213,7 +213,7 @@ export default function AccessForm() {
                     value={state.password}
                     required
                     aria-label="Access Code"
-                    className={`w-full rounded-lg border ${state.error ? "border-red-500 ring-red-500 focus:outline-red-500" : "border-zinc-500 focus:border-zinc-400 focus:ring-zinc-400"} bg-transparent p-2 px-3 dark:bg-zinc-800`}
+                    className={`w-full rounded-lg border ${state.error ? "border-destructive ring-destructive focus:outline-destructive" : "border-border focus:border-border focus:ring-ring"} bg-transparent p-2 px-3 dark:bg-muted`}
                   />
                 </motion.div>
               </label>
@@ -270,7 +270,7 @@ export default function AccessForm() {
           <form
             ref={ref}
             onSubmit={handleSubmit}
-            className="flex flex-col gap-4 overflow-hidden rounded-lg border border-zinc-500 p-4 shadow-sm dark:bg-neutral-900"
+            className="flex flex-col gap-4 overflow-hidden rounded-lg border border-border bg-card p-4 shadow-sm"
           >
             <div className="flex gap-2">
               <LockClosedIcon className="h-auto w-6" />
@@ -292,9 +292,9 @@ export default function AccessForm() {
                 <motion.button
                   layout
                   className={cn(
-                    `flex h-10 items-center justify-center overflow-hidden rounded-lg bg-zinc-900 text-zinc-50 transition-all dark:bg-zinc-50 dark:text-black
-                ${state.step === "password" && state.success && "bg-green-500 text-green-900 dark:bg-green-400 dark:text-green-900"}
-                ${state.showError && "bg-red-500 dark:bg-red-500 dark:text-white"}`,
+                    `flex h-10 items-center justify-center overflow-hidden rounded-lg bg-primary text-primary-foreground transition-all
+                ${state.step === "password" && state.success && "bg-success text-success-foreground"}
+                ${state.showError && "bg-destructive text-destructive-foreground"}`,
                   )}
                   type="submit"
                   disabled={state.loading}

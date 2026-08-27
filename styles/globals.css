@@ -1,5 +1,11 @@
 @import "tailwindcss";
 @import "tw-animate-css";
+@import "@radix-ui/colors/gray.css";
+@import "@radix-ui/colors/gray-dark.css";
+@import "@radix-ui/colors/red.css";
+@import "@radix-ui/colors/red-dark.css";
+@import "@radix-ui/colors/green.css";
+@import "@radix-ui/colors/green-dark.css";
 @plugin "@tailwindcss/typography";
 
 @custom-variant dark (&:where(.dark, .dark *));
@@ -12,32 +18,35 @@
 
   --breakpoint-lessA4: 210mm;
 
-  --color-border: hsl(var(--border));
-  --color-input: hsl(var(--input));
-  --color-ring: hsl(var(--ring));
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
   --color-background: var(--background);
-  --color-foreground: hsl(var(--foreground));
+  --color-foreground: var(--foreground);
 
-  --color-primary: hsl(var(--primary));
-  --color-primary-foreground: hsl(var(--primary-foreground));
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
 
-  --color-secondary: hsl(var(--secondary));
-  --color-secondary-foreground: hsl(var(--secondary-foreground));
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
 
-  --color-destructive: hsl(var(--destructive));
-  --color-destructive-foreground: hsl(var(--destructive-foreground));
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
 
-  --color-muted: hsl(var(--muted));
-  --color-muted-foreground: hsl(var(--muted-foreground));
+  --color-success: var(--success);
+  --color-success-foreground: var(--success-foreground);
 
-  --color-accent: hsl(var(--accent));
-  --color-accent-foreground: hsl(var(--accent-foreground));
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
 
-  --color-popover: hsl(var(--popover));
-  --color-popover-foreground: hsl(var(--popover-foreground));
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
 
-  --color-card: hsl(var(--card));
-  --color-card-foreground: hsl(var(--card-foreground));
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
 
   --radius-lg: var(--radius);
   --radius-md: calc(var(--radius) - 2px);
@@ -269,83 +278,86 @@ body {
 }
 
 @layer base {
+  /*
+    Neutrals map directly onto Radix Colors' Gray scale (1-2 backgrounds,
+    3-5 component surfaces, 6-8 borders, 11-12 text — see Radix's usage
+    guide). gray.css/gray-dark.css scope their variables under
+    :root/.dark already, so a single reference below resolves correctly
+    in both modes without a separate override block.
+
+    Destructive/success/highlight intentionally do NOT use Radix's
+    step 9 ("solid") value: step 9 is tuned for vividness, not contrast,
+    and several hues (red, green, blue) fall below 4.5:1 against the
+    white text we pair them with. Step 11 (light) / step 8 (dark) both
+    clear WCAG AA (~4.7-5.4:1) for red, green, and blue alike, so those
+    are used instead — this does need an explicit per-mode override,
+    since it's a different step per mode rather than the same variable
+    resolving automatically.
+  */
   :root {
-    --accent: #000dff;
-    --background: 0 0% 95.9%%;
-    --foreground: 240 10% 3.9%;
+    --background: var(--gray-1);
+    --foreground: var(--gray-12);
 
-    --card: 0 0% 100%;
-    --card-foreground: 240 10% 3.9%;
+    --card: oklch(1 0 0); /* white — brighter than gray-1, the panel/elevation convention */
+    --card-foreground: var(--gray-12);
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 240 10% 3.9%;
+    --popover: oklch(1 0 0); /* white */
+    --popover-foreground: var(--gray-12);
 
-    --primary: 240 5.9% 10%;
-    --primary-foreground: 0 0% 98%;
+    --primary: var(--gray-12);
+    --primary-foreground: var(--gray-1);
 
-    --secondary: 240 4.8% 95.9%;
-    --secondary-foreground: 240 5.9% 10%;
+    --secondary: var(--gray-3);
+    --secondary-foreground: var(--gray-12);
 
-    --muted: 240 4.8% 95.9%;
-    --muted-foreground: 240 3.8% 46.1%;
+    --muted: var(--gray-3);
+    --muted-foreground: var(--gray-11);
 
-    --accent: 240 4.8% 95.9%;
-    --accent-foreground: 240 5.9% 10%;
+    --accent: var(--gray-4);
+    --accent-foreground: var(--gray-12);
 
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 0 0% 98%;
+    --destructive: var(--red-11);
+    --destructive-foreground: oklch(1 0 0);
 
-    --border: 240 5.9% 90%;
-    --input: 240 5.9% 90%;
-    --ring: 240 10% 3.9%;
+    --success: var(--green-11);
+    --success-foreground: oklch(1 0 0);
+
+    --border: var(--gray-6);
+    --input: var(--gray-6);
+    --ring: var(--gray-12);
     --radius: 0.5rem;
 
-    --selection-background: #a5a5a5;
-    --selection-text: #000000;
+    --selection-background: var(--gray-8);
+    --selection-text: var(--gray-12);
   }
 
   .dark {
-    --selection-background: #474747;
-    --selection-text: white;
+    /* card/popover, selection, and the accent colors below use a different
+       Radix step per mode, so (unlike the tokens in :root above) they need
+       an explicit override here rather than resolving automatically. */
+    --card: var(--gray-2); /* lighter than gray-1, the panel/elevation convention */
+    --popover: var(--gray-2);
 
-    --tw-bg-opacity: 1;
-    --background: rgb(28 25 23 / var(--tw-bg-opacity));
-    --foreground: 0 0% 98%;
-    --card: 240 10% 3.9%;
-    --card-foreground: 0 0% 98%;
+    --selection-background: var(--gray-7);
 
-    --popover: 240 10% 3.9%;
-    --popover-foreground: 0 0% 98%;
-
-    --primary: 0 0% 98%;
-    --primary-foreground: 240 5.9% 10%;
-
-    --secondary: 240 3.7% 15.9%;
-    --secondary-foreground: 0 0% 98%;
-
-    --muted: 240 3.7% 15.9%;
-    --muted-foreground: 240 5% 64.9%;
-
-    --accent: 240 3.7% 15.9%;
-    --accent-foreground: 0 0% 98%;
-
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 0 0% 98%;
-
-    --border: 240 3.7% 15.9%;
-    --input: 240 3.7% 15.9%;
-    --ring: 240 4.9% 83.9%;
+    --destructive: var(--red-8);
+    --success: var(--green-8);
   }
 
+  /*
+    Not one of @radix-ui/colors' bundled named scales — generated via
+    Radix's custom palette tool (radix-ui.com/colors/custom) seeded on
+    #0A37CD for a more vibrant brand blue than the stock "Blue" scale
+    allows while still clearing WCAG AA against white text (8.6:1 and
+    6.5:1 respectively — Radix's own generator agrees, emitting
+    `--blue-contrast: #fff` for this exact scale). Kept as one flat value
+    across modes, matching how Radix keeps a scale's own step 9 identical
+    across light/dark, and how this site's brand blue worked before.
+  */
   :root {
-    --highlight-light: rgb(66, 88, 255);
-    --highlight: #000dff;
-    --text-highlight: white;
-  }
-  .dark {
-    --highlight-light: #0033ff;
-    --highlight: #0033ff;
-    --text-highlight: white;
+    --highlight-light: oklch(0.502 0.2641 264.4); /* custom blue-8, #1046f7 */
+    --highlight: oklch(0.435 0.2314 264.4); /* custom blue-9 (seed), #0a37cd */
+    --text-highlight: oklch(1 0 0);
   }
 
   ::selection {
@@ -421,22 +433,22 @@ body {
   }
 
   p a {
-    @apply box-shadow-small hover:box-shadow-full text-zinc-900 underline-offset-4  transition-all active:text-zinc-200 dark:text-zinc-200;
+    @apply box-shadow-small hover:box-shadow-full text-foreground underline-offset-4  transition-all active:text-foreground/70;
   }
 
   p code {
-    @apply mx-[1px] rounded-sm border px-[2px] text-sm dark:border-zinc-500;
+    @apply mx-[1px] rounded-sm border border-border px-[2px] text-sm;
   }
   table a {
-    @apply box-shadow-small hover:box-shadow-full  text-zinc-900 underline-offset-4 dark:text-zinc-200;
+    @apply box-shadow-small hover:box-shadow-full  text-foreground underline-offset-4;
   }
 
   [basics-link] {
-    @apply box-shadow-small hover:box-shadow-full   text-zinc-900 underline-offset-4 dark:text-zinc-200;
+    @apply box-shadow-small hover:box-shadow-full   text-foreground underline-offset-4;
   }
 
   [basics-link-pill] {
-    @apply box-shadow-small-pill hover:box-shadow-full-pill  text-zinc-900 underline-offset-4 dark:text-zinc-200;
+    @apply box-shadow-small-pill hover:box-shadow-full-pill  text-foreground underline-offset-4;
   }
 
   .box-reflect {
@@ -456,24 +468,24 @@ body {
 }
 
 a:hover > [basics-css-icon] {
-  @apply text-black transition-all dark:text-white;
+  @apply text-foreground transition-all;
 }
 
 /* This is for the writing menu */
 [basic-list] {
-  @apply transition-all  sm:hover:text-zinc-400 sm:dark:hover:text-zinc-600;
+  @apply transition-all  sm:hover:text-muted-foreground;
 }
 
 [basic-list]:hover [basic-list-item] {
-  @apply hover:text-black dark:hover:text-white;
+  @apply hover:text-foreground;
 }
 
 [basic-list]:hover [basic-list-item]:hover [basic-list-year] {
-  @apply hover:text-zinc-400 dark:hover:text-zinc-600;
+  @apply hover:text-muted-foreground;
 }
 
 [basic-list-item]:hover [basic-list-year] {
-  @apply text-zinc-400 dark:text-zinc-600;
+  @apply text-muted-foreground;
 }
 
 [basics-css-icon] {
@@ -483,18 +495,13 @@ a:hover > [basics-css-icon] {
   height: var(--size);
   width: var(--size);
   vertical-align: text-top;
-  color: red;
+  color: var(--foreground);
   --icon: var(--icon);
   display: inline-block;
   -webkit-mask: var(--icon);
   mask-size: 100% 100%;
   background-color: currentColor;
   background-size: 100% 100%;
-}
-.dark {
-  [basics-css-icon] {
-    color: white;
-  }
 }
 
 [data-animation-controller="false"] [data-animate] {

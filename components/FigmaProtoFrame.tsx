@@ -16,7 +16,7 @@ const FigmaProtoFrame = ({
   const card = (
     <div
       className={cn(
-        "mx-auto w-full max-w-5xl rounded-[8px] border border-zinc-300 bg-zinc-300 p-[4px] shadow-md *:rounded-[4px] dark:bg-white dark:bg-opacity-50 md:rounded-[12px] md:bg-white md:bg-opacity-50 md:p-[8px] md:*:rounded-[6px]",
+        "mx-auto w-full max-w-5xl rounded-[8px] border border-zinc-300 bg-zinc-300 p-[4px] shadow-md *:rounded-[4px] dark:bg-white/50 md:rounded-[12px] md:bg-white/50 md:p-[8px] md:*:rounded-[6px]",
         !wrapper && className,
       )}
     >

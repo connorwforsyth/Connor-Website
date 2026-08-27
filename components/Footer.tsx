@@ -27,7 +27,7 @@ function Copyright() {
 
 export default function Footer() {
   return (
-    <footer className="border-t border-zinc-300 border-opacity-50 text-sm text-zinc-700 dark:text-zinc-400 ">
+    <footer className="border-t border-border border-opacity-50 text-sm text-muted-foreground ">
       {/* <div className="flex flex-grow">
         Last Visit: <span>Location</span>
         <div className="flex-grow"></div>

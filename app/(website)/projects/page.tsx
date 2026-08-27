@@ -43,7 +43,7 @@ export default function Projects() {
       <div className="mx-auto flex w-full max-w-2xl flex-col gap-8">
         <h1 className="font-medium">Projects and Case Studies</h1>
 
-        <ol basic-list="" className="border-b border-zinc-300">
+        <ol basic-list="" className="border-b border-border">
           {allProjects
             .filter((post) => post.published)
             .sort(
@@ -60,14 +60,14 @@ export default function Projects() {
                     {/* {isFirstOfYear ? (
                       <span
                         basic-list-year=""
-                        className="flex  w-24 border-t border-zinc-300 px-0 py-3  sm:px-3"
+                        className="flex  w-24 border-t border-border px-0 py-3  sm:px-3"
                       >
                         {year}
                       </span>
                     ) : (
                       <span className=" w-24 px-0 py-3 sm:px-3"></span>
                     )} */}
-                    <span className="flex w-full flex-grow  items-center gap-1 border-t border-zinc-300">
+                    <span className="flex w-full flex-grow  items-center gap-1 border-t border-border">
                       <h2 className="flex-grow py-3">{post.title}</h2>
                       <time
                         className=" whitespace-nowrap py-3 text-sm"
