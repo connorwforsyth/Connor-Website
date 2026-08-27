@@ -2,8 +2,6 @@
 // @ts-nocheck
 
 import { ImageResponse } from "next/og";
-import { readFile } from "fs/promises";
-import path from "path";
 
 const SITE_AUTHOR = "Connor Forsyth";
 const SITE_ROLE = "Design Engineer";
@@ -15,14 +13,6 @@ const MAX_DESCRIPTION_LENGTH = 120;
 function truncate(text: string, max: number) {
   if (text.length <= max) return text;
   return `${text.slice(0, max - 1).trimEnd()}…`;
-}
-
-async function readAsArrayBuffer(relativePath: string) {
-  const buffer = await readFile(path.join(process.cwd(), relativePath));
-  return buffer.buffer.slice(
-    buffer.byteOffset,
-    buffer.byteOffset + buffer.byteLength,
-  );
 }
 
 function parseParams(requestUrl: string) {
@@ -42,8 +32,18 @@ function parseParams(requestUrl: string) {
 
 export async function GET(request: Request) {
   const [connorHeadshot, fontDataKag] = await Promise.all([
-    readAsArrayBuffer("public/connorforsythheadshot-Medium.jpeg"),
-    readAsArrayBuffer("public/fonts/KAG/KynetonArtGrotesque-Regular.woff"),
+    fetch(
+      new URL(
+        "../../../public/connorforsythheadshot-Medium.jpeg",
+        import.meta.url,
+      ),
+    ).then((res) => res.arrayBuffer()),
+    fetch(
+      new URL(
+        "../../../public/fonts/KAG/KynetonArtGrotesque-Regular.woff",
+        import.meta.url,
+      ),
+    ).then((res) => res.arrayBuffer()),
   ]);
 
   try {
