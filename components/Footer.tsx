@@ -6,6 +6,7 @@ function Copyright() {
   return (
     <div className="h-full gap-0.5 p-1">
       <svg
+        aria-hidden="true"
         className="my-auto inline h-4 w-3 pb-[2.2px]"
         fill="none"
         stroke="currentColor"
@@ -19,7 +20,6 @@ function Copyright() {
           strokeLinejoin="round"
         />
       </svg>
-      <span className="sr-only">☺︎</span>
       <span> </span>
       Connor Forsyth {new Date().getFullYear()}
     </div>

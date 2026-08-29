@@ -24,7 +24,7 @@ type SiteConfig = {
 const siteMetadata: SiteConfig = {
   author: "Connor Forsyth",
   description:
-    "I'm a designer and technologist with a background in design sprints, lean ux, agile and web development. I currently work as a service designer at Designit and as an academic tutor at The University of Sydney.",
+    "I'm a design engineer focused on design systems, AI products, and developer tools. I currently work at Deloitte, where I lead the enterprise design system from design to code.",
   email: "c@connorforsyth.co",
   github: "https://github.com/connorwforsyth",
   headerTitle: "Connor Forsyth",

@@ -39,9 +39,9 @@ export default function Projects() {
   return (
     <>
       <div />
-      <BackButton label="Index" />
+      <BackButton href="/" label="Index" />
       <div className="mx-auto flex w-full max-w-2xl flex-col gap-8">
-        <h1 className="font-medium">Projects and Case Studies</h1>
+        <h1 className="font-medium">Projects and case studies</h1>
 
         <ol basic-list="" className="border-border border-b">
           {allProjects
@@ -73,7 +73,7 @@ export default function Projects() {
                         className="whitespace-nowrap py-3 text-sm"
                         dateTime={post.date}
                       >
-                        {format(new Date(post.date), "d MMM yyy")}
+                        {format(new Date(post.date), "d MMM yyyy")}
                       </time>
                     </span>
                   </Link>
