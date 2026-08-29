@@ -2,13 +2,19 @@
 
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { Suspense, useEffect, useLayoutEffect, useRef, useState } from "react";
-import type { DirectionalLight, Group } from "three";
+import type { DirectionalLight, Group, Mesh } from "three";
 import { CAMERA_FOV, fitCameraZ, visibleHeightAt } from "./camera-fit";
+import { CV_LINK_RECTS } from "./cv-links.generated";
+import { LinkOverlay } from "./link-overlay";
 import { PAPER_HEIGHT, PAPER_WIDTH, PaperPage } from "./paper-page";
 
 const PAGE_GAP = 72;
 const CAMERA_Z = 1500;
 const TOTAL_DOC_HEIGHT = PAPER_HEIGHT * 2 + PAGE_GAP;
+// Breathing room above page 1's top edge and below page 2's bottom edge —
+// without it the page sits flush against the viewport frame, which reads
+// as cramped now that the camera is zoomed in close.
+const SCROLL_EDGE_GAP = 56;
 const SHEET_STAGGER = 0.22;
 const FIRST_DROP_DELAY = 0.12;
 const SCROLL_EASE = 10;
@@ -19,12 +25,18 @@ const SHADOW_FRUSTUM = 1600;
 const TEXTURES = ["/cv-v2/page-1.png", "/cv-v2/page-2.png"];
 
 type SceneProps = {
+  meshesRef: React.RefObject<(Mesh | null)[]>;
   reduceMotion: boolean;
   replayToken: number;
   scrollTarget: React.RefObject<number>;
 };
 
-function Papers({ reduceMotion, replayToken, scrollTarget }: SceneProps) {
+function Papers({
+  meshesRef,
+  reduceMotion,
+  replayToken,
+  scrollTarget,
+}: SceneProps) {
   const groupRef = useRef<Group>(null);
   const scroll = useRef(0);
 
@@ -41,7 +53,7 @@ function Papers({ reduceMotion, replayToken, scrollTarget }: SceneProps) {
     // approach) could strand the header above the visible frame with no
     // way to scroll up to it.
     const visibleHeight = visibleHeightAt(state.camera.position.z);
-    const topOffset = (visibleHeight - PAPER_HEIGHT) / 2;
+    const topOffset = (visibleHeight - PAPER_HEIGHT) / 2 - SCROLL_EDGE_GAP;
     group.position.y = topOffset + scroll.current;
   });
 
@@ -53,6 +65,9 @@ function Papers({ reduceMotion, replayToken, scrollTarget }: SceneProps) {
           dropDelay={FIRST_DROP_DELAY + index * SHEET_STAGGER}
           index={index}
           key={textureUrl}
+          onMeshRef={(mesh) => {
+            meshesRef.current[index] = mesh;
+          }}
           reduceMotion={reduceMotion}
           replayToken={replayToken}
           textureUrl={textureUrl}
@@ -129,7 +144,10 @@ function useScrollControls() {
   useEffect(() => {
     const updateMaxScroll = () => {
       const z = fitCameraZ(window.innerWidth, window.innerHeight, PAPER_WIDTH);
-      maxScroll.current = Math.max(0, TOTAL_DOC_HEIGHT - visibleHeightAt(z));
+      maxScroll.current = Math.max(
+        0,
+        TOTAL_DOC_HEIGHT - visibleHeightAt(z) + SCROLL_EDGE_GAP * 2
+      );
       scrollTarget.current = Math.min(scrollTarget.current, maxScroll.current);
     };
     updateMaxScroll();
@@ -188,6 +206,10 @@ function useScrollControls() {
 export default function PaperScene() {
   const [replayToken, setReplayToken] = useState(0);
   const [reduceMotion, setReduceMotion] = useState(false);
+  const meshesRef = useRef<(Mesh | null)[]>([]);
+  const anchorRefs = useRef<(HTMLAnchorElement | null)[][]>(
+    CV_LINK_RECTS.map(() => [])
+  );
   const scrollTarget = useScrollControls();
 
   useEffect(() => {
@@ -212,7 +234,11 @@ export default function PaperScene() {
           near: 10,
           position: [0, 0, CAMERA_Z],
         }}
-        dpr={[1, 2]}
+        // Browser zoom raises devicePixelRatio; capping at 2 clamped the
+        // canvas below that and blurred it on top of the texture's own
+        // ceiling. 3 covers zoomed retina displays without over-rendering
+        // at 1x.
+        dpr={[1, 3]}
         flat
         shadows="soft"
       >
@@ -222,16 +248,39 @@ export default function PaperScene() {
         <Table />
         <Suspense fallback={null}>
           <Papers
+            meshesRef={meshesRef}
             reduceMotion={reduceMotion}
             replayToken={replayToken}
             scrollTarget={scrollTarget}
           />
+          <LinkOverlay
+            anchorRefs={anchorRefs}
+            meshRefs={meshesRef}
+            pages={CV_LINK_RECTS}
+          />
         </Suspense>
       </Canvas>
-      <p className="cv-v2-hint">
-        scroll for page 2 · press R to drop the pages again ·{" "}
-        <a href="/cv">flat version</a>
-      </p>
+      <div className="cv-v2-links">
+        {CV_LINK_RECTS.map((rects, pageIndex) => (
+          <div key={pageIndex}>
+            {rects.map((rect, linkIndex) => (
+              <a
+                className="cv-v2-link"
+                href={rect.href}
+                key={rect.href}
+                ref={(el) => {
+                  anchorRefs.current[pageIndex][linkIndex] = el;
+                }}
+              >
+                {/* Invisible over the texture; gives the overlay real,
+                    screen-reader-accessible content instead of an empty
+                    <a>. */}
+                <span className="sr-only">{rect.label}</span>
+              </a>
+            ))}
+          </div>
+        ))}
+      </div>
     </div>
   );
 }

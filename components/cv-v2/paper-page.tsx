@@ -19,11 +19,12 @@ const SEGMENTS_X = 16;
 const SEGMENTS_Y = 22;
 
 // Quick, quiet landing: a short drop that settles in about a second.
-// The 3D-ness should register as texture, not as a performance.
-const DROP_HEIGHT = 200;
-const DROP_OMEGA = 4.2;
-const DRIFT = 14;
-const DRIFT_OMEGA = 3.4;
+// The 3D-ness should register as texture, not as a performance. Each sheet
+// gets a slightly different fall — a shared feel, not a repeated one.
+const DROP_HEIGHT_BY_INDEX = [200, 235];
+const DROP_OMEGA_BY_INDEX = [4.2, 3.7];
+const DRIFT_BY_INDEX = [14, 20];
+const DRIFT_OMEGA_BY_INDEX = [3.4, 3];
 const REST_HOVER = 4; // resting height keeps the sheet off the table plane
 const TILT_PER_SPEED = 0.000_24; // rad of rotateX per px/s of descent
 const TWIST_PER_SPEED = 0.000_35; // rad of rotateZ per px/s of drift
@@ -44,6 +45,7 @@ type PaperPageProps = {
   centerY: number;
   dropDelay: number;
   index: number;
+  onMeshRef?: (mesh: Mesh | null) => void;
   reduceMotion: boolean;
   replayToken: number;
   textureUrl: string;
@@ -53,13 +55,14 @@ export function PaperPage({
   centerY,
   dropDelay,
   index,
+  onMeshRef,
   reduceMotion,
   replayToken,
   textureUrl,
 }: PaperPageProps) {
   const texture = useLoader(TextureLoader, textureUrl);
   texture.colorSpace = SRGBColorSpace;
-  texture.anisotropy = 8;
+  texture.anisotropy = 16;
 
   const meshRef = useRef<Mesh>(null);
   const startedAt = useRef<number | undefined>(undefined);
@@ -77,6 +80,10 @@ export function PaperPage({
 
   const direction = index % 2 === 0 ? 1 : -1;
   const restTwist = REST_TWISTS_RAD[index] ?? 0;
+  const dropHeight = DROP_HEIGHT_BY_INDEX[index] ?? DROP_HEIGHT_BY_INDEX[0];
+  const dropOmega = DROP_OMEGA_BY_INDEX[index] ?? DROP_OMEGA_BY_INDEX[0];
+  const driftAmount = DRIFT_BY_INDEX[index] ?? DRIFT_BY_INDEX[0];
+  const driftOmega = DRIFT_OMEGA_BY_INDEX[index] ?? DRIFT_OMEGA_BY_INDEX[0];
 
   useFrame((state) => {
     const mesh = meshRef.current;
@@ -96,8 +103,12 @@ export function PaperPage({
       ? Number.MAX_SAFE_INTEGER
       : elapsed - startedAt.current - dropDelay;
 
-    const height = criticallyDampedAt(DROP_HEIGHT, DROP_OMEGA, local);
-    const drift = criticallyDampedAt(direction * DRIFT, DRIFT_OMEGA, local);
+    const height = criticallyDampedAt(dropHeight, dropOmega, local);
+    const drift = criticallyDampedAt(
+      direction * driftAmount,
+      driftOmega,
+      local
+    );
     const speed = -height.velocity; // px/s of descent, positive while falling
 
     mesh.position.set(drift.position, centerY, REST_HOVER + height.position);
@@ -149,7 +160,14 @@ export function PaperPage({
   });
 
   return (
-    <mesh castShadow geometry={geometry} ref={meshRef}>
+    <mesh
+      castShadow
+      geometry={geometry}
+      ref={(node) => {
+        meshRef.current = node;
+        onMeshRef?.(node);
+      }}
+    >
       <meshStandardMaterial
         map={texture}
         metalness={0}

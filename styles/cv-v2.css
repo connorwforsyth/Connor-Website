@@ -69,20 +69,43 @@ body {
   display: block;
   width: 100%;
   height: 100%;
-  touch-action: none;
+  /* Block native panning (we drive scroll ourselves from touchmove) but
+     keep native pinch-zoom working, same as a normal HTML page. */
+  touch-action: pinch-zoom;
 }
 
-.cv-v2-hint {
-  position: fixed;
-  bottom: 1rem;
-  left: 50%;
-  font-size: 11px;
-  color: #8a8a86;
-  letter-spacing: 0.01em;
-  white-space: nowrap;
-  transform: translateX(-50%);
+/* Real, focusable links positioned each frame over their text on the
+   paper texture — see components/cv-v2/link-overlay.tsx. Invisible at
+   rest so they don't look like boxes drawn on the page; hover and
+   keyboard focus reveal a tint matching the texture's link color. */
+.cv-v2-links {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
 }
 
-.cv-v2-hint a {
-  color: inherit;
+.cv-v2-link {
+  position: absolute;
+  display: block;
+  pointer-events: auto;
+  border-radius: 3px;
+}
+
+.cv-v2-link:hover {
+  cursor: pointer;
+  background: rgb(10 55 205 / 8%);
+}
+
+.cv-v2-link:focus-visible {
+  outline: 2px solid #0a37cd;
+  outline-offset: 2px;
+  background: rgb(10 55 205 / 8%);
+}
+
+/* Mobile: plain, responsive HTML — no canvas, no scroll hijacking. Same
+   content and .page styling as /cv, just without the paper-drop scene. */
+.cv-v2-plain {
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
 }
