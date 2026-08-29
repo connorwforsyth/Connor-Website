@@ -6,7 +6,7 @@ export default function Page() {
   return (
     <>
       <TrackNotFound />
-      <BackButton label="Index" type="404" />
+      <BackButton href="/" label="Index" type="404" />
       <div className="mx-auto w-full max-w-2xl">
         <h1 className="font-medium">Page not found</h1>
         <p className="mt-3">

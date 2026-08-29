@@ -39,7 +39,7 @@ export default function Writing() {
   return (
     <>
       <div />
-      <BackButton label="Index" />
+      <BackButton href="/" label="Index" />
       <div className="mx-auto flex w-full max-w-2xl flex-col gap-8">
         <h1 className="font-medium">Writing</h1>
 
