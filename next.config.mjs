@@ -16,6 +16,26 @@ const nextConfig = {
       },
     ];
   },
+  // .wgsl shader imports (vgpu). Turbopack and webpack read their own keys,
+  // so both rules are needed. Note neither path validates WGSL at build
+  // time — that's `bun x vgpu check <file> --require-validation`.
+  turbopack: {
+    rules: {
+      "*.wgsl": {
+        as: "*.js",
+        loaders: ["@vgpu/wgsl/loader-webpack"],
+      },
+    },
+  },
+  webpack(config) {
+    config.module ??= {};
+    config.module.rules ??= [];
+    config.module.rules.push({
+      loader: "@vgpu/wgsl/loader-webpack",
+      test: /\.wgsl$/,
+    });
+    return config;
+  },
 };
 
 const withMDX = createMDX({
