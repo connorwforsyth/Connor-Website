@@ -8,7 +8,8 @@ export default defineConfig({
     trace: "retain-on-failure",
   },
   webServer: {
-    command: "ACCESS_CODE=playwright-code PLAYWRIGHT=true bun run dev",
+    command:
+      "ACCESS_CODE=playwright-code SESSION_ENV=playwright-session PLAYWRIGHT=true bun run dev",
     reuseExistingServer: false,
     url: "http://127.0.0.1:3000",
   },

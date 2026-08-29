@@ -72,7 +72,7 @@ export default function Writing() {
                         className="whitespace-nowrap py-3 text-sm"
                         dateTime={post.date}
                       >
-                        {format(new Date(post.date), "d MMM yyy")}
+                        {format(new Date(post.date), "d MMM yyyy")}
                       </time>
                     </span>
                   </Link>

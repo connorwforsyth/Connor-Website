@@ -219,12 +219,12 @@ const data = {
         {
           bullets: [
             "Maintaining the GEL Design System across Figma and Storybook (React).",
-            "Leading design for MyAssist, Deloittes internal AI chat and workflow product.",
+            "Leading design for MyAssist, Deloitte's internal AI chat and workflow product.",
           ],
           company: "Deloitte Australia",
           companyUrl: "https://www.deloitte.com.au",
           description:
-            "Lead designer for enterprise design systems, AI products and developer tools.",
+            "Lead designer for enterprise design systems, AI products, and developer tools.",
           location: "Sydney AUS",
           title: "Design Engineer (Manager)",
         },
@@ -249,7 +249,7 @@ const data = {
           company: "Designit",
           companyUrl: "http://designit.com",
           description:
-            "Working at the intersection of innovation, product design, strategy and technology.",
+            "Working at the intersection of innovation, product design, strategy, and technology.",
           location: "Sydney AUS",
           title: "Service & Product Designer",
         },
@@ -279,7 +279,7 @@ const data = {
           company: "Design Lab: University of Sydney",
           companyUrl: "https://www.sydney.edu.au",
           description:
-            "Teaching 200+ masters of design students at one of Australia's top Universities.<br> Subjects: <a href='https://www.sydney.edu.au/units/IDEA9106'>IDEA9106: Design Thinking</a> ‧ <a href='https://www.sydney.edu.au/units/DESN9003'>DESN9003: Strategic Design & Leadership.</a>",
+            "Teaching 200+ masters of design students at one of Australia's top universities.<br> Subjects: <a href='https://www.sydney.edu.au/units/IDEA9106'>IDEA9106: Design Thinking</a> ‧ <a href='https://www.sydney.edu.au/units/DESN9003'>DESN9003: Strategic Design & Leadership.</a>",
           location: "Sydney AUS",
           title: "Guest Lecturer & Academic Tutor",
         },
@@ -292,7 +292,7 @@ const data = {
           company: "Civic Disability Services",
           companyUrl: "https://www.civic.org.au",
           description:
-            "Leading the service design and research capability for the 800 person organisation. Delivering projects for employee and client onboarding, and establishing agile rituals and OKRs in line with the strategy.",
+            "Leading the service design and research capability for the 800-person organisation. Delivering projects for employee and client onboarding, and establishing agile rituals and OKRs in line with the strategy.",
           location: "Sydney AUS",
           title: "Service Designer",
         },
@@ -508,10 +508,10 @@ export default function CVPage() {
           <div className="col-span-2">
             <article className="col-span-2 flex flex-col gap-4 text-sm md:gap-2">
               <p>
-                I am a designer with 7+ years of experience across interaction
-                design, design systems, web technology and user research.
+                I'm a designer with 7+ years of experience across interaction
+                design, design systems, web technology, and user research.
                 Outside of work, you'll find me coding, taking photos, and
-                making coffee. I currently work at{" "}
+                brewing coffee. I currently work at{" "}
                 <a href="https://www.deloitte.com.au">Deloitte</a> as a Design
                 Engineer.
               </p>

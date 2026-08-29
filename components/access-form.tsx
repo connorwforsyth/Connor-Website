@@ -289,10 +289,7 @@ export default function AccessForm() {
         return (
           <>
             <div className="flex flex-col gap-2">
-              <p>
-                Please leave your name as it would be great to know who's
-                visiting:
-              </p>
+              <p>Leave your name so I know who's visiting:</p>
             </div>
             <Field className="flex flex-col gap-2">
               <FieldLabel htmlFor="access-name">Your Name</FieldLabel>
@@ -347,7 +344,7 @@ export default function AccessForm() {
           >
             <div className="flex gap-2">
               <LockKeyIcon className="h-auto w-6" />
-              <h3 className="font-medium">Protected Project</h3>
+              <h3 className="font-medium">Protected project</h3>
             </div>
             <AnimatePresence initial={false} mode="popLayout">
               <motion.div
