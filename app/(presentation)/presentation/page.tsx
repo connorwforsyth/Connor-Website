@@ -1,16 +1,15 @@
 "use client";
 
-import { cn } from "@/lib/utils";
-import { NavigationButton } from "./NavigationButton";
-
+import { formatDistanceToNow } from "date-fns";
 import { useEffect, useRef, useState } from "react";
 import { getSession } from "@/server-actions/actions";
-import { formatDistanceToNow } from "date-fns";
+import { NavigationButton } from "./NavigationButton";
 
 const figmaDomain = "https://embed.figma.com/proto/";
 const figmaProps =
   "&scaling=scale-down-width&share=1&embed-host=share&hide-ui=1&hotspot-hints=0&theme=system&device-frame=false";
-const presentation = `IRxjN1QkNUk8ynq6gOvql3/CF-Portfolio-PDF?page-id=13%3A18132&node-id=13-18154&p=f&viewport=4803%2C-22702%2C1`;
+const presentation =
+  "IRxjN1QkNUk8ynq6gOvql3/CF-Portfolio-PDF?page-id=13%3A18132&node-id=13-18154&p=f&viewport=4803%2C-22702%2C1";
 const clientId = "&client-id=FdThHDFIsJFvWm4uNuG74k";
 const figmaOrigin = "https://www.figma.com/";
 const embedCode = `${figmaDomain}${presentation}${figmaProps}${clientId}`;
@@ -21,7 +20,7 @@ const CACHE_DURATION = 3600; // 1 hour in seconds
 const FigmaEmbed = () => {
   const iframeRef = useRef<HTMLIFrameElement>(null);
 
-  const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
+  const [dimensions, setDimensions] = useState({ height: 0, width: 0 });
   const [name, setName] = useState<string>("");
   const [lastUpdated, setLastUpdated] = useState<string>("");
   const [isFullscreen, setIsFullscreen] = useState(false);
@@ -31,7 +30,7 @@ const FigmaEmbed = () => {
       {
         type: `NAVIGATE_${direction}`,
       },
-      figmaOrigin,
+      figmaOrigin
     );
   };
 
@@ -53,14 +52,14 @@ const FigmaEmbed = () => {
     const fetchLastUpdated = async () => {
       try {
         const response = await fetch(
-          `/api/figma-last-updated?fileKey=${fileKey}`,
+          `/api/figma-last-updated?fileKey=${fileKey}`
         );
 
         const data = await response.json();
 
         if (!response.ok) {
           throw new Error(
-            data.error || `Failed to fetch: ${response.statusText}`,
+            data.error || `Failed to fetch: ${response.statusText}`
           );
         }
 
@@ -81,7 +80,7 @@ const FigmaEmbed = () => {
     // Refresh the last updated time every hour
     const refreshInterval = setInterval(
       fetchLastUpdated,
-      CACHE_DURATION * 1000,
+      CACHE_DURATION * 1000
     );
 
     return () => {
@@ -103,10 +102,8 @@ const FigmaEmbed = () => {
 
   const toggleFullscreen = () => {
     try {
-      if (!document.fullscreenElement) {
-        if (iframeRef.current) {
-          iframeRef.current.requestFullscreen();
-        }
+      if (!document.fullscreenElement && iframeRef.current) {
+        iframeRef.current.requestFullscreen();
       }
     } catch (error) {
       console.error("Fullscreen error:", error);
@@ -117,7 +114,7 @@ const FigmaEmbed = () => {
 
   const calculateDimensions = () => {
     const PADDING = window.innerWidth > 600 ? 32 : 16;
-    let SCALE_FACTOR = window.innerWidth > 2000 ? 1 : 0.66;
+    const SCALE_FACTOR = window.innerWidth > 2000 ? 1 : 0.66;
     const MAX_WIDTH = 1920;
 
     const VIEWPORT_HEIGHT = window.innerHeight;
@@ -127,16 +124,16 @@ const FigmaEmbed = () => {
     let width = Math.min(
       VIEWPORT_WIDTH - PADDING,
       VIEWPORT_HEIGHT * (16 / 9) - PADDING,
-      MAX_WIDTH * SCALE_FACTOR,
+      MAX_WIDTH * SCALE_FACTOR
     );
 
     // Force width to be divisible by 16
     width = Math.floor(width / 16) * 16;
 
     // Calculate exact height for 16:9
-    let height = (width / 16) * 9;
+    const height = (width / 16) * 9;
 
-    setDimensions({ width, height });
+    setDimensions({ height, width });
   };
 
   useEffect(() => {
@@ -161,15 +158,16 @@ const FigmaEmbed = () => {
   return (
     <div className="relative grid h-dvh place-items-center overflow-clip">
       <iframe
-        ref={iframeRef}
-        width={dimensions.width}
+        allow="fullscreen"
         height={dimensions.height}
+        ref={iframeRef}
+        src={embedCode}
         style={{
           border: "none",
           zoom: isFullscreen ? "100%" : "100%",
         }}
-        src={embedCode}
-        allow="fullscreen"
+        title="Presentation"
+        width={dimensions.width}
       />
       <div className="absolute bottom-0 flex w-full items-center p-4 md:justify-between">
         <div className="hidden w-full gap-4 sm:flex">
@@ -193,10 +191,11 @@ const FigmaEmbed = () => {
             onClick={() => navigate("FORWARD")}
           />
           <button
-            onClick={toggleFullscreen}
             className="hidden text-xs hover:bg-zinc-700 md:block"
-            tabIndex={0}
+            onClick={toggleFullscreen}
             onKeyDown={(e) => e.key === "f" && toggleFullscreen}
+            tabIndex={0}
+            type="button"
           >
             Fullscreen
           </button>

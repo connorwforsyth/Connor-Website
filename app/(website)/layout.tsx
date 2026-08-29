@@ -1,16 +1,23 @@
 import "@/styles/globals.css";
-import { ThemeProvider } from "@/components/theme-provider";
+import type { Metadata } from "next";
+import { JetBrains_Mono } from "next/font/google";
+import { Analytics } from "@/components/analytics";
 import Texture from "@/components/BackgroundTexture";
 import Footer from "@/components/Footer";
 import Offline from "@/components/Offline";
-import { CSPostHogProvider } from "@/lib/providers";
-import { Metadata } from "next";
+import { ThemeProvider } from "@/components/theme-provider";
 import siteMetadata from "@/config/site-metadata";
 import { getOgImageUrl } from "@/lib/og";
 
 interface RootLayoutProps {
   children: React.ReactNode;
 }
+
+const jetbrainsMono = JetBrains_Mono({
+  display: "swap",
+  subsets: ["latin"],
+  variable: "--font-jetbrains-mono",
+});
 
 // export const metadata: Metadata = {
 //   title: {
@@ -52,42 +59,45 @@ interface RootLayoutProps {
 // };
 
 export const metadata: Metadata = {
-  metadataBase: new URL(siteMetadata.siteUrl),
-  title: siteMetadata.title,
   description: siteMetadata.description,
+  metadataBase: new URL(siteMetadata.siteUrl),
   openGraph: {
-    type: "website",
-    url: siteMetadata.siteUrl,
-    title: siteMetadata.title,
     description: siteMetadata.description,
-    siteName: siteMetadata.title,
     images: {
       url: getOgImageUrl({
-        title: siteMetadata.title,
         description: siteMetadata.description,
+        title: siteMetadata.title,
         type: "Website",
       }),
     },
+    siteName: siteMetadata.title,
+    title: siteMetadata.title,
+    type: "website",
+    url: siteMetadata.siteUrl,
   },
+  title: siteMetadata.title,
 };
 
 export default function RootLayout({ children }: RootLayoutProps) {
   return (
-    <html className="scroll-p-32 scroll-smooth" lang="en" suppressHydrationWarning>
-      <body className={`relative bg-background antialiased`}>
+    <html
+      className={`scroll-p-32 scroll-smooth ${jetbrainsMono.variable}`}
+      lang="en"
+      suppressHydrationWarning
+    >
+      <body className={"relative bg-background antialiased"}>
         <Offline />
-        <div className="prog-blur"></div>
+        <div className="prog-blur" />
         <Texture />
         <ThemeProvider>
-          <CSPostHogProvider>
-            <div className="flex min-h-screen flex-col">
-              <main className="flex-grow px-4 pb-24 pt-24 md:pt-36">
-                {children}
-              </main>
-              <Footer />
-            </div>
-          </CSPostHogProvider>
+          <div className="flex min-h-screen flex-col">
+            <main className="flex-grow px-4 pt-24 pb-24 md:pt-36">
+              {children}
+            </main>
+            <Footer />
+          </div>
         </ThemeProvider>
+        <Analytics />
       </body>
     </html>
   );

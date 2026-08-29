@@ -3,7 +3,7 @@ import { createContext, useContext, useState } from "react";
 const MagnifierContext = createContext<{
   isMagnifierActive: boolean;
   toggleMagnifier: () => void;
-}>({ isMagnifierActive: false, toggleMagnifier: () => {} });
+}>({ isMagnifierActive: false, toggleMagnifier: () => undefined });
 
 export function MagnifierProvider({ children }: { children: React.ReactNode }) {
   const [isMagnifierActive, setIsMagnifierActive] = useState(false);
@@ -12,7 +12,7 @@ export function MagnifierProvider({ children }: { children: React.ReactNode }) {
       "Toggling magnifier from:",
       isMagnifierActive,
       "to:",
-      !isMagnifierActive,
+      !isMagnifierActive
     );
     setIsMagnifierActive((prev) => !prev);
   };

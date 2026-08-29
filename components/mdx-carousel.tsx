@@ -2,12 +2,12 @@
 import React from "react";
 import {
   Carousel,
+  type CarouselApi,
   CarouselContent,
   CarouselItem,
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
-import { type CarouselApi } from "@/components/ui/carousel";
 
 export default function MDXCarousel({ children }) {
   const [api, setApi] = React.useState<CarouselApi>();
@@ -32,19 +32,17 @@ export default function MDXCarousel({ children }) {
   ));
 
   return (
-    <>
-      <Carousel className="" setApi={setApi}>
-        <div className="mx-auto flex h-auto w-full max-w-2xl items-center justify-center gap-3 pt-3 text-sm text-muted-foreground">
-          <CarouselPrevious />
-          <p>
-            Slide {current} of {count}
-          </p>
-          <CarouselNext />
-        </div>
-        <CarouselContent className="mx-auto flex w-full max-w-6xl cursor-grab items-center">
-          {items}
-        </CarouselContent>
-      </Carousel>
-    </>
+    <Carousel className="" setApi={setApi}>
+      <div className="mx-auto flex h-auto w-full max-w-2xl items-center justify-center gap-3 pt-3 text-muted-foreground text-sm">
+        <CarouselPrevious />
+        <p>
+          Slide {current} of {count}
+        </p>
+        <CarouselNext />
+      </div>
+      <CarouselContent className="mx-auto flex w-full max-w-6xl cursor-grab items-center">
+        {items}
+      </CarouselContent>
+    </Carousel>
   );
 }

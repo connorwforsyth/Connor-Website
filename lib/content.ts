@@ -1,31 +1,31 @@
-import fs from "fs";
-import path from "path";
+import fs from "node:fs";
+import path from "node:path";
 import matter from "gray-matter";
 import { notFound } from "next/navigation";
 
 const contentDirectory = path.join(process.cwd(), "content");
 
 interface BaseFields {
-  title: string;
-  description: string;
   date: string;
-  published: boolean;
+  description: string;
   protected: boolean;
+  published: boolean;
+  title: string;
 }
 
 export interface Writing extends BaseFields {
-  protectedIntro?: string;
+  content: string;
   protectedEnd?: string;
+  protectedIntro?: string;
   slug: string;
   slugAsParams: string;
-  content: string;
 }
 
 export interface Project extends BaseFields {
+  content: string;
   p2?: string;
   slug: string;
   slugAsParams: string;
-  content: string;
 }
 
 type ContentDir = "writing" | "projects";
@@ -41,12 +41,12 @@ function readDocs<T>(dir: ContentDir): T[] {
 
     return {
       date: "2022-6-4",
-      published: true,
       protected: false,
+      published: true,
       ...data,
+      content,
       slug: `/${dir}/${slugAsParams}`,
       slugAsParams,
-      content,
     } as T;
   });
 }
@@ -61,12 +61,16 @@ export function getAllProjects(): Project[] {
 
 export function getWritingBySlug(slug: string): Writing {
   const doc = getAllWritings().find((doc) => doc.slugAsParams === slug);
-  if (!doc) notFound();
+  if (!doc) {
+    notFound();
+  }
   return doc;
 }
 
 export function getProjectBySlug(slug: string): Project {
   const doc = getAllProjects().find((doc) => doc.slugAsParams === slug);
-  if (!doc) notFound();
+  if (!doc) {
+    notFound();
+  }
   return doc;
 }

@@ -1,10 +1,10 @@
-import { getAllProjects } from "@/lib/content";
-import Link from "next/link";
 import { format } from "date-fns";
-import BackButton from "@/components/BackButton";
+import type { Metadata } from "next";
+import Link from "next/link";
 import type { JSX } from "react";
-import { Metadata } from "next";
+import BackButton from "@/components/BackButton";
 import siteMetadata from "@/config/site-metadata";
+import { getAllProjects } from "@/lib/content";
 import { getOgImageUrl } from "@/lib/og";
 
 type PostWithElement = { element: JSX.Element; date: string };
@@ -13,50 +13,50 @@ const title = "Projects";
 const description = "Projects and case studies by Connor Forsyth.";
 
 export const metadata: Metadata = {
-  title,
-  description,
   alternates: {
     canonical: `${siteMetadata.siteUrl}/projects`,
   },
+  description,
   openGraph: {
-    title,
     description,
-    type: "website",
-    url: `${siteMetadata.siteUrl}/projects`,
     images: [
       {
-        url: getOgImageUrl({ title, description, type: "Website" }),
-        width: 1200,
-        height: 630,
         alt: title,
+        height: 630,
+        url: getOgImageUrl({ description, title, type: "Website" }),
+        width: 1200,
       },
     ],
+    title,
+    type: "website",
+    url: `${siteMetadata.siteUrl}/projects`,
   },
+  title,
 };
 
 export default function Projects() {
   const allProjects = getAllProjects();
   return (
     <>
-      <div></div>
+      <div />
       <BackButton label="Index" />
       <div className="mx-auto flex w-full max-w-2xl flex-col gap-8">
         <h1 className="font-medium">Projects and Case Studies</h1>
 
-        <ol basic-list="" className="border-b border-border">
+        <ol basic-list="" className="border-border border-b">
           {allProjects
             .filter((post) => post.published)
             .sort(
-              (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
+              (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
             )
             .reduce<PostWithElement[]>((acc, post) => {
               const year = new Date(post.date).getFullYear();
-              const isFirstOfYear = !acc.find(
-                (item) => new Date(item.date).getFullYear() === year,
+              const _isFirstOfYear = !acc.find(
+                (item) => new Date(item.date).getFullYear() === year
               );
               const element = (
                 <li basic-list-item="" className="" key={post.title}>
-                  <Link className="flex " href={post.slug} key={post.title}>
+                  <Link className="flex" href={post.slug} key={post.title}>
                     {/* {isFirstOfYear ? (
                       <span
                         basic-list-year=""
@@ -67,10 +67,10 @@ export default function Projects() {
                     ) : (
                       <span className=" w-24 px-0 py-3 sm:px-3"></span>
                     )} */}
-                    <span className="flex w-full flex-grow  items-center gap-1 border-t border-border">
+                    <span className="flex w-full flex-grow items-center gap-1 border-border border-t">
                       <h2 className="flex-grow py-3">{post.title}</h2>
                       <time
-                        className=" whitespace-nowrap py-3 text-sm"
+                        className="whitespace-nowrap py-3 text-sm"
                         dateTime={post.date}
                       >
                         {format(new Date(post.date), "d MMM yyy")}
@@ -79,7 +79,7 @@ export default function Projects() {
                   </Link>
                 </li>
               );
-              acc.push({ element, date: post.date });
+              acc.push({ date: post.date, element });
               return acc;
             }, [])
             .map((item) => item.element)}

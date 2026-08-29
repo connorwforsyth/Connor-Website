@@ -1,18 +1,18 @@
-import collaboratorsData from "../data/collaborators/collaborators.json";
 import Image from "next/image";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
+import collaboratorsData from "../data/collaborators/collaborators.json";
 
 interface Collaborator {
-  name: string;
-  link: string;
   image: string;
+  link: string;
+  name: string;
 }
 
 interface CollaboratorsProps {
-  people?: string[];
   className?: string[];
   inline?: boolean;
+  people?: string[];
 }
 
 export function Collaborators({ people, className }: CollaboratorsProps) {
@@ -34,21 +34,21 @@ export function Collaborators({ people, className }: CollaboratorsProps) {
         {searchedPeople.map((i: Collaborator) => (
           <Link
             basics-link-pill=""
-            className="align-center flex items-center gap-1 rounded-full bg-muted p-1 pr-2 text-sm text-foreground no-underline"
-            key={i.name}
+            className="flex items-center gap-1 rounded-full bg-muted p-1 pr-2 align-center text-foreground text-sm no-underline hover:text-[var(--text-highlight)]"
             href={i.link}
+            key={i.name}
           >
             <div className="flex h-6 w-6 items-center overflow-hidden rounded-full">
               <Image
-                className="h-full w-full object-cover"
-                src={`../${i.image}`}
-                width={24}
-                height={24}
                 alt={i.name}
+                className="h-full w-full object-cover"
+                height={24}
+                src={`../${i.image}`}
                 unoptimized={true}
+                width={24}
               />
             </div>
-            <span className="translate-y-[1px] ">{i.name}</span>
+            <span className="[text-box:trim-both_cap_alphabetic]">{i.name}</span>
           </Link>
         ))}
       </div>

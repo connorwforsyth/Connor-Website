@@ -1,5 +1,5 @@
+import { useCallback, useEffect, useRef, useState } from "react";
 import { cn } from "@/lib/utils";
-import { useState, useEffect, useCallback, useRef } from "react";
 
 type NavigationButtonProps = {
   direction: "FORWARD" | "BACKWARD";
@@ -44,14 +44,15 @@ export function NavigationButton({
 
   return (
     <button
-      ref={buttonRef}
       className={cn(
-        "flex items-center gap-2 rounded-md bg-zinc-800 p-2 text-xs text-white hover:bg-zinc-700 focus:outline-none focus:ring-1 focus:ring-zinc-400 active:bg-zinc-700 active:ring-zinc-400",
-        isActive && "ring-2 ",
-        className,
+        "flex items-center gap-2 rounded-md bg-zinc-800 p-2 text-white text-xs hover:bg-zinc-700 focus:outline-none focus:ring-1 focus:ring-zinc-400 active:bg-zinc-700 active:ring-zinc-400",
+        isActive && "ring-2",
+        className
       )}
-      onClick={handleAction}
       onBlur={() => setIsActive(false)}
+      onClick={handleAction}
+      ref={buttonRef}
+      type="button"
     >
       {direction === "BACKWARD" && (
         <span className={cn("text-xs opacity-50", isActive && "opacity-100")}>

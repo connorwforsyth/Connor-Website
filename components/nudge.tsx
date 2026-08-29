@@ -1,5 +1,4 @@
 "use client";
-import React from "react";
 
 export default function Nudge() {
   const audio = new Audio("/msn/nudge.mp3");
@@ -8,7 +7,7 @@ export default function Nudge() {
   const msnSound = () => {
     audio.play();
     const nudgeElement = document.getElementById("nudge");
-    nudgeElement.innerHTML = nudgeElement.innerHTML =
+    nudgeElement.innerHTML =
       '<img style="display: inline; margin-right: 0.6rem; margin-left: 0.6rem;" src="/msn/nudge.png" />';
     setTimeout(() => {
       const imgElement = nudgeElement.querySelector("img");
@@ -20,13 +19,14 @@ export default function Nudge() {
   };
   return (
     <span>
-      <em
-        onClick={msnSound}
+      <button
+        className="inline cursor-pointer italic underline"
         id="nudge"
-        className="inline cursor-pointer underline"
+        onClick={msnSound}
+        type="button"
       >
         nudge
-      </em>
+      </button>
     </span>
   );
 }

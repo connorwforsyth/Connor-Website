@@ -1,28 +1,26 @@
 import Link from "next/link";
 import "@/styles/icons.css";
-import { Collaborators } from "@/components/Collaborators";
+import type { Metadata } from "next";
 import Image from "next/image";
-import { Metadata } from "next";
-import siteMetadata from "@/config/site-metadata";
-import Navbar from "@/components/navbar";
-import FeatureItem from "@/components/FeatureItem";
+import { Collaborators } from "@/components/Collaborators";
+import FeatureItem, { type FeatureItemProps } from "@/components/FeatureItem";
 import ProjectLink from "@/components/ProjectLink";
-import { FeatureItemProps } from "@/components/FeatureItem";
+import siteMetadata from "@/config/site-metadata";
 
 export const metadata: Metadata = {
-  metadataBase: new URL(siteMetadata.siteUrl),
-  title: siteMetadata.title,
   description: siteMetadata.description,
+  metadataBase: new URL(siteMetadata.siteUrl),
   openGraph: {
-    type: "website",
-    url: siteMetadata.siteUrl,
-    title: siteMetadata.title,
     description: siteMetadata.description,
-    siteName: siteMetadata.title,
     images: {
       url: `${siteMetadata.siteUrl}/api/og/?title=${siteMetadata.title}`,
     },
+    siteName: siteMetadata.title,
+    title: siteMetadata.title,
+    type: "website",
+    url: siteMetadata.siteUrl,
   },
+  title: siteMetadata.title,
 };
 
 export default function Home() {
@@ -30,17 +28,17 @@ export default function Home() {
     <div className="flex-col text-pretty">
       {/* <Navbar /> */}
       <Image
-        width={64}
-        height={64}
         alt="ConnorForsythHeadshot"
         className="sr-only mx-auto w-full max-w-2xl rounded-lg"
-        src="/connorforsyth-headshot.jpg"
-        priority
+        height={64}
         loading="eager"
+        priority
+        src="/connorforsyth-headshot.jpg"
+        width={64}
       />
       <div className="flex flex-col gap-4 sm:h-auto">
-        <div className="mx-auto flex w-full max-w-2xl flex-col gap-4 ">
-          <h1 className="pb-4 font-rodney text-2xl font-medium text-foreground sm:text-3xl">
+        <div className="mx-auto flex w-full max-w-2xl flex-col gap-4">
+          <h1 className="pb-4 font-medium font-rodney text-2xl text-foreground sm:text-3xl">
             <span className="block pr-1 text-foreground/80 sm:inline">
               Connor Forsyth.
             </span>
@@ -51,16 +49,16 @@ export default function Home() {
             </span>
           </h1>
           <div
+            basic-stagger="1"
             className="flex flex-col gap-3"
             data-animate=""
-            basic-stagger="1"
           >
             <p>
               I currently work at{" "}
               <Link
                 href="https://deloitte.com.au"
-                target="_blank"
                 rel="noopener noreferrer"
+                target="_blank"
               >
                 Deloitte
               </Link>{" "}
@@ -70,15 +68,14 @@ export default function Home() {
               development of software applications.
             </p>
             <p>
-              Outside of work, I enjoy taking photos,              
-              and brewing filter coffee.
+              Outside of work, I enjoy taking photos, and brewing filter coffee.
             </p>
           </div>
         </div>
         <div
-          data-animate=""
           basic-stagger="2"
           className="mx-auto flex w-full max-w-2xl flex-col gap-4"
+          data-animate=""
         >
           <div className="flex flex-row gap-4">
             <ProjectLink href="/projects">All Projects</ProjectLink>
@@ -90,16 +87,16 @@ export default function Home() {
         </div>
         <div className="flex flex-col-reverse gap-4 sm:flex-col">
           <div
-            data-animate=""
             basic-stagger="3"
-            className="mx-auto flex w-full max-w-2xl  gap-4"
+            className="mx-auto flex w-full max-w-2xl gap-4"
+            data-animate=""
           >
             <Collaborators />
           </div>
           <div
-            data-animate=""
             basic-stagger="4"
             className="mx-auto w-full max-w-2xl"
+            data-animate=""
           >
             <h2 className="mb-3 hidden text-foreground/80 sm:block">
               <em>Contact</em>
@@ -118,9 +115,9 @@ export default function Home() {
       </div>
 
       <div
-        data-animate=""
         basic-stagger="5"
         className="mx-auto my-8 flex w-full max-w-screen-2xl flex-col gap-24 py-24 md:gap-36 md:py-36"
+        data-animate=""
       >
         {featuredItems.map((feature) => (
           <FeatureItem key={feature.title} {...feature} />
@@ -132,19 +129,6 @@ export default function Home() {
 
 const featuredItems: FeatureItemProps[] = [
   {
-    title: "Recime",
-    description:
-      "Crafting a web based Recipe discovery, organiser and menu planner app for a New York based startup.",
-    position: "left",
-    icon: (
-      <Image
-        src="/homepage/recime-icon.svg"
-        alt="Recime"
-        width={24}
-        height={24}
-      />
-    ),
-    media: { src: "/homepage/recime-home.png", variant: "framed" },
     content: (
       <>
         <p>
@@ -162,22 +146,21 @@ const featuredItems: FeatureItemProps[] = [
         </ProjectLink>
       </>
     ),
-  },
-  {
-    title: "Designit",
     description:
-      "Service and product design consulting, design workflows and business development.",
-    position: "right",
+      "Crafting a web based Recipe discovery, organiser and menu planner app for a New York based startup.",
     icon: (
       <Image
-        src="/homepage/designit-icon.svg"
-        className="p-1"
-        alt="Designit"
-        width={24}
+        alt="Recime"
         height={24}
+        src="/homepage/recime-icon.svg"
+        width={24}
       />
     ),
-    media: { src: "/writing/miro-ds/heroshot.png" },
+    media: { src: "/homepage/recime-home.png", variant: "framed" },
+    position: "left",
+    title: "Recime",
+  },
+  {
     content: (
       <>
         <p>
@@ -196,26 +179,22 @@ const featuredItems: FeatureItemProps[] = [
         <ProjectLink href="/projects/makeit">View Makeit</ProjectLink>
       </>
     ),
-  },
-  {
-    title: "Origin Zero",
     description:
-      "Product strategy and design for Australia's leading net zero energy retailer.",
-    position: "left",
+      "Service and product design consulting, design workflows and business development.",
     icon: (
       <Image
-        className="p-0.5"
-        src="/homepage/origin-icon.png"
-        alt="Origin Zero"
-        width={24}
+        alt="Designit"
+        className="p-1"
         height={24}
+        src="/homepage/designit-icon.svg"
+        width={24}
       />
     ),
-    media: {
-      src: "/homepage/origin-zero-home.png",
-      variant: "framed",
-      frameClassName: "from-orange-400 to-red-500",
-    },
+    media: { src: "/writing/miro-ds/heroshot.png" },
+    position: "right",
+    title: "Designit",
+  },
+  {
     content: (
       <>
         <p>
@@ -232,23 +211,26 @@ const featuredItems: FeatureItemProps[] = [
         </ProjectLink>
       </>
     ),
-  },
-  {
-    title: "Woolworths / WooliesX",
     description:
-      "Heuristic evaluation and conversation design for key customer jobs for Australia's leading retail grocery chain.",
-    imageWrapperClassName: "bg-white items-end",
-    position: "right",
+      "Product strategy and design for Australia's leading net zero energy retailer.",
     icon: (
       <Image
-        className="p-1"
-        src="/homepage/woolies-icon.png"
-        alt="WooliesX"
-        width={24}
+        alt="Origin Zero"
+        className="p-0.5"
         height={24}
+        src="/homepage/origin-icon.png"
+        width={24}
       />
     ),
-    media: { src: "/homepage/woolies-hero.png" },
+    media: {
+      frameClassName: "from-orange-400 to-red-500",
+      src: "/homepage/origin-zero-home.png",
+      variant: "framed",
+    },
+    position: "left",
+    title: "Origin Zero",
+  },
+  {
     content: (
       <>
         <p>
@@ -264,32 +246,23 @@ const featuredItems: FeatureItemProps[] = [
         </ProjectLink>
       </>
     ),
+    description:
+      "Heuristic evaluation and conversation design for key customer jobs for Australia's leading retail grocery chain.",
+    icon: (
+      <Image
+        alt="WooliesX"
+        className="p-1"
+        height={24}
+        src="/homepage/woolies-icon.png"
+        width={24}
+      />
+    ),
+    imageWrapperClassName: "bg-white items-end",
+    media: { src: "/homepage/woolies-hero.png" },
+    position: "right",
+    title: "Woolworths / WooliesX",
   },
   {
-    title: "TEDxMelbourne",
-    description:
-      "Leading operations, experience design and technology for Melbourne's very own TEDx community.",
-    position: "left",
-    imageWrapperClassName:
-      "w-full bg-gradient-to-tr p-4 *:scale-75 sm:p-8 lg:p-24 to-red-500 from-red-600",
-    icon: (
-      <>
-        <svg
-          className="p-1"
-          width="266"
-          height="256"
-          viewBox="0 0 266 256"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            d="M171.471 255.972L132.502 191.26L94.5004 255.972H0.889771L89.7502 125.127L4.18934 0H97.8284L132.502 61.8667L168.172 0H261.782L176.25 125.156L265.11 256H171.499L171.471 255.972Z"
-            fill="#EB0028"
-          />
-        </svg>
-      </>
-    ),
-    media: { src: "/images/TEDx-Hero.png" },
     content: (
       <>
         I lead the design and technology team with TEDxMelbourne, in which I
@@ -302,23 +275,32 @@ const featuredItems: FeatureItemProps[] = [
         </ProjectLink>
       </>
     ),
+    description:
+      "Leading operations, experience design and technology for Melbourne's very own TEDx community.",
+    icon: (
+      <>
+        <svg
+          className="p-1"
+          fill="none"
+          height="256"
+          viewBox="0 0 266 256"
+          width="266"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M171.471 255.972L132.502 191.26L94.5004 255.972H0.889771L89.7502 125.127L4.18934 0H97.8284L132.502 61.8667L168.172 0H261.782L176.25 125.156L265.11 256H171.499L171.471 255.972Z"
+            fill="#EB0028"
+          />
+        </svg>
+      </>
+    ),
+    imageWrapperClassName:
+      "w-full bg-gradient-to-tr p-4 *:scale-75 sm:p-8 lg:p-24 to-red-500 from-red-600",
+    media: { src: "/images/TEDx-Hero.png" },
+    position: "left",
+    title: "TEDxMelbourne",
   },
   {
-    title: "Figma Plugin: Component Instance Looper",
-    description:
-      "Figma plugin development to improve design workflows leveraging open source libraries like React.",
-    position: "right",
-    imageWrapperClassName:"*:object-contain bg-cover bg-[url(/projects/component-instance-looper/cover.png)]",
-    icon: (
-      <Image
-        src="/homepage/figma-app-icon.png"
-        className="h-8 w-8"
-        alt="Placeholder"
-        width={64}
-        height={64}
-      />
-    ),
-    media: { src: "/projects/component-instance-looper/cover.png" },
     content: (
       <>
         <p>
@@ -338,22 +320,24 @@ const featuredItems: FeatureItemProps[] = [
         </ProjectLink>
       </>
     ),
-  },
-  {
-    title: "Raycast Extension: Pinch SVG",
     description:
-      "Building and contributing to open source through a pixel incrementing tool.",
-    position: "left",
+      "Figma plugin development to improve design workflows leveraging open source libraries like React.",
     icon: (
       <Image
-        src="/homepage/raycast-icon.png"
-        className=""
         alt="Placeholder"
-        width={32}
-        height={32}
+        className="h-8 w-8"
+        height={64}
+        src="/homepage/figma-app-icon.png"
+        width={64}
       />
     ),
-    media: { src: "/projects/raycast-extension/SVG spacing.png" },
+    imageWrapperClassName:
+      "*:object-contain bg-cover bg-[url(/projects/component-instance-looper/cover.png)]",
+    media: { src: "/projects/component-instance-looper/cover.png" },
+    position: "right",
+    title: "Figma Plugin: Component Instance Looper",
+  },
+  {
     content: (
       <>
         <p>
@@ -369,5 +353,19 @@ const featuredItems: FeatureItemProps[] = [
         </ProjectLink>
       </>
     ),
+    description:
+      "Building and contributing to open source through a pixel incrementing tool.",
+    icon: (
+      <Image
+        alt="Placeholder"
+        className=""
+        height={32}
+        src="/homepage/raycast-icon.png"
+        width={32}
+      />
+    ),
+    media: { src: "/projects/raycast-extension/SVG spacing.png" },
+    position: "left",
+    title: "Raycast Extension: Pinch SVG",
   },
 ];

@@ -1,5 +1,5 @@
-import { PrintButton } from "@/components/PrintButton";
 import type { JSX } from "react";
+import { DownloadCVButton } from "@/components/DownloadCVButton";
 
 const accessCode: string = process.env.ACCESS_CODE!;
 
@@ -37,123 +37,69 @@ type EducationItem = {
 
 // Data
 const data = {
-  work: [
+  education: [
     {
-      year: "2025 → Now",
       items: [
         {
-          title: "Design Engineer (Manager)",
-          company: "Deloitte Australia",
-          companyUrl: "https://www.deloitte.com.au",
-          location: "Sydney AUS",
-          description:
-            "Lead designer for enterprise design systems, AI products and developer tools.",
-          bullets: [
-            "Maintaining the GEL Design System across Figma and Storybook (React).",
-            "Leading design for MyAssist, Deloittes internal AI chat and workflow product.",
-          ],
+          name: "Design System University",
+          url: "https://designsystem.university",
         },
+        { name: "Animations.dev", url: "https://animations.dev" },
+        { name: "Buildui.com", url: "https://buildui.com" },
+        { name: "svg-animations.how", url: "https://svg-animations.how" },
       ],
+      year: "2024",
     },
     {
-      year: "2022 → 2025",
       items: [
         {
-          title: "Service & Product Designer",
-          company: "Designit",
-          companyUrl: "http://designit.com",
-          location: "Sydney AUS",
-          description:
-            "Working at the intersection of innovation, product design, strategy and technology.",
-          bullets: [
-            "Leading design engineering for Ausgrid's BCM portal, using RadixUI, ReactRouter and SharePoint framework (SPFx).", // "Defining and communicating the future vision for statewide road asset maintenance with Transport NSW (Gov).",
-            "Product design for Origin Zero's <a href='https://connorforsyth.co/projects/net-zero-energy-concepts/'>B2B Net-Zero energy portal</a> and strategising advanced features for their roadmap.",
-            "Leading the digital strategy for <a href='https://www.ozharvest.org.au/'>OzHarvest</a>, partnering with the Founder, C-suite and extended team to identify key challenges to overcome and combat food waste.",
-            "Reimagined procurement with Origin Energy, leveraging ServiceNow proposals projected to save $120M in maverick spend across source-to-pay.",
-            // "Reimagining and market researching postgraduate study with The University of Sydney Business School's post covid, global learning environment.",
-
-            "Conducted a residency program to explore AI's influence in design and delivered workshops for 30+ students at <a href='https://sva.edu/events/ai-sins-panel-discussion-with-designit'>SVA NYC</a>.",
-            // "Major sharepoint intranet redesign for Ausgrid 20+ pages of rework and a heuristic evaluation.",
-            "Improving 8+ customer jobs through a <a href='https://connorforsyth.co/projects/chatbot-heuristic'>chatbot heuristic</a> review and redesign for Woolworths Group.",
-            // "Established new business opportunities through programs like <a href='https://connorforsyth.co/projects/makeit'>Makeit</a>.",
-          ],
+          name: "FrontEnd Masters: JavaScript, React, Full Stack for Frontend Developers",
         },
+        { name: "IDEO: Leading Complex Projects" },
       ],
+      year: "2023",
     },
     {
-      year: "2018 → 2025",
       items: [
-        {
-          title: "Design Technologist",
-          company: "TEDxMelbourne",
-          companyUrl: "https://www.tedxmelbourne.com",
-          location: "Melbourne AUS",
-          description:
-            "Leading design and technology to deliver world-class events.",
-          bullets: [
-            "I developed and managed the TEDxMelbourne website, implemented organisational systems for project management, CRMs for volunteers, partners, and speakers, and streamlined core operational processes.",
-            "Leveraged technology to enhance event experiences such as creating audience interaction tools, implementing live streaming, and using AI to create experimental event concepts.",
-          ],
-        },
+        { name: "Design Sprint Masterclass & Workshopper Master, AJ&Smart" },
+        { name: "CS50x: Introduction to Computer Science, HarvardX" },
       ],
+      year: "2022",
     },
     {
-      year: "2022 → 2024",
       items: [
-        {
-          title: "Guest Lecturer & Academic Tutor",
-          company: "Design Lab: University of Sydney",
-          companyUrl: "https://www.sydney.edu.au",
-          location: "Sydney AUS",
-          description:
-            "Teaching 200+ masters of design students at one of Australia's top Universities.<br> Subjects: <a href='https://www.sydney.edu.au/units/IDEA9106'>IDEA9106: Design Thinking</a> ‧ <a href='https://www.sydney.edu.au/units/DESN9003'>DESN9003: Strategic Design & Leadership.</a>",
-        },
+        { name: "Agile Coaching Certification, ICP-ACC - ICAgile" },
+        { name: "Codecademy" },
       ],
+      year: "2021",
     },
     {
-      year: "2021 → 2022",
       items: [
-        {
-          title: "Service Designer",
-          company: "Civic Disability Services",
-          companyUrl: "https://www.civic.org.au",
-          location: "Sydney AUS",
-          description:
-            "Leading the service design and research capability for the 800 person organisation. Delivering projects for employee and client onboarding, and establishing agile rituals and OKRs in line with the strategy.",
-        },
+        { name: "Human-Centred Service Design, IDEO" },
+        { name: "Agile Explorer, IBM" },
+        { name: "Interaction Design Foundation" },
       ],
+      year: "2020",
     },
     {
-      year: "2019 → 2022",
       items: [
-        {
-          title: "Service Design & Creative Technologist",
-          company: "Freelance",
-          companyUrl: "https://connorforsyth.co",
-          location: "Sydney AUS",
-          description:
-            "Leading experience design with Stone Digital, Vipassana At Home, and Surf Coast Shire (Government).",
-        },
+        { name: "Service Design Bootcamp, Academy Xi" },
+        { name: "UX Design Bootcamp, General Assembly" },
       ],
+      year: "2019",
     },
     {
-      year: "2018 → 2019",
       items: [
         {
-          title: "Design Strategist (Architecture)",
-          company: "Billard Leece Partnership",
-          companyUrl: "https://www.blp.com.au",
-          location: "Melbourne AUS",
-          description:
-            "Architectural design for government Victorian Building Schools. Prototyping for Peter MacCallum Palliative Care and Cancer Centre. User testing with doctors and nurses to design the bed head for cancer patients.",
+          name: "Bachelor of Design (Architecture), The University of Melbourne",
         },
       ],
+      year: "2018",
     },
-  ] as YearGroup<WorkItem>[],
+  ] as YearGroup<EducationItem>[],
 
   sideprojects: [
     {
-      year: "2024",
       items: [
         {
           title: "ReciMe web application design",
@@ -172,66 +118,66 @@ const data = {
           url: "https://www.connorforsyth.co/writing/miro-design-system",
         },
       ],
+      year: "2024",
     },
     {
-      year: "2023",
       items: [
         {
           title: "Designer, OpenLibrary.org",
           url: "https://openlibrary.org/",
         },
       ],
+      year: "2023",
     },
     {
-      year: "2022",
       items: [
         {
           title: "Community Advisor, Earlywork",
           url: "https://www.earlywork.co/",
         },
       ],
+      year: "2022",
     },
     {
-      year: "2020",
       items: [
         {
           title: "Designer and Developer, Vipassana At Home",
           url: "https://www.connorforsyth.co/projects/vipassana-at-home",
         },
       ],
+      year: "2020",
     },
     {
-      year: "2019-21",
       items: [
         {
           title: "Design Technologist, Melbourne SOUP",
           url: "http://melbournesoup.org",
         },
       ],
+      year: "2019-21",
     },
     {
-      year: "2018-19",
       items: [
         {
           title: "Design Director, NAAUC",
           url: "https://www.naauc.edu.au/",
         },
       ],
+      year: "2018-19",
     },
     {
-      year: "2016-17",
       items: [
         {
           title: "Student Club President, International House Melbourne",
           url: "https://study.unimelb.edu.au/accommodation/international-house",
         },
       ],
+      year: "2016-17",
     },
   ] as YearGroup<SideProjectItem>[],
 
   speaking: [
     {
-      year: "2023",
       items: [
         {
           title:
@@ -242,9 +188,9 @@ const data = {
             "Panel: School of Visual Arts NYC: AI Sins - The future of the design industry with AI",
         },
       ],
+      year: "2023",
     },
     {
-      year: "2022",
       items: [
         {
           title:
@@ -255,78 +201,131 @@ const data = {
             "Host: Tech Talks Sydney + Designit - Sustainability by Design",
         },
       ],
+      year: "2022",
     },
     {
-      year: "2018",
       items: [
         {
           title:
             "Seminars: NAAUC National Conference - (1) Diversity in leadership, (2) Universities in a digital world",
         },
       ],
+      year: "2018",
     },
   ] as YearGroup<SpeakingItem>[],
+  work: [
+    {
+      items: [
+        {
+          bullets: [
+            "Maintaining the GEL Design System across Figma and Storybook (React).",
+            "Leading design for MyAssist, Deloittes internal AI chat and workflow product.",
+          ],
+          company: "Deloitte Australia",
+          companyUrl: "https://www.deloitte.com.au",
+          description:
+            "Lead designer for enterprise design systems, AI products and developer tools.",
+          location: "Sydney AUS",
+          title: "Design Engineer (Manager)",
+        },
+      ],
+      year: "2025 → Now",
+    },
+    {
+      items: [
+        {
+          bullets: [
+            "Leading design engineering for Ausgrid's BCM portal, using RadixUI, ReactRouter and SharePoint framework (SPFx).", // "Defining and communicating the future vision for statewide road asset maintenance with Transport NSW (Gov).",
+            "Product design for Origin Zero's <a href='https://connorforsyth.co/projects/net-zero-energy-concepts/'>B2B Net-Zero energy portal</a> and strategising advanced features for their roadmap.",
+            "Leading the digital strategy for <a href='https://www.ozharvest.org.au/'>OzHarvest</a>, partnering with the Founder, C-suite and extended team to identify key challenges to overcome and combat food waste.",
+            "Reimagined procurement with Origin Energy, leveraging ServiceNow proposals projected to save $120M in maverick spend across source-to-pay.",
+            // "Reimagining and market researching postgraduate study with The University of Sydney Business School's post covid, global learning environment.",
 
-  education: [
-    {
-      year: "2024",
-      items: [
-        {
-          name: "Design System University",
-          url: "https://designsystem.university",
-        },
-        { name: "Animations.dev", url: "https://animations.dev" },
-        { name: "Buildui.com", url: "https://buildui.com" },
-        { name: "svg-animations.how", url: "https://svg-animations.how" },
-      ],
-    },
-    {
-      year: "2023",
-      items: [
-        {
-          name: "FrontEnd Masters: JavaScript, React, Full Stack for Frontend Developers",
-        },
-        { name: "IDEO: Leading Complex Projects" },
-      ],
-    },
-    {
-      year: "2022",
-      items: [
-        { name: "Design Sprint Masterclass & Workshopper Master, AJ&Smart" },
-        { name: "CS50x: Introduction to Computer Science, HarvardX" },
-      ],
-    },
-    {
-      year: "2021",
-      items: [
-        { name: "Agile Coaching Certification, ICP-ACC - ICAgile" },
-        { name: "Codecademy" },
-      ],
-    },
-    {
-      year: "2020",
-      items: [
-        { name: "Human-Centred Service Design, IDEO" },
-        { name: "Agile Explorer, IBM" },
-        { name: "Interaction Design Foundation" },
-      ],
-    },
-    {
-      year: "2019",
-      items: [
-        { name: "Service Design Bootcamp, Academy Xi" },
-        { name: "UX Design Bootcamp, General Assembly" },
-      ],
-    },
-    {
-      year: "2018",
-      items: [
-        {
-          name: "Bachelor of Design (Architecture), The University of Melbourne",
+            "Conducted a residency program to explore AI's influence in design and delivered workshops for 30+ students at <a href='https://sva.edu/events/ai-sins-panel-discussion-with-designit'>SVA NYC</a>.",
+            // "Major sharepoint intranet redesign for Ausgrid 20+ pages of rework and a heuristic evaluation.",
+            "Improving 8+ customer jobs through a <a href='https://connorforsyth.co/projects/chatbot-heuristic'>chatbot heuristic</a> review and redesign for Woolworths Group.",
+            // "Established new business opportunities through programs like <a href='https://connorforsyth.co/projects/makeit'>Makeit</a>.",
+          ],
+          company: "Designit",
+          companyUrl: "http://designit.com",
+          description:
+            "Working at the intersection of innovation, product design, strategy and technology.",
+          location: "Sydney AUS",
+          title: "Service & Product Designer",
         },
       ],
+      year: "2022 → 2025",
     },
-  ] as YearGroup<EducationItem>[],
+    {
+      items: [
+        {
+          bullets: [
+            "I developed and managed the TEDxMelbourne website, implemented organisational systems for project management, CRMs for volunteers, partners, and speakers, and streamlined core operational processes.",
+            "Leveraged technology to enhance event experiences such as creating audience interaction tools, implementing live streaming, and using AI to create experimental event concepts.",
+          ],
+          company: "TEDxMelbourne",
+          companyUrl: "https://www.tedxmelbourne.com",
+          description:
+            "Leading design and technology to deliver world-class events.",
+          location: "Melbourne AUS",
+          title: "Design Technologist",
+        },
+      ],
+      year: "2018 → 2025",
+    },
+    {
+      items: [
+        {
+          company: "Design Lab: University of Sydney",
+          companyUrl: "https://www.sydney.edu.au",
+          description:
+            "Teaching 200+ masters of design students at one of Australia's top Universities.<br> Subjects: <a href='https://www.sydney.edu.au/units/IDEA9106'>IDEA9106: Design Thinking</a> ‧ <a href='https://www.sydney.edu.au/units/DESN9003'>DESN9003: Strategic Design & Leadership.</a>",
+          location: "Sydney AUS",
+          title: "Guest Lecturer & Academic Tutor",
+        },
+      ],
+      year: "2022 → 2024",
+    },
+    {
+      items: [
+        {
+          company: "Civic Disability Services",
+          companyUrl: "https://www.civic.org.au",
+          description:
+            "Leading the service design and research capability for the 800 person organisation. Delivering projects for employee and client onboarding, and establishing agile rituals and OKRs in line with the strategy.",
+          location: "Sydney AUS",
+          title: "Service Designer",
+        },
+      ],
+      year: "2021 → 2022",
+    },
+    {
+      items: [
+        {
+          company: "Freelance",
+          companyUrl: "https://connorforsyth.co",
+          description:
+            "Leading experience design with Stone Digital, Vipassana At Home, and Surf Coast Shire (Government).",
+          location: "Sydney AUS",
+          title: "Service Design & Creative Technologist",
+        },
+      ],
+      year: "2019 → 2022",
+    },
+    {
+      items: [
+        {
+          company: "Billard Leece Partnership",
+          companyUrl: "https://www.blp.com.au",
+          description:
+            "Architectural design for government Victorian Building Schools. Prototyping for Peter MacCallum Palliative Care and Cancer Centre. User testing with doctors and nurses to design the bed head for cancer patients.",
+          location: "Melbourne AUS",
+          title: "Design Strategist (Architecture)",
+        },
+      ],
+      year: "2018 → 2019",
+    },
+  ] as YearGroup<WorkItem>[],
 } as const;
 
 const TimelineYearGroup = <T extends { title: string; url?: string }>({
@@ -370,7 +369,7 @@ const WorkSection = ({
 }) => (
   <>
     <section className={`${className}`}>
-      {first && <h2 className="col-span-2 ">Work Experience</h2>}
+      {first && <h2 className="col-span-2">Work Experience</h2>}
       <ul className="grid grid-cols-1 gap-8">
         {experience.map((yearGroup, index) => (
           <li key={index}>
@@ -387,6 +386,7 @@ const WorkSection = ({
 const BulletContent = ({ content }: { content: React.ReactNode }) => {
   // Parse string content to handle HTML tags
   if (typeof content === "string") {
+    // biome-ignore lint/security/noDangerouslySetInnerHtml: CV bullet content is authored in this repo, not user input
     return <span dangerouslySetInnerHTML={{ __html: content }} />;
   }
   return <>{content}</>;
@@ -416,15 +416,14 @@ const WorkItem = ({
           <BulletContent content={description} />
         </p>
       )}
-      {bullets &&
-        bullets.map((bullet, index) => (
-          <li
-            className="relative pl-5 text-sm before:absolute before:left-0  before:content-['—'] sm:text-xs print:text-xs"
-            key={index}
-          >
-            <BulletContent content={bullet} />
-          </li>
-        ))}
+      {bullets?.map((bullet, index) => (
+        <li
+          className="relative pl-5 text-sm before:absolute before:left-0 before:content-['—'] sm:text-xs print:text-xs"
+          key={index}
+        >
+          <BulletContent content={bullet} />
+        </li>
+      ))}
     </ul>
   </div>
 );
@@ -460,10 +459,10 @@ const ListSection = ({ title, items }: ListSectionProps) => (
 interface SecondarySectionProps<
   T extends { title?: string; name?: string; url?: string },
 > {
+  className?: string;
   title: string;
 
   yearGroups: YearGroup<T>[];
-  className?: string;
 }
 
 const SecondarySection = <
@@ -479,12 +478,12 @@ const SecondarySection = <
     <ul className="flex flex-col">
       {yearGroups.map((group, index) => (
         <TimelineYearGroup
-          key={index}
-          year={group.year}
           items={group.items.map((item) => ({
             title: item.title || item.name || "",
             url: item.url,
           }))}
+          key={index}
+          year={group.year}
         />
       ))}
     </ul>
@@ -495,11 +494,11 @@ const SecondarySection = <
 export default function CVPage() {
   return (
     <>
-      <PrintButton />
+      <DownloadCVButton />
       <div className="page">
-        <header className="grid grid-cols-1 flex-col gap-4 md:grid-cols-3 ">
+        <header className="grid grid-cols-1 flex-col gap-4 md:grid-cols-3">
           <div>
-            <h1 className="text-base font-medium">
+            <h1 className="font-medium text-base">
               <span>Connor Forsyth</span>
               <span className="block font-light text-muted-foreground lg:text-nowrap">
                 Design Engineer
@@ -511,8 +510,8 @@ export default function CVPage() {
               <p>
                 I am a designer with 7+ years of experience across interaction
                 design, design systems, web technology and user research.
-                Outside of work, you'll find me coding, taking photos, and making
-                coffee. I currently work at{" "}
+                Outside of work, you'll find me coding, taking photos, and
+                making coffee. I currently work at{" "}
                 <a href="https://www.deloitte.com.au">Deloitte</a> as a Design
                 Engineer.
               </p>
@@ -526,7 +525,6 @@ export default function CVPage() {
                   <li>
                     <a href="https://connorforsyth.co/github">GitHub</a>
                   </li>
-                 
                 </div>
                 <div className="col-span-2">
                   <a className="" href="mailto:c@connorforsyth.co">
@@ -545,7 +543,7 @@ export default function CVPage() {
             </nav>
           </div>
         </header>
-        <WorkSection first className="" experience={data.work} />
+        <WorkSection className="" experience={data.work} first />
       </div>
 
       <div className="page">
@@ -556,7 +554,6 @@ export default function CVPage() {
         />
         <div className="grid gap-8 sm:grid-cols-2">
           <ListSection
-            title="Skills"
             items={[
               "Service design",
               "Product design",
@@ -569,9 +566,9 @@ export default function CVPage() {
               "Prototyping",
               "Design systems",
             ]}
+            title="Skills"
           />
           <ListSection
-            title="Tech stack"
             items={[
               "Figma",
               "Miro",
@@ -588,6 +585,7 @@ export default function CVPage() {
               "RadixUI",
               "Webflow",
             ]}
+            title="Tech stack"
           />
         </div>
         <div className="grid gap-8 sm:grid-cols-2">
@@ -597,7 +595,6 @@ export default function CVPage() {
           />
           <SecondarySection title="Speaking" yearGroups={data.speaking} />
           <ListSection
-            title="Ask me about..."
             items={[
               "Filter coffee",
               "Photography",
@@ -606,15 +603,16 @@ export default function CVPage() {
               "Moving from architecture to IXD",
               "Vipassana meditation",
             ]}
+            title="Ask me about..."
           />
           <ListSection
-            title="This month I'm working on..."
             items={[
               "Building a timezone picker tool",
               "Hiking",
               "Rumba, Son, Afro-Cuban",
               "Running",
             ]}
+            title="This month I'm working on..."
           />
         </div>
       </div>

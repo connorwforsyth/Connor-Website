@@ -1,0 +1,83 @@
+{
+  "$schema": "./node_modules/@biomejs/biome/configuration_schema.json",
+  "extends": [
+    "ultracite/biome/core",
+    "ultracite/biome/react",
+    "ultracite/biome/next"
+  ],
+  "files": {
+    "includes": [
+      "!videos",
+      "!public",
+      "!content-draft-writing",
+      "!.context",
+      "!.conductor",
+      "!data"
+    ]
+  },
+  "linter": {
+    "rules": {
+      // Ultracite ships a very strict preset. The rules below are relaxed to
+      // roughly match the previous eslint-config-next setup and this project's
+      // intentional patterns. Formatting, import/key/class sorting, and the
+      // a11y / correctness / security safety net stay enforced.
+      "a11y": {
+        // Decorative inline SVG icons throughout the UI; titling each is noise.
+        "noSvgWithoutTitle": "off"
+      },
+      "correctness": {
+        // The old config disabled the React Compiler-oriented react-hooks
+        // rules; keep that intent here.
+        "useExhaustiveDependencies": "off"
+      },
+      "performance": {
+        // <img> is required in the OG image route (Satori, not next/image).
+        "noImgElement": "off",
+        // Inline handlers / namespace imports are fine for this codebase.
+        "noJsxPropsBind": "off",
+        "noNamespaceImport": "off",
+        "useTopLevelRegex": "off"
+      },
+      "style": {
+        "noNestedTernary": "off",
+        "noNonNullAssertion": "off",
+        // `type` vs `interface` is a style preference, not a defect.
+        "useConsistentTypeDefinitions": "off",
+        // Renaming files en masse would break imports for no real gain.
+        "useFilenamingConvention": "off",
+        // CSS source-order rule; the global stylesheet relies on ordering.
+        "noDescendingSpecificity": "off"
+      },
+      "suspicious": {
+        // The site uses custom attributes (e.g. `basic-stagger`) to drive its
+        // animation controller.
+        "noUnknownAttribute": "off",
+        // `cond && <X />` is used widely; the leaked-render footgun is
+        // acceptable here.
+        "noLeakedRender": "off",
+        // Static lists that never reorder (CV sections, spinner bars).
+        "noArrayIndexKey": "off",
+        // Migrating away from forwardRef is a separate React 19 refactor.
+        "noReactForwardRef": "off",
+        "noShadow": "off",
+        // Server actions, route handlers and the proxy need async signatures
+        // even without an inner await.
+        "useAwait": "off",
+        // Noisy with `strict: false` in tsconfig.
+        "noUnnecessaryConditions": "off"
+      }
+    }
+  },
+  "overrides": [
+    {
+      // shadcn/ui primitives are vendored code kept close to upstream.
+      "includes": ["components/ui/**"],
+      "linter": {
+        "rules": {
+          "a11y": { "useSemanticElements": "off" },
+          "correctness": { "noUnusedVariables": "off" }
+        }
+      }
+    }
+  ]
+}

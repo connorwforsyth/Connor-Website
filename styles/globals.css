@@ -1,11 +1,13 @@
 @import "tailwindcss";
 @import "tw-animate-css";
+@import "./type.css";
 @import "@radix-ui/colors/gray.css";
 @import "@radix-ui/colors/gray-dark.css";
 @import "@radix-ui/colors/red.css";
 @import "@radix-ui/colors/red-dark.css";
 @import "@radix-ui/colors/green.css";
 @import "@radix-ui/colors/green-dark.css";
+@import "shadcn/tailwind.css";
 @plugin "@tailwindcss/typography";
 
 @custom-variant dark (&:where(.dark, .dark *));
@@ -14,7 +16,7 @@
 @theme {
   --font-kag: kag-fallback, kag, sans-serif;
   --font-rodney: rodney, serif;
-  --font-mono: geist-mono;
+  --font-mono: var(--font-jetbrains-mono), geist-mono, monospace;
 
   --breakpoint-lessA4: 210mm;
 
@@ -53,10 +55,101 @@
   --radius-sm: calc(var(--radius) - 4px);
 }
 
-@utility container {
-  margin-inline: auto;
-  padding-inline: 2rem;
+/*
+  Neutrals map directly onto Radix Colors' Gray scale (1-2 backgrounds,
+  3-5 component surfaces, 6-8 borders, 11-12 text — see Radix's usage
+  guide). gray.css/gray-dark.css scope their variables under
+  :root/.dark already, so a single reference below resolves correctly
+  in both modes without a separate override block.
 
+  Destructive/success/highlight intentionally do NOT use Radix's
+  step 9 ("solid") value: step 9 is tuned for vividness, not contrast,
+  and several hues (red, green, blue) fall below 4.5:1 against the
+  white text we pair them with. Step 11 (light) / step 8 (dark) both
+  clear WCAG AA (~4.7-5.4:1) for red, green, and blue alike, so those
+  are used instead — this does need an explicit per-mode override,
+  since it's a different step per mode rather than the same variable
+  resolving automatically.
+
+  Deliberately unlayered rather than inside `@layer base`: this is the
+  single source of truth for the palette, and top-level :root/.dark is
+  also where the shadcn CLI reads and writes theme tokens.
+*/
+:root {
+  --background: var(--gray-1);
+  --foreground: var(--gray-12);
+
+  --card: oklch(
+    1 0 0
+  ); /* white — brighter than gray-1, the panel/elevation convention */
+  --card-foreground: var(--gray-12);
+
+  --popover: oklch(1 0 0); /* white */
+  --popover-foreground: var(--gray-12);
+
+  --primary: var(--gray-12);
+  --primary-foreground: var(--gray-1);
+
+  --secondary: var(--gray-3);
+  --secondary-foreground: var(--gray-12);
+
+  --muted: var(--gray-3);
+  --muted-foreground: var(--gray-11);
+
+  --accent: var(--gray-4);
+  --accent-foreground: var(--gray-12);
+
+  --destructive: var(--red-11);
+  --destructive-foreground: oklch(1 0 0);
+
+  --success: var(--green-11);
+  --success-foreground: oklch(1 0 0);
+
+  --border: var(--gray-6);
+  --input: var(--gray-6);
+  --ring: var(--gray-12);
+  --radius: 0.5rem;
+
+  --selection-background: var(--gray-8);
+  --selection-text: var(--gray-12);
+}
+
+.dark {
+  /* card/popover, selection, and the accent colors below use a different
+     Radix step per mode, so (unlike the tokens in :root above) they need
+     an explicit override here rather than resolving automatically. */
+  --card: var(
+    --gray-2
+  ); /* lighter than gray-1, the panel/elevation convention */
+  --popover: var(--gray-2);
+
+  --selection-background: var(--gray-7);
+
+  --destructive: var(--red-8);
+  --success: var(--green-8);
+}
+
+/*
+  Not one of @radix-ui/colors' bundled named scales — generated via
+  Radix's custom palette tool (radix-ui.com/colors/custom) seeded on
+  #0A37CD for a more vibrant brand blue than the stock "Blue" scale
+  allows while still clearing WCAG AA against white text (8.6:1 and
+  6.5:1 respectively — Radix's own generator agrees, emitting
+  `--blue-contrast: #fff` for this exact scale). Kept as one flat value
+  across modes, matching how Radix keeps a scale's own step 9 identical
+  across light/dark, and how this site's brand blue worked before.
+*/
+:root {
+  --highlight-light: oklch(0.502 0.2641 264.4); /* custom blue-8, #1046f7 */
+  --highlight: oklch(0.435 0.2314 264.4); /* custom blue-9 (seed), #0a37cd */
+  --text-highlight: oklch(1 0 0);
+}
+
+@utility container {
+  padding-inline: 2rem;
+  margin-inline: auto;
+
+  /* biome-ignore lint/correctness/noUnknownFunction: Tailwind v4 theme() function */
   @media (width >= theme(--breakpoint-2xl)) {
     max-width: 1400px;
   }
@@ -64,201 +157,38 @@
 
 @utility font-rodney-medium {
   font-family: rodney, serif;
-  font-weight: 600;
   font-style: italic;
+  font-weight: 500;
 }
 
 @utility box-shadow-small {
   box-shadow: inset 0px -1.5px 0px 0px var(--highlight);
-  @apply inline px-[1px] pb-[2px] font-[450] text-[var(--text-highlight)] transition-all hover:text-[var(--text-highlight)];
-  transition-property: all;
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   transition-duration: 200ms;
+  transition-property: all;
+  @apply inline px-[1px] pb-[2px] font-[450] text-[var(--text-highlight)] transition-all hover:text-[var(--text-highlight)];
 }
 
 @utility box-shadow-full {
-  @apply font-[450];
   box-shadow: inset 0px -24px 0px 0px var(--highlight);
+  @apply font-[450];
 }
 
 @utility box-shadow-small-pill {
-  box-shadow: inset 0px 0px 3px -4px var(--highlight-light);
-  @apply inline px-[1px] text-[var(--text-highlight)] underline decoration-[var(--highlight-light)] transition-all hover:text-[var(--text-highlight)] hover:no-underline;
   text-decoration-thickness: 1px;
   text-underline-offset: 1px;
-  transition-property: all;
+  box-shadow: inset 0px 0px 3px -4px var(--highlight-light);
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   transition-duration: 300ms;
+  transition-property: all;
+  @apply inline px-[1px] text-[var(--text-highlight)] underline decoration-[var(--highlight-light)] transition-all hover:text-[var(--text-highlight)] hover:no-underline;
 }
 
 @utility box-shadow-full-pill {
   box-shadow: inset 0px -50px 0px 0px var(--highlight);
 }
 
-@supports (font-variation-settings: normal) {
-  @font-face {
-    font-family: "kag-fallback";
-    src: url("/fonts/geist/GeistVF.woff2") format("woff2");
-    font-weight: 500;
-    unicode-range: U+2197, U+21B3, U+0026, U+2190, U+2192, U+003D; /* Covers ↗, ↳, &, ←, →, = characters */
-  }
-}
-
-@font-face {
-  font-family: "geist-mono";
-  src: url("/fonts/geist/GeistMonoVF.woff2") format("woff2-variations");
-  font-weight: 100 900;
-  font-style: swap;
-}
-
-@font-face {
-  font-family: "kag";
-  src: url("/fonts/KAG/KynetonArtGrotesque-Light.woff2") format("woff2");
-  font-weight: 200;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: "kag";
-  src: url("/fonts/KAG/KynetonArtGrotesque-Regular.woff2") format("woff2");
-  font-weight: 300;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: "kag";
-  src: url("/fonts/KAG/KynetonArtGrotesque-DemiBold.woff2") format("woff2");
-  font-weight: 500;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: "kag";
-  src: url("/fonts/KAG/KynetonArtGrotesque-Bold.woff2") format("woff2");
-  font-weight: 700;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: "kag";
-  src: url("/fonts/KAG/KynetonArtGrotesque-Black.woff2") format("woff2");
-  font-weight: 900;
-  font-style: normal;
-  font-display: swap;
-}
-
-/* // Italic styles */
-@font-face {
-  font-family: "kag";
-  src: url("/fonts/KAG/KynetonArtGrotesque-LightItalic.woff2") format("woff2");
-  font-weight: 200;
-  font-style: italic;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: "kag";
-  src: url("/fonts/KAG/KynetonArtGrotesque-Italic.woff2") format("woff2");
-  font-weight: 300;
-  font-style: italic;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: "kag";
-  src: url("/fonts/KAG/KynetonArtGrotesque-DemiBoldItalic.woff2")
-    format("woff2");
-  font-weight: 500;
-  font-style: italic;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: "kag";
-  src: url("/fonts/KAG/KynetonArtGrotesque-BoldItalic.woff2") format("woff2");
-  font-weight: 700;
-  font-style: italic;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: "kag";
-  src: url("/fonts/KAG/KynetonArtGrotesque-BlackItalic.woff2") format("woff2");
-  font-weight: 900;
-  font-style: italic;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: "rodney";
-  src: url(/fonts/Rodney/Rodney-Light.woff2) format("woff2");
-  font-weight: 300;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: "rodney";
-  src: url(/fonts/Rodney/Rodney-Regular.woff2) format("woff2");
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: "rodney";
-  src: url(/fonts/Rodney/Rodney-Medium.woff2) format("woff2");
-  font-weight: 500;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: "rodney";
-  src: url(/fonts/Rodney/Rodney-Bold.woff2) format("woff2");
-  font-weight: 700;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: "rodney";
-  src: url(/fonts/Rodney/Rodney-LightItalic.woff2) format("woff2");
-  font-weight: 300;
-  font-style: italic;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: "rodney";
-  src: url(/fonts/Rodney/Rodney-RegularItalic.woff2) format("woff2");
-  font-weight: 400;
-  font-style: italic;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: "rodney";
-  src: url(/fonts/Rodney/Rodney-MediumItalic.woff2) format("woff2");
-  font-weight: 500;
-  font-style: italic;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: "rodney";
-  src: url(/fonts/Rodney/Rodney-BoldItalic.woff2) format("woff2");
-  font-weight: 700;
-  font-style: italic;
-  font-display: swap;
-}
-
 body {
-  font-weight: 300;
   font-family:
     kag-fallback,
     kag,
@@ -275,99 +205,18 @@ body {
     "Segoe UI Emoji",
     "Segoe UI Symbol",
     "Noto Color Emoji";
+  font-weight: 300;
 }
 
 @layer base {
-  /*
-    Neutrals map directly onto Radix Colors' Gray scale (1-2 backgrounds,
-    3-5 component surfaces, 6-8 borders, 11-12 text — see Radix's usage
-    guide). gray.css/gray-dark.css scope their variables under
-    :root/.dark already, so a single reference below resolves correctly
-    in both modes without a separate override block.
-
-    Destructive/success/highlight intentionally do NOT use Radix's
-    step 9 ("solid") value: step 9 is tuned for vividness, not contrast,
-    and several hues (red, green, blue) fall below 4.5:1 against the
-    white text we pair them with. Step 11 (light) / step 8 (dark) both
-    clear WCAG AA (~4.7-5.4:1) for red, green, and blue alike, so those
-    are used instead — this does need an explicit per-mode override,
-    since it's a different step per mode rather than the same variable
-    resolving automatically.
-  */
-  :root {
-    --background: var(--gray-1);
-    --foreground: var(--gray-12);
-
-    --card: oklch(1 0 0); /* white — brighter than gray-1, the panel/elevation convention */
-    --card-foreground: var(--gray-12);
-
-    --popover: oklch(1 0 0); /* white */
-    --popover-foreground: var(--gray-12);
-
-    --primary: var(--gray-12);
-    --primary-foreground: var(--gray-1);
-
-    --secondary: var(--gray-3);
-    --secondary-foreground: var(--gray-12);
-
-    --muted: var(--gray-3);
-    --muted-foreground: var(--gray-11);
-
-    --accent: var(--gray-4);
-    --accent-foreground: var(--gray-12);
-
-    --destructive: var(--red-11);
-    --destructive-foreground: oklch(1 0 0);
-
-    --success: var(--green-11);
-    --success-foreground: oklch(1 0 0);
-
-    --border: var(--gray-6);
-    --input: var(--gray-6);
-    --ring: var(--gray-12);
-    --radius: 0.5rem;
-
-    --selection-background: var(--gray-8);
-    --selection-text: var(--gray-12);
-  }
-
-  .dark {
-    /* card/popover, selection, and the accent colors below use a different
-       Radix step per mode, so (unlike the tokens in :root above) they need
-       an explicit override here rather than resolving automatically. */
-    --card: var(--gray-2); /* lighter than gray-1, the panel/elevation convention */
-    --popover: var(--gray-2);
-
-    --selection-background: var(--gray-7);
-
-    --destructive: var(--red-8);
-    --success: var(--green-8);
-  }
-
-  /*
-    Not one of @radix-ui/colors' bundled named scales — generated via
-    Radix's custom palette tool (radix-ui.com/colors/custom) seeded on
-    #0A37CD for a more vibrant brand blue than the stock "Blue" scale
-    allows while still clearing WCAG AA against white text (8.6:1 and
-    6.5:1 respectively — Radix's own generator agrees, emitting
-    `--blue-contrast: #fff` for this exact scale). Kept as one flat value
-    across modes, matching how Radix keeps a scale's own step 9 identical
-    across light/dark, and how this site's brand blue worked before.
-  */
-  :root {
-    --highlight-light: oklch(0.502 0.2641 264.4); /* custom blue-8, #1046f7 */
-    --highlight: oklch(0.435 0.2314 264.4); /* custom blue-9 (seed), #0a37cd */
-    --text-highlight: oklch(1 0 0);
-  }
-
   ::selection {
-    background: var(--selection-background);
     color: var(--selection-text);
+    background: var(--selection-background);
   }
 
   ::-moz-selection {
-    background: var(--selection-background);
     color: var(--selection-text);
+    background: var(--selection-background);
   }
 
   *::-webkit-scrollbar {
@@ -389,6 +238,7 @@ body {
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
     -webkit-text-size-adjust: 100%;
+    @apply border-border outline-ring/50;
   }
 
   .scrollbar-none {
@@ -401,14 +251,7 @@ body {
 
   em {
     @apply font-rodney;
-  }
-
-  --rodney {
-    font-family: rodney, serif;
-  }
-
-  --kag {
-    font-family: kag;
+    font-weight: 400;
   }
 
   /* eventually change this to the new underline link */
@@ -418,37 +261,72 @@ body {
       var(--highlight-light),
       var(--highlight)
     );
-    background-size: 110% 2px;
     background-repeat: no-repeat;
     background-position: left 1.2rem;
+    background-size: 110% 2px;
     transition: all 100ms ease-in-out;
   }
 
   .underline-grow:hover {
+    overflow: visible; /* Changed to visible to allow the background to extend outside the bounding box */
+    color: white;
+    background-position: left bottom;
     background-size: 110% 110%; /* Increased background size on hover to be larger than the element */
     border-radius: 2px;
-    overflow: visible; /* Changed to visible to allow the background to extend outside the bounding box */
-    background-position: left bottom;
-    color: white;
   }
 
   p a {
-    @apply box-shadow-small hover:box-shadow-full text-foreground underline-offset-4  transition-all active:text-foreground/70;
+    @apply box-shadow-small hover:box-shadow-full text-foreground underline-offset-4 transition-all active:text-foreground/70;
   }
 
   p code {
     @apply mx-[1px] rounded-sm border border-border px-[2px] text-sm;
   }
+
+  .mdx [data-rehype-pretty-code-figure] {
+    @apply mx-auto my-8 max-w-2xl;
+  }
+
+  .mdx [data-rehype-pretty-code-figure] pre {
+    @apply my-0;
+  }
+
+  .mdx [data-rehype-pretty-code-figure] code span {
+    color: var(--shiki-light);
+  }
+
+  .dark .mdx [data-rehype-pretty-code-figure] code span {
+    color: var(--shiki-dark);
+  }
+
+  .mdx [data-rehype-pretty-code-title] {
+    @apply rounded-t-lg border border-border border-b-0 bg-muted px-4 py-2 font-mono text-muted-foreground text-xs;
+  }
+
+  .mdx [data-rehype-pretty-code-title] + pre {
+    @apply rounded-t-none;
+  }
+
+  .mdx [data-line-numbers] [data-line]::before {
+    content: counter(line);
+    counter-increment: line;
+    @apply mr-4 inline-block w-8 text-right text-muted-foreground;
+  }
+
+  .mdx [data-highlighted-chars] {
+    @apply rounded-sm bg-accent px-1;
+  }
+
   table a {
-    @apply box-shadow-small hover:box-shadow-full  text-foreground underline-offset-4;
+    @apply box-shadow-small hover:box-shadow-full text-foreground underline-offset-4;
   }
 
   [basics-link] {
-    @apply box-shadow-small hover:box-shadow-full   text-foreground underline-offset-4;
+    @apply box-shadow-small hover:box-shadow-full text-foreground underline-offset-4;
   }
 
   [basics-link-pill] {
-    @apply box-shadow-small-pill hover:box-shadow-full-pill  text-foreground underline-offset-4;
+    @apply box-shadow-small-pill hover:box-shadow-full-pill text-foreground underline-offset-4;
   }
 
   .box-reflect {
@@ -456,14 +334,17 @@ body {
   }
 
   .prog-blur {
-    height: 3rem;
-    width: 100%;
     position: fixed;
+    z-index: 1;
+    width: 100%;
+    height: 3rem;
     pointer-events: none;
     opacity: 0.9;
-    z-index: 1;
     backdrop-filter: blur(8px);
     mask-image: linear-gradient(to bottom, #000 20%, transparent);
+  }
+  body {
+    @apply bg-background text-foreground;
   }
 }
 
@@ -473,7 +354,7 @@ a:hover > [basics-css-icon] {
 
 /* This is for the writing menu */
 [basic-list] {
-  @apply transition-all  sm:hover:text-muted-foreground;
+  @apply transition-all sm:hover:text-muted-foreground;
 }
 
 [basic-list]:hover [basic-list-item] {
@@ -492,16 +373,16 @@ a:hover > [basics-css-icon] {
   --OFF: initial;
   --ON: ;
   --size: 1em;
-  height: var(--size);
-  width: var(--size);
-  vertical-align: text-top;
-  color: var(--foreground);
   --icon: var(--icon);
   display: inline-block;
-  -webkit-mask: var(--icon);
-  mask-size: 100% 100%;
+  width: var(--size);
+  height: var(--size);
+  vertical-align: text-top;
+  color: var(--foreground);
   background-color: currentColor;
   background-size: 100% 100%;
+  -webkit-mask: var(--icon);
+  mask-size: 100% 100%;
 }
 
 [data-animation-controller="false"] [data-animate] {
@@ -556,8 +437,8 @@ a:hover > [basics-css-icon] {
 /* GFM FOOTNOTES */
 /* Style the footnotes section. */
 .footnotes {
-  @apply mx-auto my-12 max-w-2xl text-sm;
   border-top: 1px solid;
+  @apply mx-auto my-12 max-w-2xl text-sm;
 }
 
 /* Hide the section label for visual users. */
@@ -567,9 +448,9 @@ a:hover > [basics-css-icon] {
   height: 1px;
   padding: 0;
   overflow: hidden;
-  clip: rect(0, 0, 0, 0);
   word-wrap: normal;
   border: 0;
+  clip: rect(0, 0, 0, 0);
 }
 .data-footnote-backref {
   font-family: monospace;

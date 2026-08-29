@@ -1,11 +1,11 @@
 "use client";
-import { useState, useEffect } from "react";
-import { FC } from "react";
+import { DesktopIcon, MoonIcon, SunIcon } from "@phosphor-icons/react";
 import { useTheme } from "next-themes";
-import { DesktopIcon, MoonIcon, SunIcon } from "@radix-ui/react-icons";
+import { type FC, useEffect, useState } from "react";
 import {
   Select,
   SelectContent,
+  SelectGroup,
   SelectItem,
   SelectTrigger,
   SelectValue,
@@ -13,19 +13,22 @@ import {
 
 // documenting themes, and their icons
 const themeIcons: Record<string, typeof SunIcon> = {
-  light: SunIcon,
   dark: MoonIcon,
+  light: SunIcon,
   system: DesktopIcon,
 };
+
+const formatThemeName = (value: string) =>
+  `${value.charAt(0).toUpperCase()}${value.slice(1)}`;
 
 const ThemeSelectItem: FC<{ readonly value: string }> = ({ value }) => {
   const Icon = themeIcons[value];
 
   return (
-    <SelectItem value={value} className="" key={value}>
-      <div className="flex items-center gap-2">
-        <Icon className="h-4 w-4" />
-        {value.charAt(0).toUpperCase() + value.slice(1)}
+    <SelectItem value={value}>
+      <div className="flex items-center gap-2 [&_svg]:size-4">
+        <Icon />
+        {formatThemeName(value)}
       </div>
     </SelectItem>
   );
@@ -43,15 +46,42 @@ export const ModeToggle: FC = () => {
     return null;
   }
 
+  const themeItems = themes.map((value) => ({
+    label: formatThemeName(value),
+    value,
+  }));
+
   return (
-    <Select value={theme} onValueChange={setTheme}>
+    <Select
+      items={themeItems}
+      onValueChange={(value) => {
+        if (value) {
+          setTheme(value);
+        }
+      }}
+      value={theme ?? null}
+    >
       <SelectTrigger className="gap-2 border border-border hover:border-foreground focus:bg-accent">
-        <SelectValue placeholder="Theme" />
+        <SelectValue placeholder="Theme">
+          {(value: string | null) => {
+            const Icon = value ? themeIcons[value] : undefined;
+            return Icon ? (
+              <span className="flex items-center gap-2">
+                <Icon />
+                {formatThemeName(value as string)}
+              </span>
+            ) : (
+              "Theme"
+            );
+          }}
+        </SelectValue>
       </SelectTrigger>
       <SelectContent>
-        {themes.map((option) => (
-          <ThemeSelectItem key={option} value={option} />
-        ))}
+        <SelectGroup>
+          {themeItems.map(({ value }) => (
+            <ThemeSelectItem key={value} value={value} />
+          ))}
+        </SelectGroup>
       </SelectContent>
     </Select>
   );

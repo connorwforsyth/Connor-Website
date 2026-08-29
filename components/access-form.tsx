@@ -1,29 +1,26 @@
 "use client";
 
-import { posthog } from "posthog-js";
-import useMeasure from "react-use-measure";
-import {
-  FormEvent,
-  useReducer,
-  useMemo,
-  useEffect,
-  useRef,
-  Suspense,
-} from "react";
-import {
-  LockClosedIcon,
-  ExclamationTriangleIcon,
-  CheckIcon,
-  InfoCircledIcon,
-} from "@radix-ui/react-icons";
+import { CheckIcon, LockKeyIcon, WarningIcon } from "@phosphor-icons/react";
 import { AnimatePresence, MotionConfig, motion } from "framer-motion";
-import { Spinner } from "./Spinner/Spinner";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
+import { posthog } from "posthog-js";
+import {
+  type ChangeEvent,
+  type FormEvent,
+  Suspense,
+  useEffect,
+  useMemo,
+  useReducer,
+  useRef,
+} from "react";
+import { Button } from "@/components/ui/button";
+import { Field, FieldLabel } from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { Spinner } from "@/components/ui/spinner";
 import { cn } from "@/lib/utils";
-
 // Import the server actions
-import { verifyAccessCode, completeSignUp } from "@/server-actions/actions";
+import { completeSignUp, verifyAccessCode } from "@/server-actions/actions";
 
 type FormStep = "password" | "name" | "email";
 
@@ -49,35 +46,36 @@ type FormAction =
   | { type: "SET_SHOW_ERROR"; showError: boolean };
 
 const initialState: FormState = {
-  step: "password",
-  success: false,
-  password: "",
-  name: "",
   email: "",
   error: null,
-  loading: false,
   isLoggedIn: false,
+  loading: false,
+  name: "",
+  password: "",
   showError: false,
+  step: "password",
+  success: false,
 };
 
 const formReducer = (state: FormState, action: FormAction): FormState => {
   switch (action.type) {
     case "SET_FIELD":
       return { ...state, [action.field]: action.value };
-    case "NEXT_STEP":
+    case "NEXT_STEP": {
       const steps: FormStep[] = ["password", "name", "email"];
       const currentIndex = steps.indexOf(state.step);
       return {
         ...state,
-        step: steps[currentIndex + 1],
         error: null,
         showError: false,
+        step: steps[currentIndex + 1],
         success: false,
       };
+    }
     case "SET_ERROR":
       return { ...state, error: action.error, showError: true, success: false };
     case "SET_SUCCESS":
-      return { ...state, success: action.success, showError: false };
+      return { ...state, showError: false, success: action.success };
     case "SET_LOADING":
       return { ...state, loading: action.loading };
     case "SET_LOGGED_IN":
@@ -91,18 +89,18 @@ const formReducer = (state: FormState, action: FormAction): FormState => {
 
 // useSearchParams requires a Suspense boundary, isolated here so it can't
 // force the rest of the form into a fallback state.
-const AutoSubmitFromUrl = ({
-  onCode,
-}: {
-  onCode: (code: string) => void;
-}) => {
+const AutoSubmitFromUrl = ({ onCode }: { onCode: (code: string) => void }) => {
   const searchParams = useSearchParams();
   const hasRun = useRef(false);
 
   useEffect(() => {
-    if (hasRun.current) return;
+    if (hasRun.current) {
+      return;
+    }
     const code = searchParams.get("code");
-    if (!code) return;
+    if (!code) {
+      return;
+    }
 
     hasRun.current = true;
     onCode(code);
@@ -113,23 +111,22 @@ const AutoSubmitFromUrl = ({
 
 export default function AccessForm() {
   const [state, dispatch] = useReducer(formReducer, initialState);
-  const [ref, bounds] = useMeasure();
   const router = useRouter();
 
   useEffect(() => {
     if (state.showError) {
       const timer = setTimeout(() => {
-        dispatch({ type: "SET_SHOW_ERROR", showError: false });
+        dispatch({ showError: false, type: "SET_SHOW_ERROR" });
       }, 1500);
       return () => clearTimeout(timer);
     }
   }, [state.showError]);
 
   const submitPassword = async (password: string) => {
-    dispatch({ type: "SET_LOADING", loading: true });
-    dispatch({ type: "SET_ERROR", error: null });
-    dispatch({ type: "SET_SHOW_ERROR", showError: false });
-    dispatch({ type: "SET_SUCCESS", success: false });
+    dispatch({ loading: true, type: "SET_LOADING" });
+    dispatch({ error: null, type: "SET_ERROR" });
+    dispatch({ showError: false, type: "SET_SHOW_ERROR" });
+    dispatch({ success: false, type: "SET_SUCCESS" });
 
     try {
       const formData = new FormData();
@@ -138,31 +135,35 @@ export default function AccessForm() {
       const result = await verifyAccessCode(formData);
 
       if (result.success) {
+        posthog.capture("access_code_verified");
         // Simulate loading
         await new Promise((resolve) => setTimeout(resolve, 1000));
-        dispatch({ type: "SET_SHOW_ERROR", showError: false });
-        dispatch({ type: "SET_ERROR", error: null });
-        dispatch({ type: "SET_LOADING", loading: false });
+        dispatch({ showError: false, type: "SET_SHOW_ERROR" });
+        dispatch({ error: null, type: "SET_ERROR" });
+        dispatch({ loading: false, type: "SET_LOADING" });
 
-        dispatch({ type: "SET_SUCCESS", success: true });
+        dispatch({ success: true, type: "SET_SUCCESS" });
         // Show success for 1 second
         await new Promise((resolve) => setTimeout(resolve, 1000));
         dispatch({ type: "NEXT_STEP" });
       } else {
+        posthog.capture("access_code_rejected", {
+          reason: result.error ?? "Incorrect access code",
+        });
         dispatch({
-          type: "SET_ERROR",
           error: result.error || "Incorrect access code",
+          type: "SET_ERROR",
         });
       }
-    } catch (error) {
-      dispatch({ type: "SET_ERROR", error: "An unexpected error occurred" });
+    } catch {
+      dispatch({ error: "An unexpected error occurred", type: "SET_ERROR" });
     } finally {
-      dispatch({ type: "SET_LOADING", loading: false });
+      dispatch({ loading: false, type: "SET_LOADING" });
     }
   };
 
   const handleCodeFromUrl = (code: string) => {
-    dispatch({ type: "SET_FIELD", field: "password", value: code });
+    dispatch({ field: "password", type: "SET_FIELD", value: code });
     submitPassword(code);
   };
 
@@ -173,20 +174,20 @@ export default function AccessForm() {
       if (state.step === "password") {
         await submitPassword(state.password);
       } else if (state.step === "name") {
-        dispatch({ type: "SET_LOADING", loading: true });
+        dispatch({ loading: true, type: "SET_LOADING" });
         dispatch({ type: "NEXT_STEP" });
       } else if (state.step === "email") {
         await handleComplete();
       }
-    } catch (error) {
-      dispatch({ type: "SET_ERROR", error: "An unexpected error occurred" });
+    } catch {
+      dispatch({ error: "An unexpected error occurred", type: "SET_ERROR" });
     } finally {
-      dispatch({ type: "SET_LOADING", loading: false });
+      dispatch({ loading: false, type: "SET_LOADING" });
     }
   };
 
   const handleComplete = async () => {
-    dispatch({ type: "SET_LOADING", loading: true });
+    dispatch({ loading: true, type: "SET_LOADING" });
     try {
       const formData = new FormData();
       formData.append("password", state.password);
@@ -197,18 +198,22 @@ export default function AccessForm() {
 
       if (result.success) {
         posthog.identify(state.name, { email: state.email, name: state.name });
-        dispatch({ type: "SET_LOGGED_IN", isLoggedIn: true });
+        posthog.capture("access_granted");
+        dispatch({ isLoggedIn: true, type: "SET_LOGGED_IN" });
         router.refresh();
       } else {
+        posthog.capture("access_signup_failed", {
+          reason: result.error ?? "Failed to complete sign up",
+        });
         dispatch({
-          type: "SET_ERROR",
           error: result.error || "Failed to complete sign up",
+          type: "SET_ERROR",
         });
       }
-    } catch (error) {
-      dispatch({ type: "SET_ERROR", error: "An unexpected error occurred" });
+    } catch {
+      dispatch({ error: "An unexpected error occurred", type: "SET_ERROR" });
     } finally {
-      dispatch({ type: "SET_LOADING", loading: false });
+      dispatch({ loading: false, type: "SET_LOADING" });
     }
   };
 
@@ -216,10 +221,10 @@ export default function AccessForm() {
     const inputProps = {
       className:
         "rounded-lg border border-border bg-transparent p-2 px-3 dark:bg-muted",
-      onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
+      onChange: (e: ChangeEvent<HTMLInputElement>) => {
         dispatch({
-          type: "SET_FIELD",
           field: e.target.name as keyof FormState,
+          type: "SET_FIELD",
           value: e.target.value,
         });
       },
@@ -228,43 +233,57 @@ export default function AccessForm() {
     switch (state.step) {
       case "password":
         return (
-          <>
-            <div className="flex flex-col gap-1">
-              <p>This project is protected.</p>
-              <p>
-                If you do not have an access code,{" "}
-                <Link className="underline" href="mailto:c@connorforsyth.co">
-                  reach out.
-                </Link>
-              </p>
+          <div className="flex flex-col gap-1">
+            <p>This project is protected.</p>
+            <p>
+              If you do not have an access code,{" "}
+              <Link className="underline" href="mailto:c@connorforsyth.co">
+                reach out.
+              </Link>
+            </p>
 
-              <label className="mt-4 flex flex-col gap-2">
-                Access Code
-                <motion.div
-                  key={state.error} // Add a key prop to force re-render when error changes
-                  animate={{
-                    x: state.error ? [-5, 5, -5, 5, 0] : 0,
-                    transition: {
-                      duration: 0.1,
-                      repeat: state.error ? 2 : 0,
-                      repeatType: "reverse",
-                      ease: "linear",
-                    },
-                  }}
+            <Field
+              className="mt-4 flex flex-col gap-2"
+              data-invalid={Boolean(state.error)}
+            >
+              <FieldLabel htmlFor="access-code">Access Code</FieldLabel>
+              <motion.div
+                animate={{
+                  transition: {
+                    duration: 0.1,
+                    ease: "linear",
+                    repeat: state.error ? 2 : 0,
+                    repeatType: "reverse",
+                  },
+                  x: state.error ? [-5, 5, -5, 5, 0] : 0,
+                }}
+                key={state.error} // Add a key prop to force re-render when error changes
+              >
+                <Input
+                  {...inputProps}
+                  aria-describedby={
+                    state.error ? "access-code-error" : undefined
+                  }
+                  aria-invalid={Boolean(state.error)}
+                  className={`w-full rounded-lg border ${state.error ? "border-destructive ring-destructive focus:outline-destructive" : "border-border focus:border-border focus:ring-ring"} bg-transparent p-2 px-3 dark:bg-muted`}
+                  id="access-code"
+                  name="password"
+                  required
+                  type="password"
+                  value={state.password}
+                />
+              </motion.div>
+              {state.error && (
+                <p
+                  className="text-destructive text-sm"
+                  id="access-code-error"
+                  role="alert"
                 >
-                  <input
-                    {...inputProps}
-                    name="password"
-                    type="password"
-                    value={state.password}
-                    required
-                    aria-label="Access Code"
-                    className={`w-full rounded-lg border ${state.error ? "border-destructive ring-destructive focus:outline-destructive" : "border-border focus:border-border focus:ring-ring"} bg-transparent p-2 px-3 dark:bg-muted`}
-                  />
-                </motion.div>
-              </label>
-            </div>
-          </>
+                  {state.error}
+                </p>
+              )}
+            </Field>
+          </div>
         );
       case "name":
         return (
@@ -275,16 +294,18 @@ export default function AccessForm() {
                 visiting:
               </p>
             </div>
-            <label className="flex flex-col gap-2">
-              Your Name
-              <input
+            <Field className="flex flex-col gap-2">
+              <FieldLabel htmlFor="access-name">Your Name</FieldLabel>
+              <Input
                 {...inputProps}
-                type="text"
+                autoComplete="name"
+                id="access-name"
                 name="name"
+                required
+                type="text"
                 value={state.name}
-                aria-label="Your Name"
               />
-            </label>
+            </Field>
           </>
         );
       case "email":
@@ -294,18 +315,22 @@ export default function AccessForm() {
               <p>Hey {state.name} 👋</p>
               <p>Please leave your email below:</p>
             </div>
-            <label className="flex flex-col gap-2">
-              Your Email
-              <input
+            <Field className="flex flex-col gap-2">
+              <FieldLabel htmlFor="access-email">Your Email</FieldLabel>
+              <Input
                 {...inputProps}
-                type="email"
+                autoComplete="email"
+                id="access-email"
                 name="email"
+                required
+                type="email"
                 value={state.email}
-                aria-label="Your Email"
               />
-            </label>
+            </Field>
           </>
         );
+      default:
+        return null;
     }
   }, [state]);
 
@@ -314,44 +339,45 @@ export default function AccessForm() {
       <Suspense fallback={null}>
         <AutoSubmitFromUrl onCode={handleCodeFromUrl} />
       </Suspense>
-      <MotionConfig transition={{ duration: 0.8, type: "spring", bounce: 0 }}>
+      <MotionConfig transition={{ bounce: 0, duration: 0.8, type: "spring" }}>
         <motion.div>
           <form
-            ref={ref}
-            onSubmit={handleSubmit}
             className="flex flex-col gap-4 overflow-hidden rounded-lg border border-border bg-card p-4 shadow-sm"
+            onSubmit={handleSubmit}
           >
             <div className="flex gap-2">
-              <LockClosedIcon className="h-auto w-6" />
+              <LockKeyIcon className="h-auto w-6" />
               <h3 className="font-medium">Protected Project</h3>
             </div>
-            <AnimatePresence mode="popLayout" initial={false}>
+            <AnimatePresence initial={false} mode="popLayout">
               <motion.div
-                layout
-                key={state.step}
-                initial={{ x: "110%", opacity: 0 }}
                 animate={{ opacity: 1, x: 0 }}
-                exit={{ x: "-110%", opacity: 0 }}
-                transition={{ duration: 0.5, type: "spring", bounce: 0 }}
                 className="flex flex-col gap-4"
+                exit={{ opacity: 0, x: "-110%" }}
+                initial={{ opacity: 0, x: "110%" }}
+                key={state.step}
+                layout
+                transition={{ bounce: 0, duration: 0.5, type: "spring" }}
               >
                 {renderStep}
               </motion.div>
               {state.step && (
-                <motion.button
-                  layout
-                  className={cn(
-                    `flex h-10 items-center justify-center overflow-hidden rounded-lg bg-primary text-primary-foreground transition-all
-                ${state.step === "password" && state.success && "bg-success text-success-foreground"}
-                ${state.showError && "bg-destructive text-destructive-foreground"}`,
-                  )}
-                  type="submit"
-                  disabled={state.loading}
-                >
-                  <AnimatePresence mode="wait" initial={false}>
-                    {renderButtonContent(state)}
-                  </AnimatePresence>
-                </motion.button>
+                <motion.div layout>
+                  <Button
+                    aria-live="polite"
+                    className={cn(
+                      `flex h-10 w-full items-center justify-center overflow-hidden rounded-lg bg-primary text-primary-foreground transition-all ${state.step === "password" && state.success && "bg-success text-success-foreground"}`,
+                      state.showError &&
+                        "bg-destructive text-destructive-foreground"
+                    )}
+                    disabled={state.loading}
+                    type="submit"
+                  >
+                    <AnimatePresence initial={false} mode="wait">
+                      {renderButtonContent(state)}
+                    </AnimatePresence>
+                  </Button>
+                </motion.div>
               )}
             </AnimatePresence>
           </form>
@@ -363,9 +389,9 @@ export default function AccessForm() {
 
 const renderButtonContent = (state: FormState) => {
   const commonMotionProps = {
-    initial: { y: "-110%", opacity: 0 },
-    animate: { y: 0, opacity: 1 },
-    exit: { y: "110%", opacity: 0 },
+    animate: { opacity: 1, y: 0 },
+    exit: { opacity: 0, y: "110%" },
+    initial: { opacity: 0, y: "-110%" },
     transition: {
       duration: 0.3,
       ease: [0.25, 0.1, 0.25, 1],
@@ -374,7 +400,7 @@ const renderButtonContent = (state: FormState) => {
   };
 
   if (state.loading) {
-    return <Spinner color="gray" />;
+    return <Spinner data-icon="inline-start" />;
   }
 
   if (state.step === "password") {
@@ -385,7 +411,7 @@ const renderButtonContent = (state: FormState) => {
           {...commonMotionProps}
           className="flex items-center gap-2"
         >
-          <CheckIcon className="h-auto w-4" />
+          <CheckIcon data-icon="inline-start" />
           Access code verified
         </motion.div>
       );
@@ -397,7 +423,7 @@ const renderButtonContent = (state: FormState) => {
           {...commonMotionProps}
           className="flex items-center gap-2"
         >
-          <ExclamationTriangleIcon className="h-auto w-4" />
+          <WarningIcon data-icon="inline-start" />
           Incorrect access code
         </motion.div>
       );

@@ -1,4 +1,4 @@
-import crypto from "crypto";
+import crypto from "node:crypto";
 
 export type SessionData = {
   name?: string;
@@ -11,7 +11,7 @@ export const defaultSession: SessionData = {
 };
 
 const COOKIE_NAME = "Connor-Session";
-const MAX_AGE_SECONDS = 172800; // 2 days
+const MAX_AGE_SECONDS = 172_800; // 2 days
 const ALGORITHM = "aes-256-gcm";
 const IV_LENGTH = 12;
 
@@ -45,13 +45,15 @@ function encodeSession(data: SessionData): string {
 
 function decodeSession(cookieValue: string): SessionData | null {
   const [ivPart, ciphertextPart, authTagPart] = cookieValue.split(".");
-  if (!ivPart || !ciphertextPart || !authTagPart) return null;
+  if (!(ivPart && ciphertextPart && authTagPart)) {
+    return null;
+  }
 
   try {
     const decipher = crypto.createDecipheriv(
       ALGORITHM,
       getKey(),
-      Buffer.from(ivPart, "base64url"),
+      Buffer.from(ivPart, "base64url")
     );
     decipher.setAuthTag(Buffer.from(authTagPart, "base64url"));
     const plaintext = Buffer.concat([
@@ -60,7 +62,9 @@ function decodeSession(cookieValue: string): SessionData | null {
     ]).toString("utf8");
 
     const data: SignedSession = JSON.parse(plaintext);
-    if (Date.now() > data.expiresAt) return null;
+    if (Date.now() > data.expiresAt) {
+      return null;
+    }
     return data;
   } catch {
     return null;
@@ -68,19 +72,21 @@ function decodeSession(cookieValue: string): SessionData | null {
 }
 
 export const sessionCookie = {
-  name: COOKIE_NAME,
-  options: {
-    httpOnly: true,
-    secure: process.env.NODE_ENV === "production",
-    sameSite: "lax" as const,
-    maxAge: MAX_AGE_SECONDS,
-    path: "/",
-  },
   create(data: SessionData): string {
     return encodeSession(data);
   },
+  name: COOKIE_NAME,
+  options: {
+    httpOnly: true,
+    maxAge: MAX_AGE_SECONDS,
+    path: "/",
+    sameSite: "lax" as const,
+    secure: process.env.NODE_ENV === "production",
+  },
   read(value: string | undefined): SessionData {
-    if (!value) return defaultSession;
+    if (!value) {
+      return defaultSession;
+    }
     return decodeSession(value) ?? defaultSession;
   },
 };

@@ -6,12 +6,12 @@ export default function Texture() {
         style={{
           backdropFilter: "url(#grainy)",
         }}
-      ></div>
-      <svg width={0} height={0} className="absolute inset-0">
+      />
+      <svg className="absolute inset-0" height={0} width={0}>
         <filter id="grainy">
-          <feTurbulence type="turbulence" seed={2} baseFrequency="1" />
+          <feTurbulence baseFrequency="1" seed={2} type="turbulence" />
           <feComponentTransfer in="coloredNoise">
-            <feFuncA type="linear" slope="0.1" />
+            <feFuncA slope="0.1" type="linear" />
           </feComponentTransfer>
         </filter>
       </svg>
