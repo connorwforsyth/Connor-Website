@@ -8,13 +8,11 @@ import { PAPER_HEIGHT, PaperPage } from "./paper-page";
 const PAGE_GAP = 72;
 const CAMERA_Z = 2150;
 const CAMERA_FOV = 40;
-const SHEET_STAGGER = 0.6;
-const FIRST_DROP_DELAY = 0.4;
-const SCROLL_EASE = 8;
+const SHEET_STAGGER = 0.22;
+const FIRST_DROP_DELAY = 0.12;
+const SCROLL_EASE = 10;
 const SCROLL_LINE = 120;
 const SCROLL_PAGE = 900;
-const PARALLAX_X = 26;
-const PARALLAX_Y = 18;
 const TABLE_SIZE = 9000;
 const SHADOW_FRUSTUM = 1600;
 const TEXTURES = ["/cv-v2/page-1.png", "/cv-v2/page-2.png"];
@@ -29,7 +27,7 @@ function Papers({ reduceMotion, replayToken, scrollTarget }: SceneProps) {
   const groupRef = useRef<Group>(null);
   const scroll = useRef(0);
 
-  useFrame((state, delta) => {
+  useFrame((_state, delta) => {
     const group = groupRef.current;
     if (!group) {
       return;
@@ -38,12 +36,6 @@ function Papers({ reduceMotion, replayToken, scrollTarget }: SceneProps) {
       (scrollTarget.current - scroll.current) *
       Math.min(1, delta * SCROLL_EASE);
     group.position.y = scroll.current;
-
-    // A touch of camera parallax keeps the scene feeling inhabited.
-    if (!reduceMotion) {
-      state.camera.position.x = state.pointer.x * PARALLAX_X;
-      state.camera.position.y = state.pointer.y * PARALLAX_Y;
-    }
   });
 
   return (
@@ -92,7 +84,7 @@ function Daylight() {
         intensity={1.4}
         position={[-850, 950, 1500]}
         ref={lightRef}
-        shadow-mapSize={[2048, 2048]}
+        shadow-mapSize={[1024, 1024]}
       />
     </>
   );
