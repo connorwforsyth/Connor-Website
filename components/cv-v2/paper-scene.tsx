@@ -1,13 +1,19 @@
 "use client";
 
-import { Canvas, useFrame } from "@react-three/fiber";
-import { Suspense, useEffect, useRef, useState } from "react";
+import { Canvas, useFrame, useThree } from "@react-three/fiber";
+import { Suspense, useEffect, useLayoutEffect, useRef, useState } from "react";
 import type { DirectionalLight, Group } from "three";
-import { PAPER_HEIGHT, PaperPage } from "./paper-page";
+import { PAPER_HEIGHT, PAPER_WIDTH, PaperPage } from "./paper-page";
 
 const PAGE_GAP = 72;
-const CAMERA_Z = 2150;
+const CAMERA_Z = 1500;
 const CAMERA_FOV = 40;
+// The sheet should read close-up on every viewport, so the camera fits the
+// page width to the canvas rather than sitting at a fixed distance — a
+// fixed Z clips the sides on narrow, portrait screens.
+const WIDTH_FILL = 0.86;
+const MIN_CAMERA_Z = 900;
+const MAX_CAMERA_Z = 2600;
 const SHEET_STAGGER = 0.22;
 const FIRST_DROP_DELAY = 0.12;
 const SCROLL_EASE = 10;
@@ -53,6 +59,22 @@ function Papers({ reduceMotion, replayToken, scrollTarget }: SceneProps) {
       ))}
     </group>
   );
+}
+
+function CameraFit() {
+  const camera = useThree((state) => state.camera);
+  const width = useThree((state) => state.size.width);
+  const height = useThree((state) => state.size.height);
+
+  useLayoutEffect(() => {
+    const aspect = width / height;
+    const fovRad = (CAMERA_FOV * Math.PI) / 180;
+    const targetWidth = PAPER_WIDTH / WIDTH_FILL;
+    const z = targetWidth / (2 * Math.tan(fovRad / 2) * aspect);
+    camera.position.z = Math.min(MAX_CAMERA_Z, Math.max(MIN_CAMERA_Z, z));
+  }, [camera, width, height]);
+
+  return null;
 }
 
 function Daylight() {
@@ -185,6 +207,7 @@ export default function PaperScene() {
         shadows="soft"
       >
         <color args={["#efeeeb"]} attach="background" />
+        <CameraFit />
         <Daylight />
         <Table />
         <Suspense fallback={null}>
