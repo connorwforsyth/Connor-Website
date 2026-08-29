@@ -2,16 +2,17 @@ import createMDX from "@next/mdx";
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  allowedDevOrigins: ["127.0.0.1"],
   reactStrictMode: true,
   async rewrites() {
     return [
       {
-        source: "/ingest/static/:path*",
         destination: "https://us-assets.i.posthog.com/static/:path*",
+        source: "/ingest/static/:path*",
       },
       {
-        source: "/ingest/:path*",
         destination: "https://us.i.posthog.com/:path*",
+        source: "/ingest/:path*",
       },
     ];
   },
@@ -19,6 +20,19 @@ const nextConfig = {
 
 const withMDX = createMDX({
   options: {
+    rehypePlugins: [
+      "rehype-slug",
+      [
+        "rehype-pretty-code",
+        {
+          keepBackground: false,
+          theme: {
+            dark: "github-dark-high-contrast",
+            light: "github-light-high-contrast",
+          },
+        },
+      ],
+    ],
     // remark-frontmatter makes the mdx compiler recognize the leading
     // --- yaml --- block as frontmatter instead of rendering it as text.
     // The frontmatter values themselves are read separately via gray-matter
@@ -29,10 +43,6 @@ const withMDX = createMDX({
     // default bundler since Next 16, and JS functions can't be passed to its
     // Rust compiler: https://nextjs.org/docs/app/guides/mdx#using-plugins-with-turbopack
     remarkPlugins: ["remark-frontmatter", "remark-gfm"],
-    rehypePlugins: [
-      "rehype-slug",
-      ["rehype-pretty-code", { theme: "github-dark" }],
-    ],
   },
 });
 

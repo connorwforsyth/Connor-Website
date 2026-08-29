@@ -3,22 +3,26 @@ import Link from "next/link";
 export default function Navbar() {
   const navItems = [
     {
+      href: "/projects",
       title: "Projects",
-      href: "/projects"
     },
     {
-      title: "Writing", 
-      href: "/writing"
+      href: "/writing",
+      title: "Writing",
     },
     {
+      href: "/contact",
       title: "Contact",
-      href: "/contact"
-    }
+    },
   ];
 
-  return <nav className="fixed w-full justify-center top-4 left-0 right-0 z-10 flex flex-row gap-4">
-    {navItems.map((item) => (
-      <Link key={item.title} href={item.href}>{item.title}</Link>
-    ))}
-  </nav>;
+  return (
+    <nav className="fixed top-4 right-0 left-0 z-10 flex w-full flex-row justify-center gap-4">
+      {navItems.map((item) => (
+        <Link href={item.href} key={item.title}>
+          {item.title}
+        </Link>
+      ))}
+    </nav>
+  );
 }

@@ -1,6 +1,6 @@
+import Image from "next/image";
 import { cn } from "@/lib/utils";
 import FigmaProtoFrame from "./FigmaProtoFrame";
-import Image from "next/image";
 
 export type FeatureItemMedia =
   // A plain photo/screenshot that fills and crops to the wrapper.
@@ -31,32 +31,37 @@ export default function FeatureItem({
     <div className="grid grid-cols-12">
       <div
         className={cn("col-span-12 sm:col-span-7", {
+          "sm:col-end-13": position === "right",
           "sm:col-start-1": position === "left",
           "sm:col-start-2": position === "center",
-          "sm:col-end-13": position === "right",
         })}
       >
         <div
           className={cn(
-            "relative flex aspect-3/2 w-full items-center justify-center overflow-hidden rounded-lg xl:min-h-[550px]",
-            imageWrapperClassName,
+            "relative flex w-full items-center justify-center rounded-lg",
+            // Framed media carries its own aspect ratio via the mockup frame, so
+            // pinning it to aspect-3/2 + overflow-hidden clips the frame. Let it
+            // size to its natural height instead.
+            media.variant !== "framed" &&
+              "aspect-3/2 overflow-hidden xl:min-h-[550px]",
+            imageWrapperClassName
           )}
         >
           {media.variant === "framed" ? (
-            <div className="flex h-full w-full items-center justify-center">
+            <div className="flex w-full items-center justify-center">
               <FigmaProtoFrame
-                src={media.src}
-                image
                 className={media.frameClassName}
+                image
+                src={media.src}
               />
             </div>
           ) : (
             <Image
-              src={media.src}
               alt={title}
+              className="object-cover"
               fill
               sizes="(min-width: 640px) 60vw, 100vw"
-              className="object-cover"
+              src={media.src}
             />
           )}
         </div>

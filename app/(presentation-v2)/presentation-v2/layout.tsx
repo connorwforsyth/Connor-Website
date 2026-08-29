@@ -1,11 +1,11 @@
 import "@/styles/globals.css";
 
-import { ThemeProvider } from "@/components/theme-provider";
-import Texture from "@/components/BackgroundTexture";
-import { CSPostHogProvider } from "@/lib/providers";
-import { Metadata } from "next";
-import siteMetadata from "@/config/site-metadata";
+import type { Metadata } from "next";
 import AccessForm from "@/components/access-form";
+import { Analytics } from "@/components/analytics";
+import Texture from "@/components/BackgroundTexture";
+import { ThemeProvider } from "@/components/theme-provider";
+import siteMetadata from "@/config/site-metadata";
 import { getSession } from "@/server-actions/actions";
 
 interface RootLayoutProps {
@@ -13,21 +13,21 @@ interface RootLayoutProps {
 }
 
 export const metadata: Metadata = {
-  metadataBase: new URL(siteMetadata.siteUrl),
-  title: siteMetadata.title,
   description: siteMetadata.description,
+  metadataBase: new URL(siteMetadata.siteUrl),
   openGraph: {
-    type: "website",
-    url: siteMetadata.siteUrl,
-    title: siteMetadata.title,
     description: siteMetadata.description,
-    siteName: siteMetadata.title,
     images: [
       {
         url: `${siteMetadata.siteUrl}/api/og/?title=${siteMetadata.title}`,
       },
     ],
+    siteName: siteMetadata.title,
+    title: siteMetadata.title,
+    type: "website",
+    url: siteMetadata.siteUrl,
   },
+  title: siteMetadata.title,
 };
 
 export default async function Layout({ children }: RootLayoutProps) {
@@ -35,21 +35,20 @@ export default async function Layout({ children }: RootLayoutProps) {
 
   return (
     <html className="scroll-smooth" lang="en" suppressHydrationWarning>
-      <body className={`relative bg-background antialiased`}>
+      <body className={"relative bg-background antialiased"}>
         <Texture />
         <ThemeProvider>
-          <CSPostHogProvider>
-            {!session.isLoggedIn ? (
-              <div className="flex h-svh items-center justify-center">
-                <div className="w-full max-w-md p-4">
-                  <AccessForm />
-                </div>
+          {session.isLoggedIn ? (
+            children
+          ) : (
+            <div className="flex h-svh items-center justify-center">
+              <div className="w-full max-w-md p-4">
+                <AccessForm />
               </div>
-            ) : (
-              <>{children}</>
-            )}
-          </CSPostHogProvider>
+            </div>
+          )}
         </ThemeProvider>
+        <Analytics />
       </body>
     </html>
   );

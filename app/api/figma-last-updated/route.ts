@@ -11,14 +11,14 @@ export async function GET(request: Request) {
   if (!fileKey) {
     return NextResponse.json(
       { error: "File key is required" },
-      { status: 400 },
+      { status: 400 }
     );
   }
 
   if (!process.env.FIGMA_ACCESS_TOKEN) {
     return NextResponse.json(
       { error: "Figma access token not configured" },
-      { status: 500 },
+      { status: 500 }
     );
   }
 
@@ -37,15 +37,15 @@ export async function GET(request: Request) {
     const figmaData = (await response.json()) as FigmaData;
 
     return NextResponse.json({
-      timestamp: new Date().toISOString(),
-      lastModified: figmaData.lastModified,
       fileKey,
+      lastModified: figmaData.lastModified,
+      timestamp: new Date().toISOString(),
     });
   } catch (error) {
     console.error("Figma API error:", error);
     return NextResponse.json(
-      { error: "Failed to fetch data", details: String(error) },
-      { status: 500 },
+      { details: String(error), error: "Failed to fetch data" },
+      { status: 500 }
     );
   }
 }

@@ -21,23 +21,14 @@ type SiteConfig = {
   keywords: string[];
 };
 
-export const siteMetadata: SiteConfig = {
-  title: "Connor Forsyth",
+const siteMetadata: SiteConfig = {
   author: "Connor Forsyth",
-  headerTitle: "Connor Forsyth",
   description:
     "I'm a designer and technologist with a background in design sprints, lean ux, agile and web development. I currently work as a service designer at Designit and as an academic tutor at The University of Sydney.",
-  language: "en-us",
-  theme: "system", // system, dark or light
-  siteUrl: "https://connorforsyth.co",
-  siteRepo: "https://github.com/connorwforsyth/connorforsyth.co",
-  siteLogo: "/",
-  image: "",
   email: "c@connorforsyth.co",
   github: "https://github.com/connorwforsyth",
-  twitter: "https://twitter.com/connorwforsyth",
-  linkedin: "https://www.linkedin.com/in/connorwforsyth",
-  locale: "en-AU",
+  headerTitle: "Connor Forsyth",
+  image: "",
   keywords: [
     "design",
     "service design",
@@ -55,6 +46,15 @@ export const siteMetadata: SiteConfig = {
     "tedxmelbourne",
     "tedx",
   ],
+  language: "en-us",
+  linkedin: "https://www.linkedin.com/in/connorwforsyth",
+  locale: "en-AU",
+  siteLogo: "/",
+  siteRepo: "https://github.com/connorwforsyth/connorforsyth.co",
+  siteUrl: "https://connorforsyth.co",
+  theme: "system", // system, dark or light
+  title: "Connor Forsyth",
+  twitter: "https://twitter.com/connorwforsyth",
 };
 
 export default siteMetadata;

@@ -1,7 +1,7 @@
-"use client"
+import { Analytics as VercelAnalytics } from "@vercel/analytics/next";
 
-import { Analytics as VercelAnalytics } from "@vercel/analytics/react"
-
+// Thin wrapper so layouts import one local component; the `/next` entrypoint
+// tracks App Router navigations automatically.
 export function Analytics() {
-  return <VercelAnalytics />
+  return <VercelAnalytics />;
 }

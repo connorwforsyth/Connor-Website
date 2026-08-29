@@ -1,29 +1,20 @@
-import { useEffect, useRef, useState, RefObject } from "react";
+import { type RefObject, useEffect, useState } from "react";
 import magConfig from "@/components/MagConfig";
 import { useMagnifier } from "@/context/MagnifierContext";
 
-let config = magConfig;
+const _config = magConfig;
 
 interface MagnifierConfig {
+  borderColor: string;
   diameter: number;
   scale: number;
-  borderColor: string;
 }
 
 const defaultConfig: MagnifierConfig = {
+  borderColor: "rgba(100, 100, 100, 0.5)",
   diameter: 160,
   scale: 2,
-  borderColor: "rgba(100, 100, 100, 0.5)",
 };
-
-interface MagnifierProps {
-  iframeRef: RefObject<HTMLIFrameElement>;
-}
-
-interface Position {
-  x: number;
-  y: number;
-}
 
 const Magnifier: React.FC<{
   iframeRef: RefObject<HTMLIFrameElement>;
@@ -35,7 +26,9 @@ const Magnifier: React.FC<{
   const magnifierConfig = { ...defaultConfig, ...config };
 
   useEffect(() => {
-    if (!isMagnifierActive || !iframeRef.current) return;
+    if (!(isMagnifierActive && iframeRef.current)) {
+      return;
+    }
 
     const updateIframePosition = () => {
       if (iframeRef.current) {
@@ -58,42 +51,44 @@ const Magnifier: React.FC<{
     };
   }, [isMagnifierActive, iframeRef]);
 
-  if (!isMagnifierActive || !iframeRect) return null;
+  if (!(isMagnifierActive && iframeRect)) {
+    return null;
+  }
 
   return (
     <>
       {/* Debug overlay to show iframe bounds */}
       <div
         style={{
+          background: "rgba(255, 0, 0, 0.1)",
+          height: iframeRect.height,
+          left: iframeRect.left,
+          pointerEvents: "none",
           position: "fixed",
           top: iframeRect.top,
-          left: iframeRect.left,
           width: iframeRect.width,
-          height: iframeRect.height,
-          zIndex: 999999999998,
-          pointerEvents: "none",
-          background: "rgba(255, 0, 0, 0.1)",
+          zIndex: 999_999_999_998,
         }}
       />
       <div
         style={{
-          height: `${magnifierConfig.diameter}px`,
-          width: `${magnifierConfig.diameter}px`,
-          borderRadius: "50%",
           background: "transparent",
           border: `2px solid ${magnifierConfig.borderColor}`,
-          position: "fixed",
-          top: "0",
-          left: "0",
-          transform: `translate(${iframeRect.left}px, ${iframeRect.top}px) translate(-50%, -50%) scale(${magnifierConfig.scale})`,
-          pointerEvents: "none",
+          borderRadius: "50%",
           boxShadow: `
             0px 4px 16px rgba(17,17,26,0.1),
             0px 8px 24px rgba(17,17,26,0.1),
             0px 16px 56px rgba(17,17,26,0.1)
           `,
-          zIndex: 999999999999,
+          height: `${magnifierConfig.diameter}px`,
+          left: "0",
           overflow: "hidden",
+          pointerEvents: "none",
+          position: "fixed",
+          top: "0",
+          transform: `translate(${iframeRect.left}px, ${iframeRect.top}px) translate(-50%, -50%) scale(${magnifierConfig.scale})`,
+          width: `${magnifierConfig.diameter}px`,
+          zIndex: 999_999_999_999,
         }}
       />
     </>

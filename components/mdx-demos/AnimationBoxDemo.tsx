@@ -1,7 +1,7 @@
 "use client";
 
+import { AnimatePresence, MotionConfig, motion } from "framer-motion";
 import { useState } from "react";
-import { motion, MotionConfig, AnimatePresence } from "framer-motion";
 
 export function Box() {
   const [isVisible, setIsVisible] = useState(true);
@@ -9,17 +9,17 @@ export function Box() {
 
   return (
     <div>
-      <MotionConfig transition={{ type: "spring", bounce: 0.25 }}>
-        <div className="h-6 flex items-center">
+      <MotionConfig transition={{ bounce: 0.25, type: "spring" }}>
+        <div className="flex h-6 items-center">
           <AnimatePresence mode="wait">
             {isVisible ? (
               <motion.button
+                animate={{ opacity: 1, scale: 1, x: 0 }}
+                className="flex rounded-lg bg-gradient-to-b from-yellow-200 via-yellow-200 to-yellow-300 p-8 shadow-inner shadow-yellow-300"
+                exit={{ opacity: 0, x: 200 }}
+                initial={{ opacity: 1, scale: 1, x: -200 }}
                 onClick={toggleVisibility}
-                initial={{ x: -200, opacity: 1, scale: 1 }}
-                animate={{ x: 0, opacity: 1, scale: 1 }}
-                exit={{ x: 200, opacity: 0 }}
-                className="from-yellow-200 via-yellow-200 shadow-inner shadow-yellow-300 to-yellow-300 bg-gradient-to-b flex p-8 rounded-lg"
-              ></motion.button>
+              />
             ) : null}
           </AnimatePresence>
         </div>
@@ -42,28 +42,28 @@ export function Copy() {
   };
 
   return (
-    <button aria-label="Copy code snippet" onClick={copy}>
-      <AnimatePresence mode="wait" initial={false}>
-        {!copied ? (
+    <button aria-label="Copy code snippet" onClick={copy} type="button">
+      <AnimatePresence initial={false} mode="wait">
+        {copied ? (
           <motion.span
-            key="checkmark"
-            variants={variants}
-            initial="hidden"
             animate="visible"
             exit="hidden"
-            className="px-3 py-2 bg-neutral-600 rounded-lg"
+            initial="hidden"
+            key="copy"
+            variants={variants}
           >
-            🔗 Copy
+            ✅
           </motion.span>
         ) : (
           <motion.span
-            key="copy"
-            variants={variants}
-            initial="hidden"
             animate="visible"
+            className="rounded-lg bg-neutral-600 px-3 py-2"
             exit="hidden"
+            initial="hidden"
+            key="checkmark"
+            variants={variants}
           >
-            ✅
+            🔗 Copy
           </motion.span>
         )}
       </AnimatePresence>
