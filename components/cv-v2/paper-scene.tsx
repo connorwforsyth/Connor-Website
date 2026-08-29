@@ -3,17 +3,12 @@
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { Suspense, useEffect, useLayoutEffect, useRef, useState } from "react";
 import type { DirectionalLight, Group } from "three";
+import { CAMERA_FOV, fitCameraZ, visibleHeightAt } from "./camera-fit";
 import { PAPER_HEIGHT, PAPER_WIDTH, PaperPage } from "./paper-page";
 
 const PAGE_GAP = 72;
 const CAMERA_Z = 1500;
-const CAMERA_FOV = 40;
-// The sheet should read close-up on every viewport, so the camera fits the
-// page width to the canvas rather than sitting at a fixed distance — a
-// fixed Z clips the sides on narrow, portrait screens.
-const WIDTH_FILL = 0.86;
-const MIN_CAMERA_Z = 900;
-const MAX_CAMERA_Z = 2600;
+const TOTAL_DOC_HEIGHT = PAPER_HEIGHT * 2 + PAGE_GAP;
 const SHEET_STAGGER = 0.22;
 const FIRST_DROP_DELAY = 0.12;
 const SCROLL_EASE = 10;
@@ -33,7 +28,7 @@ function Papers({ reduceMotion, replayToken, scrollTarget }: SceneProps) {
   const groupRef = useRef<Group>(null);
   const scroll = useRef(0);
 
-  useFrame((_state, delta) => {
+  useFrame((state, delta) => {
     const group = groupRef.current;
     if (!group) {
       return;
@@ -41,7 +36,13 @@ function Papers({ reduceMotion, replayToken, scrollTarget }: SceneProps) {
     scroll.current +=
       (scrollTarget.current - scroll.current) *
       Math.min(1, delta * SCROLL_EASE);
-    group.position.y = scroll.current;
+    // Anchor the top of page one to the top of the viewport at scroll 0 —
+    // the camera sits closer than the page is tall, so centering (the old
+    // approach) could strand the header above the visible frame with no
+    // way to scroll up to it.
+    const visibleHeight = visibleHeightAt(state.camera.position.z);
+    const topOffset = (visibleHeight - PAPER_HEIGHT) / 2;
+    group.position.y = topOffset + scroll.current;
   });
 
   return (
@@ -67,11 +68,7 @@ function CameraFit() {
   const height = useThree((state) => state.size.height);
 
   useLayoutEffect(() => {
-    const aspect = width / height;
-    const fovRad = (CAMERA_FOV * Math.PI) / 180;
-    const targetWidth = PAPER_WIDTH / WIDTH_FILL;
-    const z = targetWidth / (2 * Math.tan(fovRad / 2) * aspect);
-    camera.position.z = Math.min(MAX_CAMERA_Z, Math.max(MIN_CAMERA_Z, z));
+    camera.position.z = fitCameraZ(width, height, PAPER_WIDTH);
   }, [camera, width, height]);
 
   return null;
@@ -122,12 +119,24 @@ function Table() {
 }
 
 // Wheel, touch-drag, and keyboard all steer one scroll target that the
-// frame loop eases toward.
-function useScrollControls(maxScroll: number) {
+// frame loop eases toward. The scroll range is however much of the
+// document doesn't fit in the viewport at the current camera fit, so it's
+// recomputed on resize alongside the camera.
+function useScrollControls() {
   const scrollTarget = useRef(0);
+  const maxScroll = useRef(0);
 
   useEffect(() => {
-    const clamp = (value: number) => Math.min(maxScroll, Math.max(0, value));
+    const updateMaxScroll = () => {
+      const z = fitCameraZ(window.innerWidth, window.innerHeight, PAPER_WIDTH);
+      maxScroll.current = Math.max(0, TOTAL_DOC_HEIGHT - visibleHeightAt(z));
+      scrollTarget.current = Math.min(scrollTarget.current, maxScroll.current);
+    };
+    updateMaxScroll();
+    window.addEventListener("resize", updateMaxScroll);
+
+    const clamp = (value: number) =>
+      Math.min(maxScroll.current, Math.max(0, value));
     const onWheel = (event: WheelEvent) => {
       scrollTarget.current = clamp(scrollTarget.current + event.deltaY);
     };
@@ -165,12 +174,13 @@ function useScrollControls(maxScroll: number) {
     window.addEventListener("touchstart", onTouchStart, { passive: true });
     window.addEventListener("touchmove", onTouchMove, { passive: true });
     return () => {
+      window.removeEventListener("resize", updateMaxScroll);
       window.removeEventListener("wheel", onWheel);
       window.removeEventListener("keydown", onKeyDown);
       window.removeEventListener("touchstart", onTouchStart);
       window.removeEventListener("touchmove", onTouchMove);
     };
-  }, [maxScroll]);
+  }, []);
 
   return scrollTarget;
 }
@@ -178,7 +188,7 @@ function useScrollControls(maxScroll: number) {
 export default function PaperScene() {
   const [replayToken, setReplayToken] = useState(0);
   const [reduceMotion, setReduceMotion] = useState(false);
-  const scrollTarget = useScrollControls(PAPER_HEIGHT + PAGE_GAP);
+  const scrollTarget = useScrollControls();
 
   useEffect(() => {
     setReduceMotion(
