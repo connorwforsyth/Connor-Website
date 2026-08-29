@@ -56,3 +56,33 @@ body {
     0 22px 44px -22px rgb(70 72 82 / 0.28),
     0 5px 14px -8px rgb(70 72 82 / 0.2);
 }
+
+/* WebGL cloth-paper scene: the canvas owns the viewport and its own
+   scrolling, so the page itself must not scroll. */
+.cv-v2-3d {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+}
+
+.cv-v2-3d canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+  touch-action: none;
+}
+
+.cv-v2-hint {
+  position: fixed;
+  bottom: 1rem;
+  left: 50%;
+  font-size: 11px;
+  color: #8a8a86;
+  letter-spacing: 0.01em;
+  white-space: nowrap;
+  transform: translateX(-50%);
+}
+
+.cv-v2-hint a {
+  color: inherit;
+}
