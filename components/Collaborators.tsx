@@ -48,7 +48,9 @@ export function Collaborators({ people, className }: CollaboratorsProps) {
                 width={24}
               />
             </div>
-            <span className="[text-box:trim-both_cap_alphabetic]">{i.name}</span>
+            <span className="[text-box:trim-both_cap_alphabetic]">
+              {i.name}
+            </span>
           </Link>
         ))}
       </div>

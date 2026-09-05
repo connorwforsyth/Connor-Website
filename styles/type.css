@@ -90,7 +90,8 @@
 
 @font-face {
   font-family: "kag";
-  src: url("/fonts/KAG/KynetonArtGrotesque-DemiBoldItalic.woff2") format("woff2");
+  src: url("/fonts/KAG/KynetonArtGrotesque-DemiBoldItalic.woff2")
+    format("woff2");
   font-weight: 500;
   font-style: italic;
   font-display: swap;

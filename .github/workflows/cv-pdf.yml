@@ -5,9 +5,8 @@ on:
     branches: [main]
     paths:
       - "app/(cv)/**"
-      - "components/PrintButton.tsx"
-      - "styles/cv-globals.css"
-      - "styles/type.css"
+      - "styles/cv.css"
+      - "config/site-metadata.ts"
       - "public/fonts/**"
       - "scripts/generate-cv-pdf.ts"
       - ".github/workflows/cv-pdf.yml"

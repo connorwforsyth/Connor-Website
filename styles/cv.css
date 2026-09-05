@@ -1,0 +1,331 @@
+@import "tailwindcss";
+
+@theme inline {
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-ring: var(--ring);
+}
+
+@page {
+  size: A4;
+  margin: 12mm;
+}
+
+/* Sheets start hidden so the landing animation in paper-landing.tsx does not
+   flash settled content during hydration. Hiding them from CSS alone would
+   leave a blank CV whenever the client bundle fails to run, so the reveal is
+   driven by an inherited custom property that a CSS animation on <body> flips
+   back to 1. The landing's Web Animations override that value while it plays;
+   if it never starts, the sheets appear on their own. */
+@property --cv-landing-opacity {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 1;
+}
+
+@keyframes cv-landing-failsafe {
+  to {
+    --cv-landing-opacity: 1;
+  }
+}
+
+/* The CV is typeset in 14px-rem units so the Tailwind spacing scale lines up
+   with the 13px body copy. */
+html {
+  font-size: 14px;
+}
+
+.cv-body {
+  --cv-ink: #202020;
+  --cv-muted: #646464;
+  --cv-accent: #0a37cd;
+  --cv-rule: #d9d9d9;
+  --cv-surface: #eeedeb;
+  --cv-paper: #fcfcfc;
+  --cv-paper-wide: #fdfcf9;
+  --cv-download-icon: #8a8a8a;
+  --cv-download-icon-hover: #505050;
+  --accent: color-mix(in srgb, var(--cv-muted) 10%, transparent);
+  --accent-foreground: var(--cv-download-icon-hover);
+  --ring: var(--cv-accent);
+  --cv-landing-opacity: 0;
+  padding: 96px 32px 48px;
+  margin: 0;
+  font-size: 13px;
+  font-weight: 460;
+  font-synthesis: none;
+  color: var(--cv-ink);
+  letter-spacing: 0;
+  background: var(--cv-surface);
+
+  /* Long enough that a normal hydration + landing finishes first, short enough
+     that a broken bundle is not a blank page. */
+  animation: cv-landing-failsafe 1ms linear 2.5s forwards;
+}
+
+.cv-document {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  width: 100%;
+  max-width: 794px;
+  margin-inline: auto;
+}
+
+.cv-document--landing .page {
+  opacity: var(--cv-landing-opacity);
+}
+
+.cv-document .page {
+  box-sizing: border-box;
+  width: 100%;
+  max-width: none;
+  height: auto;
+  min-height: 1123px;
+  padding: 48px;
+  margin: 0;
+  overflow-wrap: anywhere;
+  background: var(--cv-paper);
+  border-radius: 2px;
+  box-shadow:
+    0 24px 44px -24px rgb(58 60 70 / 22%),
+    0 5px 14px -8px rgb(58 60 70 / 18%),
+    0 1px 2px rgb(58 60 70 / 8%);
+}
+
+.cv-document .page > header > p {
+  max-width: 100%;
+}
+
+.cv-contacts {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-style: normal;
+}
+
+.cv-contact-primary,
+.cv-contact-secondary {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 20px;
+  align-items: center;
+}
+
+.cv-contact-primary > li,
+.cv-contact-secondary > li {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  min-width: 0;
+}
+
+.cv-contacts a {
+  min-width: 0;
+  font-weight: 500;
+  text-decoration: none;
+}
+
+.cv-contact-primary {
+  color: var(--cv-accent);
+}
+
+.cv-contact-secondary {
+  color: var(--cv-muted);
+}
+
+.cv-contact-secondary a {
+  color: var(--cv-accent);
+}
+
+.cv-contacts svg {
+  flex-shrink: 0;
+  color: var(--cv-accent);
+}
+
+.cv-link {
+  color: var(--cv-accent);
+}
+
+.cv-muted,
+.cv-role-location,
+.cv-role-dates,
+.cv-date {
+  color: var(--cv-muted);
+}
+
+.cv-section-rule {
+  background: var(--cv-rule);
+}
+
+@media screen and (width > 768px) {
+  .cv-document .page {
+    background: var(--cv-paper-wide);
+    box-shadow:
+      8px 18px 36px -22px rgb(74 66 54 / 20%),
+      2px 3px 10px -6px rgb(74 66 54 / 14%),
+      0 1px 2px rgb(58 60 70 / 6%);
+  }
+}
+
+.cv-role-location,
+.cv-role-dates {
+  font-variant-numeric: tabular-nums;
+}
+
+.cv-role-dates {
+  margin-left: auto;
+}
+
+.cv-role-bullets {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding-left: 20px;
+  list-style: disc outside;
+}
+
+.cv-role-bullets > li {
+  padding-left: 2px;
+}
+
+.cv-role-bullets > li::marker {
+  color: var(--cv-muted);
+}
+
+.cv-document a:hover {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.cv-document a:focus-visible {
+  outline: 2px solid var(--cv-accent);
+  outline-offset: 4px;
+}
+
+.cv-actions {
+  display: contents;
+  color: var(--cv-download-icon);
+}
+
+.cv-home-link,
+.cv-pdf-download {
+  position: fixed;
+  top: 16px;
+  z-index: 10;
+  cursor: pointer;
+}
+
+.cv-pdf-download {
+  right: 16px;
+}
+
+.cv-home-link {
+  left: 16px;
+  display: none;
+}
+
+@media screen and (width > 768px) {
+  .cv-home-link {
+    display: inline-flex;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cv-document--landing .page {
+    opacity: 1;
+  }
+}
+
+@media (width <= 768px) {
+  .cv-body {
+    padding: 64px 16px 32px;
+    font-size: 14px;
+    background: var(--cv-paper);
+  }
+
+  .cv-document {
+    gap: 32px;
+  }
+
+  .cv-document .page {
+    min-height: 0;
+    padding: 0;
+    border-radius: 0;
+    box-shadow: none;
+  }
+
+  .cv-document--landing .page {
+    opacity: 1;
+  }
+
+  .cv-contact-primary {
+    column-gap: 20px;
+  }
+
+  .cv-contact-secondary {
+    column-gap: 12px;
+  }
+
+  .cv-role-location {
+    margin-left: 0;
+  }
+
+  .cv-role-dates {
+    margin-left: 0;
+  }
+}
+
+@media print {
+  .cv-body {
+    padding: 0 !important;
+    font-size: 13px;
+    print-color-adjust: exact;
+    background: white !important;
+  }
+
+  .cv-document {
+    display: block;
+    max-width: none;
+  }
+
+  .cv-document .page {
+    height: auto;
+    min-height: 0;
+    padding: 0 !important;
+    background: transparent;
+    border-radius: 0;
+    box-shadow: none;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  .cv-document--landing .page {
+    opacity: 1;
+  }
+
+  .cv-document .page + .page {
+    break-before: page;
+  }
+
+  .cv-role-bullets > li,
+  .cv-section,
+  .cv-document section:has(> h3),
+  .cv-document section:has(> div > h3),
+  .cv-document header {
+    break-inside: avoid;
+  }
+
+  .cv-document h2,
+  .cv-document h3 {
+    break-after: avoid;
+  }
+
+  .cv-role-dates {
+    margin-left: auto;
+  }
+
+  .cv-pdf-download {
+    display: none;
+  }
+}

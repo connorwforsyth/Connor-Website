@@ -11,6 +11,7 @@
  */
 
 import { spawn } from "node:child_process";
+import { once } from "node:events";
 import { mkdir } from "node:fs/promises";
 import { dirname, resolve } from "node:path";
 import { chromium } from "@playwright/test";
@@ -50,14 +51,28 @@ async function waitForServer(baseUrl: string) {
 }
 
 function startDevServer() {
-  const child = spawn("bun", ["run", "next", "dev", "--port", String(PORT)], {
-    env: { ...process.env, PLAYWRIGHT: "true" },
-    stdio: "inherit",
-  });
+  const child = spawn(
+    "node",
+    [
+      resolve(import.meta.dirname, "../node_modules/next/dist/bin/next"),
+      "dev",
+      "--port",
+      String(PORT),
+    ],
+    {
+      env: { ...process.env, PLAYWRIGHT: "true" },
+      stdio: "inherit",
+    }
+  );
   return {
     baseUrl: `http://127.0.0.1:${PORT}`,
-    stop: () => {
+    stop: async () => {
+      if (child.exitCode !== null || child.signalCode !== null) {
+        return;
+      }
+      const exited = once(child, "exit");
       child.kill("SIGTERM");
+      await exited;
     },
   };
 }
@@ -68,10 +83,15 @@ async function renderPdf(baseUrl: string) {
   const browser = await chromium.launch();
   try {
     const page = await browser.newPage();
-    await page.goto(`${baseUrl}${CV_PATH}`, {
+    const response = await page.goto(`${baseUrl}${CV_PATH}`, {
       timeout: PAGE_LOAD_TIMEOUT_MS,
       waitUntil: "networkidle",
     });
+    if (!response?.ok()) {
+      throw new Error(
+        `Could not render ${CV_PATH}: HTTP ${response?.status()}`
+      );
+    }
     await page.evaluate(async () => {
       await document.fonts.ready;
     });
@@ -107,7 +127,7 @@ async function main() {
     await renderPdf(server.baseUrl);
     console.log(`Wrote ${OUTPUT_PATH}`);
   } finally {
-    server.stop();
+    await server.stop();
   }
 }
 

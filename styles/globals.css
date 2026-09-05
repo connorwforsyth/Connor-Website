@@ -250,8 +250,8 @@ body {
   }
 
   em {
-    @apply font-rodney;
     font-weight: 400;
+    @apply font-rodney;
   }
 
   /* eventually change this to the new underline link */

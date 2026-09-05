@@ -42,7 +42,7 @@ export const mdxComponents = {
   blockquote: ({ className, ...props }) => (
     <blockquote
       className={cn(
-        "mx-auto my-6 max-w-2xl border-l-2 pl-6 font-rodney font-normal text-lg italic leading-10 lg:pr-32",
+        "mx-auto my-6 max-w-2xl border-l-2 pl-6 font-normal font-rodney text-lg italic leading-10 lg:pr-32",
         className
       )}
       {...props}
