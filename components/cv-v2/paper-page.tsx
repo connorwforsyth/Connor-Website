@@ -1,22 +1,16 @@
 "use client";
 
-import { useFrame, useLoader } from "@react-three/fiber";
+import { useFrame } from "@react-three/fiber";
 import { useMemo, useRef } from "react";
-import {
-  DoubleSide,
-  type Mesh,
-  type MeshStandardMaterial,
-  PlaneGeometry,
-  SRGBColorSpace,
-  TextureLoader,
-} from "three";
+import { DoubleSide, type Group } from "three";
+import { CSS3DObject } from "three/examples/jsm/renderers/CSS3DRenderer.js";
 import { criticallyDampedAt } from "./spring";
 
-// World units are CSS pixels: an A4 sheet at 96dpi.
+// World units are CSS pixels: an A4 sheet at 96dpi. The DOM sheet is sized
+// to exactly these numbers so the shadow caster lines up with the page the
+// reader actually sees.
 export const PAPER_WIDTH = 794;
 export const PAPER_HEIGHT = 1123;
-const SEGMENTS_X = 16;
-const SEGMENTS_Y = 22;
 
 // Quick, quiet landing: a short drop that settles in about a second.
 // The 3D-ness should register as texture, not as a performance. Each sheet
@@ -25,58 +19,48 @@ const DROP_HEIGHT_BY_INDEX = [200, 235];
 const DROP_OMEGA_BY_INDEX = [4.2, 3.7];
 const DRIFT_BY_INDEX = [14, 20];
 const DRIFT_OMEGA_BY_INDEX = [3.4, 3];
-const REST_HOVER = 4; // resting height keeps the sheet off the table plane
+// Resting height above the table. Big enough that the daylight shadow
+// reads as a soft offset rather than a hard outline, small enough that the
+// sheet still looks like it is lying down rather than floating.
+const REST_HOVER = 11;
 const TILT_PER_SPEED = 0.000_24; // rad of rotateX per px/s of descent
 const TWIST_PER_SPEED = 0.000_35; // rad of rotateZ per px/s of drift
 const REST_TWISTS_RAD = [0.004, -0.003];
 const FADE_IN = 0.25;
 
-// Cloth response, kept just above the threshold of notice: the sheet bows
-// slightly and ripples faintly while moving, then lies perfectly still.
-const CURL_PER_SPEED = 0.055; // px of edge curl per px/s of descent
-const MAX_CURL = 20;
-const FLUTTER_PER_SPEED = 0.012;
-const MAX_FLUTTER = 5;
-const FLUTTER_WAVELENGTHS = 1.4;
-const FLUTTER_HZ = 2.2;
-const STILL_EPSILON = 0.02; // below this deformation the mesh goes idle
-
 type PaperPageProps = {
   centerY: number;
   dropDelay: number;
+  element: HTMLElement;
   index: number;
-  onMeshRef?: (mesh: Mesh | null) => void;
   reduceMotion: boolean;
   replayToken: number;
-  textureUrl: string;
 };
 
+/**
+ * One sheet of the CV. The page you read is `element` — a real DOM node
+ * full of real HTML, positioned in 3D by CSS3DRenderer — so its text stays
+ * vector-sharp, selectable and linkable at any zoom.
+ *
+ * The mesh in here is never drawn. It exists only to cast the sheet's
+ * shadow onto the table in the WebGL layer behind, which is the one thing
+ * CSS cannot do honestly: a real soft shadow that tracks the page's tilt
+ * as it falls.
+ */
 export function PaperPage({
   centerY,
   dropDelay,
+  element,
   index,
-  onMeshRef,
   reduceMotion,
   replayToken,
-  textureUrl,
 }: PaperPageProps) {
-  const texture = useLoader(TextureLoader, textureUrl);
-  texture.colorSpace = SRGBColorSpace;
-  texture.anisotropy = 16;
-
-  const meshRef = useRef<Mesh>(null);
+  const groupRef = useRef<Group>(null);
   const startedAt = useRef<number | undefined>(undefined);
   const lastReplayToken = useRef(replayToken);
-  const deformed = useRef(false);
+  const lastOpacity = useRef(-1);
 
-  const geometry = useMemo(
-    () => new PlaneGeometry(PAPER_WIDTH, PAPER_HEIGHT, SEGMENTS_X, SEGMENTS_Y),
-    []
-  );
-  const basePositions = useMemo(
-    () => Float32Array.from(geometry.attributes.position.array),
-    [geometry]
-  );
+  const cssObject = useMemo(() => new CSS3DObject(element), [element]);
 
   const direction = index % 2 === 0 ? 1 : -1;
   const restTwist = REST_TWISTS_RAD[index] ?? 0;
@@ -86,8 +70,8 @@ export function PaperPage({
   const driftOmega = DRIFT_OMEGA_BY_INDEX[index] ?? DRIFT_OMEGA_BY_INDEX[0];
 
   useFrame((state) => {
-    const mesh = meshRef.current;
-    if (!mesh) {
+    const group = groupRef.current;
+    if (!group) {
       return;
     }
 
@@ -111,70 +95,33 @@ export function PaperPage({
     );
     const speed = -height.velocity; // px/s of descent, positive while falling
 
-    mesh.position.set(drift.position, centerY, REST_HOVER + height.position);
-    mesh.rotation.x = speed * TILT_PER_SPEED;
-    mesh.rotation.z = restTwist + drift.velocity * TWIST_PER_SPEED;
+    group.position.set(drift.position, centerY, REST_HOVER + height.position);
+    group.rotation.x = speed * TILT_PER_SPEED;
+    group.rotation.z = restTwist + drift.velocity * TWIST_PER_SPEED;
 
-    const material = mesh.material as MeshStandardMaterial;
-    material.opacity = Math.min(1, Math.max(0, (local + FADE_IN) / FADE_IN));
-
-    const curl = Math.min(MAX_CURL, speed * CURL_PER_SPEED);
-    const flutter = reduceMotion
-      ? 0
-      : Math.min(MAX_FLUTTER, speed * FLUTTER_PER_SPEED);
-
-    // Once the sheet has settled, restore the flat geometry a single time
-    // and stop touching vertices — the scene idles at zero geometry cost.
-    if (curl + flutter < STILL_EPSILON) {
-      if (deformed.current) {
-        geometry.attributes.position.array.set(basePositions);
-        geometry.attributes.position.needsUpdate = true;
-        geometry.computeVertexNormals();
-        deformed.current = false;
-      }
-      return;
+    const opacity = Math.min(1, Math.max(0, (local + FADE_IN) / FADE_IN));
+    if (opacity !== lastOpacity.current) {
+      element.style.opacity = `${opacity}`;
+      lastOpacity.current = opacity;
     }
-    deformed.current = true;
-
-    const phase = elapsed * Math.PI * 2;
-    const positions = geometry.attributes.position;
-    const array = positions.array as Float32Array;
-    for (let i = 0; i < positions.count; i += 1) {
-      const x = basePositions[i * 3];
-      const y = basePositions[i * 3 + 1];
-      const u = x / (PAPER_WIDTH / 2);
-      const v = y / (PAPER_HEIGHT / 2);
-
-      // Falling: the middle leads and the edges lag upward.
-      let z = curl * (u * u * 0.55 + v * v * 0.45);
-      // A faint ripple travels down the sheet while it moves.
-      z +=
-        flutter *
-        Math.sin(v * Math.PI * FLUTTER_WAVELENGTHS - phase * FLUTTER_HZ) *
-        (0.4 + 0.6 * u * u);
-
-      array[i * 3 + 2] = z;
-    }
-    positions.needsUpdate = true;
-    geometry.computeVertexNormals();
   });
 
   return (
-    <mesh
-      castShadow
-      geometry={geometry}
-      ref={(node) => {
-        meshRef.current = node;
-        onMeshRef?.(node);
-      }}
-    >
-      <meshStandardMaterial
-        map={texture}
-        metalness={0}
-        roughness={0.92}
-        side={DoubleSide}
-        transparent
-      />
-    </mesh>
+    <group ref={groupRef}>
+      {/* Invisible in the colour pass — the DOM sheet in front of the
+          canvas is what you see — but still a shadow caster. */}
+      <mesh castShadow>
+        <planeGeometry args={[PAPER_WIDTH, PAPER_HEIGHT]} />
+        {/* shadowSide matters: three renders the shadow pass with back
+            faces by default, so a single-sided plane would cast nothing
+            at all. */}
+        <meshBasicMaterial
+          colorWrite={false}
+          depthWrite={false}
+          shadowSide={DoubleSide}
+        />
+      </mesh>
+      <primitive object={cssObject} />
+    </group>
   );
 }

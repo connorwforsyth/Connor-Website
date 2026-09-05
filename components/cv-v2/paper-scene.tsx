@@ -1,11 +1,11 @@
 "use client";
 
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
-import { Suspense, useEffect, useLayoutEffect, useRef, useState } from "react";
-import type { DirectionalLight, Group, Mesh } from "three";
+import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
+import { createPortal } from "react-dom";
+import type { DirectionalLight, Group } from "three";
 import { CAMERA_FOV, fitCameraZ, visibleHeightAt } from "./camera-fit";
-import { CV_LINK_RECTS } from "./cv-links.generated";
-import { LinkOverlay } from "./link-overlay";
+import { Css3dLayer } from "./css3d-layer";
 import { PAPER_HEIGHT, PAPER_WIDTH, PaperPage } from "./paper-page";
 
 const PAGE_GAP = 72;
@@ -21,22 +21,31 @@ const SCROLL_EASE = 10;
 const SCROLL_LINE = 120;
 const SCROLL_PAGE = 900;
 const TABLE_SIZE = 9000;
-const SHADOW_FRUSTUM = 1600;
-const TEXTURES = ["/cv-v2/page-1.png", "/cv-v2/page-2.png"];
+// The tabletop sits behind the plane the sheets rest on, not flush with
+// it. That gap is what gives the daylight something to throw: at this
+// depth the key light casts the page's shadow a few dozen pixels down and
+// to the right, so it reads as a lit room rather than a sticker.
+const TABLE_Z = -46;
+// Wide enough to hold both sheets plus the scroll travel, tight enough
+// that a 2048 map still resolves a clean penumbra at the paper's edge.
+const SHADOW_FRUSTUM = 1800;
+const SHADOW_RADIUS = 5;
 
-type SceneProps = {
-  meshesRef: React.RefObject<(Mesh | null)[]>;
+type Sheet = { element: HTMLElement; id: string };
+
+type PapersProps = {
   reduceMotion: boolean;
   replayToken: number;
   scrollTarget: React.RefObject<number>;
+  sheets: Sheet[];
 };
 
 function Papers({
-  meshesRef,
   reduceMotion,
   replayToken,
   scrollTarget,
-}: SceneProps) {
+  sheets,
+}: PapersProps) {
   const groupRef = useRef<Group>(null);
   const scroll = useRef(0);
 
@@ -59,18 +68,15 @@ function Papers({
 
   return (
     <group ref={groupRef}>
-      {TEXTURES.map((textureUrl, index) => (
+      {sheets.map((sheet, index) => (
         <PaperPage
           centerY={-index * (PAPER_HEIGHT + PAGE_GAP)}
           dropDelay={FIRST_DROP_DELAY + index * SHEET_STAGGER}
+          element={sheet.element}
           index={index}
-          key={textureUrl}
-          onMeshRef={(mesh) => {
-            meshesRef.current[index] = mesh;
-          }}
+          key={sheet.id}
           reduceMotion={reduceMotion}
           replayToken={replayToken}
-          textureUrl={textureUrl}
         />
       ))}
     </group>
@@ -102,15 +108,19 @@ function Daylight() {
     light.shadow.camera.bottom = -SHADOW_FRUSTUM;
     light.shadow.camera.near = 100;
     light.shadow.camera.far = 6000;
-    light.shadow.radius = 8;
+    light.shadow.radius = SHADOW_RADIUS;
     light.shadow.bias = -0.0002;
+    light.shadow.camera.updateProjectionMatrix();
   }, []);
 
   return (
     <>
-      {/* Open-sky fill, slightly cool. Lambert shading divides by π, so
-          intensities here are ~π× the target contribution. */}
-      <ambientLight color="#f2f4fa" intensity={2.2} />
+      {/* Sky above, warm bounce off the table below. Lambert shading
+          divides by π, so intensities here are ~π× the target. */}
+      <hemisphereLight
+        args={["#eef2fb", "#e8e2d6", 2.2]}
+        position={[0, 1000, 0]}
+      />
       {/* Warm window light from the upper left, casting the soft shadows. */}
       <directionalLight
         castShadow
@@ -118,7 +128,7 @@ function Daylight() {
         intensity={1.4}
         position={[-850, 950, 1500]}
         ref={lightRef}
-        shadow-mapSize={[1024, 1024]}
+        shadow-mapSize={[2048, 2048]}
       />
     </>
   );
@@ -126,7 +136,7 @@ function Daylight() {
 
 function Table() {
   return (
-    <mesh position={[0, -TABLE_SIZE / 4, 0]} receiveShadow>
+    <mesh position={[0, 0, TABLE_Z]} receiveShadow>
       <planeGeometry args={[TABLE_SIZE, TABLE_SIZE]} />
       <meshStandardMaterial color="#f2f1ee" metalness={0} roughness={1} />
     </mesh>
@@ -203,14 +213,29 @@ function useScrollControls() {
   return scrollTarget;
 }
 
-export default function PaperScene() {
+export default function PaperScene({ pages }: { pages: React.ReactNode[] }) {
+  const [root, setRoot] = useState<HTMLDivElement | null>(null);
   const [replayToken, setReplayToken] = useState(0);
   const [reduceMotion, setReduceMotion] = useState(false);
-  const meshesRef = useRef<(Mesh | null)[]>([]);
-  const anchorRefs = useRef<(HTMLAnchorElement | null)[][]>(
-    CV_LINK_RECTS.map(() => [])
-  );
   const scrollTarget = useScrollControls();
+
+  // One detached host element per page. React owns what's inside it (via a
+  // portal, so the CV stays ordinary JSX with ordinary Tailwind); three's
+  // CSS3DRenderer owns where it sits in the scene and reparents it into
+  // its own layer. Because React never has to move these nodes itself,
+  // that reparenting is safe.
+  const sheets = useMemo<Sheet[]>(
+    () =>
+      pages.map((_, index) => {
+        const element = document.createElement("div");
+        element.className = "cv-v2-sheet";
+        // Revealed by the drop; avoids a flash at the CSS3D layer's
+        // untransformed origin before the first frame.
+        element.style.opacity = "0";
+        return { element, id: `cv-v2-sheet-${index}` };
+      }),
+    [pages]
+  );
 
   useEffect(() => {
     setReduceMotion(
@@ -226,7 +251,7 @@ export default function PaperScene() {
   }, []);
 
   return (
-    <div className="cv-v2-3d">
+    <div className="cv-v2-3d" ref={setRoot}>
       <Canvas
         camera={{
           far: 8000,
@@ -234,53 +259,30 @@ export default function PaperScene() {
           near: 10,
           position: [0, 0, CAMERA_Z],
         }}
-        // Browser zoom raises devicePixelRatio; capping at 2 clamped the
-        // canvas below that and blurred it on top of the texture's own
-        // ceiling. 3 covers zoomed retina displays without over-rendering
-        // at 1x.
-        dpr={[1, 3]}
+        // The canvas now only draws the table and the sheets' shadows —
+        // the pages themselves are DOM, and stay sharp on their own — so
+        // there's no reason to render above 2x.
+        dpr={[1, 2]}
         flat
-        shadows="soft"
+        // PCF rather than three's deprecated PCFSoft, so the penumbra is
+        // ours to set via shadow.radius.
+        shadows="percentage"
       >
         <color args={["#efeeeb"]} attach="background" />
         <CameraFit />
         <Daylight />
         <Table />
-        <Suspense fallback={null}>
-          <Papers
-            meshesRef={meshesRef}
-            reduceMotion={reduceMotion}
-            replayToken={replayToken}
-            scrollTarget={scrollTarget}
-          />
-          <LinkOverlay
-            anchorRefs={anchorRefs}
-            meshRefs={meshesRef}
-            pages={CV_LINK_RECTS}
-          />
-        </Suspense>
+        <Papers
+          reduceMotion={reduceMotion}
+          replayToken={replayToken}
+          scrollTarget={scrollTarget}
+          sheets={sheets}
+        />
+        <Css3dLayer container={root} />
       </Canvas>
-      <div className="cv-v2-links">
-        {CV_LINK_RECTS.map((rects, pageIndex) => (
-          <div key={pageIndex}>
-            {rects.map((rect, linkIndex) => (
-              <a
-                className="cv-v2-link"
-                href={rect.href}
-                key={rect.href}
-                ref={(el) => {
-                  anchorRefs.current[pageIndex][linkIndex] = el;
-                }}
-              >
-                {/* Invisible over the texture; gives the overlay real,
-                    screen-reader-accessible content instead of an empty
-                    <a>. */}
-                <span className="sr-only">{rect.label}</span>
-              </a>
-            ))}
-          </div>
-        ))}
-      </div>
+      {sheets.map((sheet, index) =>
+        createPortal(pages[index], sheet.element, sheet.id)
+      )}
     </div>
   );
 }

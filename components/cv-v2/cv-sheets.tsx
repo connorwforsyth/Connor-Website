@@ -217,99 +217,114 @@ const DatedList = ({ rows }: { rows: DatedRow[] }) => (
 const contactIconClass = "shrink-0 text-[#646464]";
 const linkClass = "text-[#0A37CD] no-underline";
 
+// The two sheets are exported separately as well as together: the /cv-v2
+// scene renders each one into its own 3D-transformed DOM node, while the
+// plain and no-WebGL paths just stack them.
+
+export function CvSheetOne() {
+  return (
+    <div className="page flex flex-col gap-5 text-[#202020] leading-[1.45] tracking-[-0.005em]">
+      <header className="flex flex-col gap-4">
+        <div>
+          <h1 className="font-semibold">Connor Forsyth</h1>
+          <p className="text-[#646464]">Design Engineer</p>
+        </div>
+        <p className="max-w-[60ch] text-[#646464]">
+          I'm a multidisciplinary designer, front-end developer and researcher
+          with 8+ years across product design, design systems, web technology
+          and AI. Currently at Deloitte.
+        </p>
+        <ul className="grid grid-cols-[minmax(11rem,auto)_1fr] gap-x-6 gap-y-2">
+          <li className="flex items-center gap-2">
+            <MapPinIcon className={contactIconClass} size={14} />
+            <span className="text-[#646464]">Sydney, Australia</span>
+          </li>
+          <li className="flex items-center gap-2">
+            <GlobeIcon className={contactIconClass} size={14} />
+            <a className={linkClass} href={`/portfolio?code=${accessCode}`}>
+              connorforsyth.co/portfolio
+              <span className="opacity-60">{`?code=${accessCode}`}</span>
+            </a>
+          </li>
+          <li className="flex items-center gap-2">
+            <PhoneIcon className={contactIconClass} size={14} />
+            <span className="text-[#646464]">+61 400 891 285</span>
+          </li>
+          <li className="flex items-center gap-2">
+            <LinkedinLogoIcon className={contactIconClass} size={14} />
+            <a
+              className={linkClass}
+              href="https://linkedin.com/in/connorforsyth"
+            >
+              linkedin.com/in/connorforsyth
+            </a>
+          </li>
+          <li className="flex items-center gap-2">
+            <EnvelopeSimpleIcon className={contactIconClass} size={14} />
+            <a className={linkClass} href="mailto:c@connorforsyth.co">
+              c@connorforsyth.co
+            </a>
+          </li>
+          <li className="flex items-center gap-2">
+            <GithubLogoIcon className={contactIconClass} size={14} />
+            <a className={linkClass} href="https://github.com/connorforsyth">
+              github.com/connorforsyth
+            </a>
+          </li>
+        </ul>
+      </header>
+      <SectionRule title="Experience" />
+      <div className="flex flex-col gap-4">
+        {roles.map((role) => (
+          <RoleEntry key={role.company} role={role} />
+        ))}
+      </div>
+    </div>
+  );
+}
+
+export function CvSheetTwo() {
+  return (
+    <div className="page flex flex-col gap-5 text-[#202020] leading-[1.45] tracking-[-0.005em]">
+      <SectionRule title="Education & Continued Learning" />
+      <DatedList rows={education} />
+      <SectionRule title="Skills" />
+      <p>
+        Front-end development, Product design, Software design, Content design,
+        Prototyping, AI development, Design systems, Lean UX, Agile software
+        development, Design research, Service design, Facilitation.
+      </p>
+      <SectionRule title="Tech Stack" />
+      <p>
+        Code: TypeScript, React, Next.js, Node, Postgres, Tailwind CSS, Base UI,
+        Docker
+        <br />
+        Tools: Figma, Paper, Miro, VS Code, Claude Code, Conductor, GitHub,
+        Vercel, Cloudflare, Raycast, Dia
+      </p>
+      <SectionRule title="Side Projects" />
+      <DatedList rows={sideProjects} />
+      <SectionRule title="Speaking" />
+      <DatedList rows={speaking} />
+      <SectionRule title="Ask me about..." />
+      <p>
+        Filter coffee, Photography, Vulfpeck, All 6 seasons of Lost (TV Show),
+        Moving from architecture to IXD, Vipassana meditation.
+      </p>
+      <SectionRule title="Lately..." />
+      <p>
+        Building a timezone picker tool, hiking, running, and Afro-Cuban dance
+        (rumba, son).
+      </p>
+    </div>
+  );
+}
+
 export function CvSheets() {
   return (
     <>
-      <div className="page flex flex-col gap-5 text-[#202020] leading-[1.45] tracking-[-0.005em]">
-        <header className="flex flex-col gap-4">
-          <div>
-            <h1 className="font-semibold">Connor Forsyth</h1>
-            <p className="text-[#646464]">Design Engineer</p>
-          </div>
-          <p className="max-w-[60ch] text-[#646464]">
-            I'm a multidisciplinary designer, front-end developer and researcher
-            with 8+ years across product design, design systems, web technology
-            and AI. Currently at Deloitte.
-          </p>
-          <ul className="grid grid-cols-[minmax(11rem,auto)_1fr] gap-x-6 gap-y-2">
-            <li className="flex items-center gap-2">
-              <MapPinIcon className={contactIconClass} size={14} />
-              <span className="text-[#646464]">Sydney, Australia</span>
-            </li>
-            <li className="flex items-center gap-2">
-              <GlobeIcon className={contactIconClass} size={14} />
-              <a className={linkClass} href={`/portfolio?code=${accessCode}`}>
-                connorforsyth.co/portfolio
-                <span className="opacity-60">{`?code=${accessCode}`}</span>
-              </a>
-            </li>
-            <li className="flex items-center gap-2">
-              <PhoneIcon className={contactIconClass} size={14} />
-              <span className="text-[#646464]">+61 400 891 285</span>
-            </li>
-            <li className="flex items-center gap-2">
-              <LinkedinLogoIcon className={contactIconClass} size={14} />
-              <a
-                className={linkClass}
-                href="https://linkedin.com/in/connorforsyth"
-              >
-                linkedin.com/in/connorforsyth
-              </a>
-            </li>
-            <li className="flex items-center gap-2">
-              <EnvelopeSimpleIcon className={contactIconClass} size={14} />
-              <a className={linkClass} href="mailto:c@connorforsyth.co">
-                c@connorforsyth.co
-              </a>
-            </li>
-            <li className="flex items-center gap-2">
-              <GithubLogoIcon className={contactIconClass} size={14} />
-              <a className={linkClass} href="https://github.com/connorforsyth">
-                github.com/connorforsyth
-              </a>
-            </li>
-          </ul>
-        </header>
-        <SectionRule title="Experience" />
-        <div className="flex flex-col gap-4">
-          {roles.map((role) => (
-            <RoleEntry key={role.company} role={role} />
-          ))}
-        </div>
-      </div>
-
-      <div className="page flex flex-col gap-5 text-[#202020] leading-[1.45] tracking-[-0.005em]">
-        <SectionRule title="Education & Continued Learning" />
-        <DatedList rows={education} />
-        <SectionRule title="Skills" />
-        <p>
-          Front-end development, Product design, Software design, Content
-          design, Prototyping, AI development, Design systems, Lean UX, Agile
-          software development, Design research, Service design, Facilitation.
-        </p>
-        <SectionRule title="Tech Stack" />
-        <p>
-          Code: TypeScript, React, Next.js, Node, Postgres, Tailwind CSS, Base
-          UI, Docker
-          <br />
-          Tools: Figma, Paper, Miro, VS Code, Claude Code, Conductor, GitHub,
-          Vercel, Cloudflare, Raycast, Dia
-        </p>
-        <SectionRule title="Side Projects" />
-        <DatedList rows={sideProjects} />
-        <SectionRule title="Speaking" />
-        <DatedList rows={speaking} />
-        <SectionRule title="Ask me about..." />
-        <p>
-          Filter coffee, Photography, Vulfpeck, All 6 seasons of Lost (TV Show),
-          Moving from architecture to IXD, Vipassana meditation.
-        </p>
-        <SectionRule title="Lately..." />
-        <p>
-          Building a timezone picker tool, hiking, running, and Afro-Cuban dance
-          (rumba, son).
-        </p>
-      </div>
+      <CvSheetOne />
+      <CvSheetTwo />
     </>
   );
 }

@@ -20,18 +20,21 @@ function hasWebGl(): boolean {
 }
 
 /**
- * On mobile, renders `children` directly as plain HTML — native scroll,
- * zoom, and text selection. On larger screens, renders the WebGL
- * cloth-paper scene when the device can, and the DOM scene (which has its
- * own CSS fallback) otherwise. `fallback` also serves as the pre-hydration
- * content, so the CV is never missing.
+ * On mobile, stacks the `pages` as plain HTML — native scroll, zoom, and
+ * text selection. On larger screens, renders the paper scene when the
+ * device can, and the DOM scene (which has its own CSS fallback)
+ * otherwise. `fallback` also serves as the pre-hydration content, so the
+ * CV is never missing.
+ *
+ * Every path renders the same real HTML: the scene transforms those exact
+ * nodes in 3D rather than swapping in a picture of them.
  */
 export function CvSceneSwitch({
-  children,
   fallback,
+  pages,
 }: {
-  children: React.ReactNode;
   fallback: React.ReactNode;
+  pages: React.ReactNode[];
 }) {
   const [mode, setMode] = useState<"fallback" | "pending" | "plain" | "webgl">(
     "pending"
@@ -52,16 +55,10 @@ export function CvSceneSwitch({
   }, []);
 
   if (mode === "webgl") {
-    return (
-      <>
-        <PaperScene />
-        {/* Screen-reader and copy-paste access to the same content. */}
-        <div className="sr-only">{children}</div>
-      </>
-    );
+    return <PaperScene pages={pages} />;
   }
   if (mode === "plain") {
-    return <div className="cv-v2-plain">{children}</div>;
+    return <div className="cv-v2-plain">{pages}</div>;
   }
   return <>{fallback}</>;
 }

@@ -1,9 +1,11 @@
-/* /cv-v2 — the CV sheets fall onto a daylight tabletop rendered by vgpu
-   (WebGPU). The canvas draws the table, drifting window light, and the
-   sheets' shadows; the sheets themselves stay crisp DOM. */
+/* /cv-v2 — the CV sheets fall onto a daylight tabletop. The canvas draws
+   the table and the sheets' shadows; the sheets themselves are real HTML,
+   placed in the same 3D scene by CSS3DRenderer, so the text stays vector
+   sharp and the links stay real links. */
 
-/* cv-globals zooms the page for reading; the table scene needs CSS pixels
-   to match canvas pixels 1:1 so DOM rects line up with shader shadows. */
+/* cv-globals zooms the page for reading; the scene needs CSS pixels to
+   match canvas pixels 1:1 so the DOM sheets line up with their shadows.
+   CSS3DRenderer likewise assumes 100% zoom. */
 @media (width > 640px) {
   html {
     zoom: 1;
@@ -74,32 +76,58 @@ body {
   touch-action: pinch-zoom;
 }
 
-/* Real, focusable links positioned each frame over their text on the
-   paper texture — see components/cv-v2/link-overlay.tsx. Invisible at
-   rest so they don't look like boxes drawn on the page; hover and
-   keyboard focus reveal a tint matching the texture's link color. */
-.cv-v2-links {
+/* The CSS3D layer sits above the canvas and holds the pages themselves as
+   real DOM. Only the sheets take pointer events; everything around them
+   falls through to the canvas and the window scroll handlers. */
+.cv-v2-css3d {
   position: absolute;
   inset: 0;
   pointer-events: none;
 }
 
-.cv-v2-link {
-  position: absolute;
-  display: block;
-  pointer-events: auto;
+/* One A4 sheet, in CSS pixels at 96dpi — the same numbers the scene uses
+   for its shadow-casting plane, so the shadow lands exactly under the
+   page. CSS3DRenderer writes `transform` and `position` inline. */
+.cv-v2-sheet {
+  width: 794px;
+  height: 1123px;
+}
+
+.cv-v2-sheet .page {
+  position: relative;
+  width: 794px;
+  max-width: none;
+  height: 1123px;
+  padding: 10mm;
+  margin: 0;
+  overflow: hidden;
+  /* Daylight on the paper: warm key spilling from the upper left, cool
+     sky filling the opposite corner. These are background layers, not an
+     overlay, so the light tints the sheet without ever washing down the
+     contrast of the text sitting on it. Kept faint — it should read as a
+     sheet in a room, not as a gradient. */
+  background:
+    linear-gradient(147deg, rgb(255 247 234 / 0.6), transparent 38%),
+    linear-gradient(318deg, rgb(224 231 247 / 0.36), transparent 44%), #fbfbfa;
+  border-radius: 2px;
+  /* Near-contact darkening that the shadow map is too coarse to resolve;
+     the long soft shadow behind comes from the real directional light. */
+  box-shadow: 0 1px 2px rgb(58 60 70 / 0.08);
+}
+
+/* Real links, because the page is real HTML now. */
+.cv-v2-sheet a {
   border-radius: 3px;
 }
 
-.cv-v2-link:hover {
-  cursor: pointer;
+.cv-v2-sheet a:hover {
   background: rgb(10 55 205 / 8%);
+  box-shadow: 0 0 0 3px rgb(10 55 205 / 8%);
 }
 
-.cv-v2-link:focus-visible {
+.cv-v2-sheet a:focus-visible {
   outline: 2px solid #0a37cd;
   outline-offset: 2px;
-  background: rgb(10 55 205 / 8%);
 }
 
 /* Mobile: plain, responsive HTML — no canvas, no scroll hijacking. Same
