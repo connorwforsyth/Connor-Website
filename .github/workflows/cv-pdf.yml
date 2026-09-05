@@ -5,9 +5,8 @@ on:
     branches: [main]
     paths:
       - "app/(cv)/**"
-      - "components/PrintButton.tsx"
-      - "styles/cv-globals.css"
-      - "styles/type.css"
+      - "styles/cv.css"
+      - "config/site-metadata.ts"
       - "public/fonts/**"
       - "scripts/generate-cv-pdf.ts"
       - ".github/workflows/cv-pdf.yml"
@@ -29,12 +28,12 @@ jobs:
           ACCESS_CODE: ${{ secrets.ACCESS_CODE }}
       - name: Commit regenerated PDF
         run: |
-          if git diff --quiet -- public/connor-forsyth-cv.pdf; then
+          git add public/connor-forsyth-cv.pdf
+          if git diff --cached --quiet -- public/connor-forsyth-cv.pdf; then
             echo "CV PDF unchanged."
             exit 0
           fi
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add public/connor-forsyth-cv.pdf
           git commit -m "chore: regenerate CV PDF [skip ci]"
           git push

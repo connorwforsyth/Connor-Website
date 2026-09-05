@@ -70,7 +70,7 @@ export default async function Page({ params }: PageProps) {
 
   const header = (
     <article>
-      <BackButton label="Projects" />
+      <BackButton href="/projects" label="Projects" />
       <div className="mx-auto mb-3 w-full max-w-2xl text-muted-foreground">
         <h1 className="font-medium text-foreground md:inline">{doc.title}</h1>{" "}
         <span className="hidden md:inline"> | </span>

@@ -45,7 +45,7 @@ export default function Home() {
             Product Design Engineer
             <span className="hidden sm:inline">
               {" "}
-              with a focus on design systems, AI products and developer tools.
+              with a focus on design systems, AI products, and developer tools.
             </span>
           </h1>
           <div
@@ -67,9 +67,7 @@ export default function Home() {
               This system is used by product teams to shape the end-to-end
               development of software applications.
             </p>
-            <p>
-              Outside of work, I enjoy taking photos, and brewing filter coffee.
-            </p>
+            <p>Outside of work, I take photos and brew filter coffee.</p>
           </div>
         </div>
         <div
@@ -105,8 +103,8 @@ export default function Home() {
               You can reach me on{" "}
               <Link href="https://www.linkedin.com/in/connorwforsyth">
                 LinkedIn
-              </Link>{" "}
-              , <Link href="https://x.com/connorwforsyth">𝕏 (Twitter)</Link> or
+              </Link>
+              , <Link href="https://x.com/connorwforsyth">X (Twitter)</Link>, or
               email:{" "}
               <Link href="mailto:c@connorforsyth.co">c@connorforsyth.co</Link>
             </p>
@@ -132,14 +130,14 @@ const featuredItems: FeatureItemProps[] = [
     content: (
       <>
         <p>
-          I worked with Recime to design a conceptual prototype of the ReciMe
+          I worked with ReciMe to design a conceptual prototype of the ReciMe
           homepage to explore how the application would be adapted for web and
           desktop users.
         </p>
         <p>
           This helped establish the start of the overall direction for how the
           mobile app could be migrated to a web experience. It also included the
-          foundation of a design system, suitable to bring the ui to the web.
+          foundation of a design system suitable for bringing the UI to the web.
         </p>
         <ProjectLink href="/projects/recime">
           View project and prototype
@@ -147,10 +145,10 @@ const featuredItems: FeatureItemProps[] = [
       </>
     ),
     description:
-      "Crafting a web based Recipe discovery, organiser and menu planner app for a New York based startup.",
+      "Crafting a web-based recipe discovery, organiser, and menu-planner app for a New York-based startup.",
     icon: (
       <Image
-        alt="Recime"
+        alt="ReciMe"
         height={24}
         src="/homepage/recime-icon.svg"
         width={24}
@@ -158,14 +156,14 @@ const featuredItems: FeatureItemProps[] = [
     ),
     media: { src: "/homepage/recime-home.png", variant: "framed" },
     position: "left",
-    title: "Recime",
+    title: "ReciMe",
   },
   {
     content: (
       <>
         <p>
           Internally at Designit, I've developed a number of internal tools to
-          improve designer workflows, such as a miro workshop design system and
+          improve designer workflows, such as a Miro workshop design system and
           exercise library for our global teams.
         </p>
         <ProjectLink href="/writing/miro-design-system">
@@ -200,7 +198,7 @@ const featuredItems: FeatureItemProps[] = [
         <p>
           I worked with Origin Zero across multiple design sprints to redesign
           and test energy usage portals that help energy brokers and business
-          customers monitor, analyze and manage their net zero energy assets.
+          customers monitor, analyse, and manage their net-zero energy assets.
         </p>
         <p>
           I was responsible for pulling together the final prototype, leading
@@ -212,7 +210,7 @@ const featuredItems: FeatureItemProps[] = [
       </>
     ),
     description:
-      "Product strategy and design for Australia's leading net zero energy retailer.",
+      "Product strategy and design for Australia's leading net-zero energy retailer.",
     icon: (
       <Image
         alt="Origin Zero"
@@ -308,9 +306,9 @@ const featuredItems: FeatureItemProps[] = [
           component instances with text at scale.
         </p>
         <p>
-          The idea of this plugin came from attempting to quickly shift sticky
-          notes from a Miro board to a Figma component. Suitable for quickly
-          polishing workshop outputs or generating journey maps.
+          The idea of this plugin came from attempting to shift sticky notes
+          from a Miro board to a Figma component. Suitable for polishing
+          workshop outputs or generating journey maps.
         </p>
         <ProjectLink href="/projects/figma-component-looper">
           View plugin

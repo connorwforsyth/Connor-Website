@@ -3,10 +3,11 @@ import Link from "next/link";
 type BackType = {
   type?: string;
   label: string;
+  href: string;
   icon?: string;
 };
 
-export default function BackButton({ type, label }: BackType) {
+export default function BackButton({ type, label, href }: BackType) {
   const svgIcon =
     label === "Index" ? (
       <svg
@@ -37,28 +38,16 @@ export default function BackButton({ type, label }: BackType) {
         />
       </svg>
     );
-  if (type === "404") {
-    return (
-      <div className="mx-auto mb-8 w-full max-w-2xl font-rodney italic lg:mb-[2px] lg:max-w-5xl">
-        <div className="flex">
-          <Link
-            className="flex items-center gap-0.5 rounded-full border border-border px-2 py-1 align-center text-sm transition-all hover:border-foreground hover:shadow-md lg:fixed"
-            href="/"
-          >
-            {svgIcon}
-            <span className="translate-y-[-1px] px-1">{label}</span>
-          </Link>
-        </div>
-      </div>
-    );
-  }
+
+  const wrapperClass =
+    "mx-auto mb-8 w-full max-w-2xl font-rodney italic lg:mb-[2px] lg:max-w-5xl";
+  const linkClass =
+    "flex items-center gap-0.5 rounded-full border border-border px-2 py-1 align-center text-sm transition-all hover:border-foreground hover:shadow-md lg:fixed";
+
   return (
-    <div className="mx-auto mb-8 w-full max-w-2xl font-rodney italic lg:mb-[2px] lg:max-w-5xl">
+    <div className={wrapperClass} data-back-type={type}>
       <div className="flex">
-        <Link
-          className="flex items-center gap-0.5 rounded-full border border-border px-2 py-1 align-center text-sm transition-all hover:border-foreground hover:shadow-md lg:fixed"
-          href="./"
-        >
+        <Link className={linkClass} href={href}>
           {svgIcon}
           <span className="translate-y-[-1px] px-1">{label}</span>
         </Link>
