@@ -227,7 +227,7 @@ export function CvSheets() {
             <p className="text-[#646464]">Design Engineer</p>
           </div>
           <p className="max-w-[60ch] text-[#646464]">
-            I'm a design engineer, front-end developer, researcher and educator
+            I'm a multidisciplinary designer, front-end developer and researcher
             with 8+ years across product design, design systems, web technology
             and AI. Currently at Deloitte.
           </p>

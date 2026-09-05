@@ -1,31 +1,42 @@
 "use client";
 
-import { Canvas, useFrame } from "@react-three/fiber";
-import { Suspense, useEffect, useRef, useState } from "react";
-import type { DirectionalLight, Group } from "three";
-import { PAPER_HEIGHT, PaperPage } from "./paper-page";
+import { Canvas, useFrame, useThree } from "@react-three/fiber";
+import { Suspense, useEffect, useLayoutEffect, useRef, useState } from "react";
+import type { DirectionalLight, Group, Mesh } from "three";
+import { CAMERA_FOV, fitCameraZ, visibleHeightAt } from "./camera-fit";
+import { CV_LINK_RECTS } from "./cv-links.generated";
+import { LinkOverlay } from "./link-overlay";
+import { PAPER_HEIGHT, PAPER_WIDTH, PaperPage } from "./paper-page";
 
 const PAGE_GAP = 72;
-const CAMERA_Z = 2150;
-const CAMERA_FOV = 40;
-const SHEET_STAGGER = 0.6;
-const FIRST_DROP_DELAY = 0.4;
-const SCROLL_EASE = 8;
+const CAMERA_Z = 1500;
+const TOTAL_DOC_HEIGHT = PAPER_HEIGHT * 2 + PAGE_GAP;
+// Breathing room above page 1's top edge and below page 2's bottom edge —
+// without it the page sits flush against the viewport frame, which reads
+// as cramped now that the camera is zoomed in close.
+const SCROLL_EDGE_GAP = 56;
+const SHEET_STAGGER = 0.22;
+const FIRST_DROP_DELAY = 0.12;
+const SCROLL_EASE = 10;
 const SCROLL_LINE = 120;
 const SCROLL_PAGE = 900;
-const PARALLAX_X = 26;
-const PARALLAX_Y = 18;
 const TABLE_SIZE = 9000;
 const SHADOW_FRUSTUM = 1600;
 const TEXTURES = ["/cv-v2/page-1.png", "/cv-v2/page-2.png"];
 
 type SceneProps = {
+  meshesRef: React.RefObject<(Mesh | null)[]>;
   reduceMotion: boolean;
   replayToken: number;
   scrollTarget: React.RefObject<number>;
 };
 
-function Papers({ reduceMotion, replayToken, scrollTarget }: SceneProps) {
+function Papers({
+  meshesRef,
+  reduceMotion,
+  replayToken,
+  scrollTarget,
+}: SceneProps) {
   const groupRef = useRef<Group>(null);
   const scroll = useRef(0);
 
@@ -37,13 +48,13 @@ function Papers({ reduceMotion, replayToken, scrollTarget }: SceneProps) {
     scroll.current +=
       (scrollTarget.current - scroll.current) *
       Math.min(1, delta * SCROLL_EASE);
-    group.position.y = scroll.current;
-
-    // A touch of camera parallax keeps the scene feeling inhabited.
-    if (!reduceMotion) {
-      state.camera.position.x = state.pointer.x * PARALLAX_X;
-      state.camera.position.y = state.pointer.y * PARALLAX_Y;
-    }
+    // Anchor the top of page one to the top of the viewport at scroll 0 —
+    // the camera sits closer than the page is tall, so centering (the old
+    // approach) could strand the header above the visible frame with no
+    // way to scroll up to it.
+    const visibleHeight = visibleHeightAt(state.camera.position.z);
+    const topOffset = (visibleHeight - PAPER_HEIGHT) / 2 - SCROLL_EDGE_GAP;
+    group.position.y = topOffset + scroll.current;
   });
 
   return (
@@ -54,6 +65,9 @@ function Papers({ reduceMotion, replayToken, scrollTarget }: SceneProps) {
           dropDelay={FIRST_DROP_DELAY + index * SHEET_STAGGER}
           index={index}
           key={textureUrl}
+          onMeshRef={(mesh) => {
+            meshesRef.current[index] = mesh;
+          }}
           reduceMotion={reduceMotion}
           replayToken={replayToken}
           textureUrl={textureUrl}
@@ -61,6 +75,18 @@ function Papers({ reduceMotion, replayToken, scrollTarget }: SceneProps) {
       ))}
     </group>
   );
+}
+
+function CameraFit() {
+  const camera = useThree((state) => state.camera);
+  const width = useThree((state) => state.size.width);
+  const height = useThree((state) => state.size.height);
+
+  useLayoutEffect(() => {
+    camera.position.z = fitCameraZ(width, height, PAPER_WIDTH);
+  }, [camera, width, height]);
+
+  return null;
 }
 
 function Daylight() {
@@ -92,7 +118,7 @@ function Daylight() {
         intensity={1.4}
         position={[-850, 950, 1500]}
         ref={lightRef}
-        shadow-mapSize={[2048, 2048]}
+        shadow-mapSize={[1024, 1024]}
       />
     </>
   );
@@ -108,12 +134,27 @@ function Table() {
 }
 
 // Wheel, touch-drag, and keyboard all steer one scroll target that the
-// frame loop eases toward.
-function useScrollControls(maxScroll: number) {
+// frame loop eases toward. The scroll range is however much of the
+// document doesn't fit in the viewport at the current camera fit, so it's
+// recomputed on resize alongside the camera.
+function useScrollControls() {
   const scrollTarget = useRef(0);
+  const maxScroll = useRef(0);
 
   useEffect(() => {
-    const clamp = (value: number) => Math.min(maxScroll, Math.max(0, value));
+    const updateMaxScroll = () => {
+      const z = fitCameraZ(window.innerWidth, window.innerHeight, PAPER_WIDTH);
+      maxScroll.current = Math.max(
+        0,
+        TOTAL_DOC_HEIGHT - visibleHeightAt(z) + SCROLL_EDGE_GAP * 2
+      );
+      scrollTarget.current = Math.min(scrollTarget.current, maxScroll.current);
+    };
+    updateMaxScroll();
+    window.addEventListener("resize", updateMaxScroll);
+
+    const clamp = (value: number) =>
+      Math.min(maxScroll.current, Math.max(0, value));
     const onWheel = (event: WheelEvent) => {
       scrollTarget.current = clamp(scrollTarget.current + event.deltaY);
     };
@@ -151,12 +192,13 @@ function useScrollControls(maxScroll: number) {
     window.addEventListener("touchstart", onTouchStart, { passive: true });
     window.addEventListener("touchmove", onTouchMove, { passive: true });
     return () => {
+      window.removeEventListener("resize", updateMaxScroll);
       window.removeEventListener("wheel", onWheel);
       window.removeEventListener("keydown", onKeyDown);
       window.removeEventListener("touchstart", onTouchStart);
       window.removeEventListener("touchmove", onTouchMove);
     };
-  }, [maxScroll]);
+  }, []);
 
   return scrollTarget;
 }
@@ -164,7 +206,11 @@ function useScrollControls(maxScroll: number) {
 export default function PaperScene() {
   const [replayToken, setReplayToken] = useState(0);
   const [reduceMotion, setReduceMotion] = useState(false);
-  const scrollTarget = useScrollControls(PAPER_HEIGHT + PAGE_GAP);
+  const meshesRef = useRef<(Mesh | null)[]>([]);
+  const anchorRefs = useRef<(HTMLAnchorElement | null)[][]>(
+    CV_LINK_RECTS.map(() => [])
+  );
+  const scrollTarget = useScrollControls();
 
   useEffect(() => {
     setReduceMotion(
@@ -188,25 +234,53 @@ export default function PaperScene() {
           near: 10,
           position: [0, 0, CAMERA_Z],
         }}
-        dpr={[1, 2]}
+        // Browser zoom raises devicePixelRatio; capping at 2 clamped the
+        // canvas below that and blurred it on top of the texture's own
+        // ceiling. 3 covers zoomed retina displays without over-rendering
+        // at 1x.
+        dpr={[1, 3]}
         flat
         shadows="soft"
       >
         <color args={["#efeeeb"]} attach="background" />
+        <CameraFit />
         <Daylight />
         <Table />
         <Suspense fallback={null}>
           <Papers
+            meshesRef={meshesRef}
             reduceMotion={reduceMotion}
             replayToken={replayToken}
             scrollTarget={scrollTarget}
           />
+          <LinkOverlay
+            anchorRefs={anchorRefs}
+            meshRefs={meshesRef}
+            pages={CV_LINK_RECTS}
+          />
         </Suspense>
       </Canvas>
-      <p className="cv-v2-hint">
-        scroll for page 2 · press R to drop the pages again ·{" "}
-        <a href="/cv">flat version</a>
-      </p>
+      <div className="cv-v2-links">
+        {CV_LINK_RECTS.map((rects, pageIndex) => (
+          <div key={pageIndex}>
+            {rects.map((rect, linkIndex) => (
+              <a
+                className="cv-v2-link"
+                href={rect.href}
+                key={rect.href}
+                ref={(el) => {
+                  anchorRefs.current[pageIndex][linkIndex] = el;
+                }}
+              >
+                {/* Invisible over the texture; gives the overlay real,
+                    screen-reader-accessible content instead of an empty
+                    <a>. */}
+                <span className="sr-only">{rect.label}</span>
+              </a>
+            ))}
+          </div>
+        ))}
+      </div>
     </div>
   );
 }
