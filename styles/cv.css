@@ -328,4 +328,12 @@ html {
   .cv-pdf-download {
     display: none;
   }
+
+  /* The dev annotation toolbar portals into <body> with inline styles, so it
+     cannot be hidden by a wrapper and needs !important to beat them. This only
+     matters when printing by hand from `next dev`; the PDF script renders
+     without it entirely. */
+  [data-agentation-root] {
+    display: none !important;
+  }
 }

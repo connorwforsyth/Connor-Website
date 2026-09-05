@@ -296,6 +296,18 @@ test("reduced motion cancels the landing and print keeps both sheets", async ({
   });
 });
 
+test("no dev annotation toolbar reaches the CV or its print output", async ({
+  page,
+}) => {
+  // The toolbar is a fixed-position overlay, so when it leaked into the PDF
+  // render it repeated on every printed page.
+  await page.goto("/cv");
+  await page.waitForLoadState("networkidle");
+  await expect(page.locator("[data-agentation-root]")).toHaveCount(0);
+  await page.emulateMedia({ media: "print" });
+  await expect(page.locator("[data-agentation-root]")).toBeHidden();
+});
+
 test("download returns a real PDF without opening the print dialog", async ({
   page,
   request,
