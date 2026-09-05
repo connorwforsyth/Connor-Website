@@ -7,6 +7,15 @@ import { DevAnnotations } from "./_components/dev-annotations";
 
 const inter = Inter({ display: "swap", subsets: ["latin"] });
 
+// `next dev` is also what renders the CV to PDF and what Playwright drives, so
+// NODE_ENV alone cannot tell interactive development apart from an automated
+// capture. The annotation toolbar is a fixed-position overlay, which Chromium
+// repeats on every page of the printed PDF. Both automation paths set
+// PLAYWRIGHT, and this check has to live in the server layout because a client
+// component only ever sees NEXT_PUBLIC_* variables.
+const showDevAnnotations =
+  process.env.NODE_ENV === "development" && process.env.PLAYWRIGHT !== "true";
+
 interface RootLayoutProps {
   children: React.ReactNode;
 }
@@ -34,7 +43,7 @@ export default function Layout({ children }: RootLayoutProps) {
     <html lang="en">
       <body className={`${inter.className} cv-body antialiased`}>
         {children}
-        <DevAnnotations />
+        {showDevAnnotations && <DevAnnotations />}
         <Analytics />
       </body>
     </html>
